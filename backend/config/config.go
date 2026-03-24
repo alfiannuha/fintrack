@@ -42,8 +42,8 @@ func Load() *Config {
 		},
 		JWT: JWTConfig{
 			Secret:     getEnv("JWT_SECRET", "change-this-secret-key"),
-			AccessExp:  60, // 60 minutes (1 hour)
-			RefreshExp: 7,  // 7 days (1 week)
+			AccessExp:  1440, // 1440 minutes (1 day)
+			RefreshExp: 7,    // 7 days (1 week)
 		},
 		CORS: CORSConfig{
 			AllowedOrigins: []string{

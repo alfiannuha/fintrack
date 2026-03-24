@@ -31,13 +31,18 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
     note: '',
   });
 
+  const handleTypeChange = (type: 'income' | 'expense') => {
+    setTxType(type);
+    setFormData(prev => ({ ...prev, category_id: '' }));
+  };
+
   const loadCategories = async () => {
     try {
       const response = await api.getCategories();
       if (response.success) {
         const filtered = response.data.filter((c: Category) => c.type === txType);
         setCategories(filtered);
-        if (!formData.category_id && filtered.length > 0) {
+        if (filtered.length > 0) {
           setFormData(prev => ({ ...prev, category_id: filtered[0]._id }));
         }
       }
@@ -103,7 +108,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           {/* Type Toggle */}
-          <Tabs value={txType} onValueChange={(v) => setTxType(v as 'income' | 'expense')} className="w-full">
+          <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-muted p-1">
               <TabsTrigger 
                 value="expense"

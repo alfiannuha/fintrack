@@ -13,7 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { api } from '@/lib/api';
 import { formatCurrency } from '@/lib/utils';
 import { toast } from 'sonner';
-import type { ReceiptData, Category, Transaction } from '@/types';
+import type { ReceiptData, Category } from '@/types';
 
 export default function ScanReceiptPage() {
   const router = useRouter();
@@ -72,28 +72,112 @@ export default function ScanReceiptPage() {
   const scanReceipt = async (imageBase64: string) => {
     setIsScanning(true);
     try {
-      const res = await api.scanReceipt(imageBase64);
-      if (res.success) {
-        setReceiptData(res.data);
-        
-        setFormData(prev => ({
-          ...prev,
-          amount: res.data.total_amount ? String(res.data.total_amount) : '',
-          date: res.data.date || new Date().toISOString().split('T')[0],
-          merchant_name: res.data.merchant_name || '',
-          note: res.data.items?.map((item: { name: string; amount: number }) => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
-        }));
-        
-        toast.success('Receipt scanned successfully');
-      } else {
-        toast.error('Failed to scan receipt');
+      // Using OCR.space free API
+      const formData = new FormData();
+      formData.append('base64Image', `data:image/png;base64,${imageBase64}`);
+      formData.append('language', 'ind');
+      formData.append('isOverlayRequired', 'false');
+
+      const response = await fetch('https://api.ocr.space/parse/image', {
+        method: 'POST',
+        headers: {
+          'apikey': 'helloworld', // Free tier key
+        },
+        body: formData,
+      });
+
+      const ocrResult = await response.json();
+
+      if (ocrResult.IsErroredOnProcessing) {
+        throw new Error(ocrResult.ErrorMessage?.[0] || 'OCR failed');
       }
+
+      const text = ocrResult.ParsedResults?.[0]?.ParsedText || '';
+      const parsedData = parseReceiptText(text);
+
+      setReceiptData({
+        merchant_name: parsedData.merchantName,
+        date: parsedData.date,
+        total_amount: parsedData.totalAmount,
+        items: parsedData.items,
+        raw_text: text,
+      });
+
+      setFormData(prev => ({
+        ...prev,
+        amount: parsedData.totalAmount ? String(parsedData.totalAmount) : '',
+        date: parsedData.date || new Date().toISOString().split('T')[0],
+        merchant_name: parsedData.merchantName || '',
+        note: parsedData.items.map(item => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
+      }));
+
+      toast.success('Receipt scanned successfully');
     } catch (error) {
       console.error('Scan error:', error);
-      toast.error('Error scanning receipt');
+      toast.error('Error scanning receipt. Please try again.');
     } finally {
       setIsScanning(false);
     }
+  };
+
+  const parseReceiptText = (text: string) => {
+    const lines = text.split('\n');
+    let merchantName = '';
+    let date = '';
+    let totalAmount = 0;
+    const items: { name: string; amount: number }[] = [];
+
+    // Find date
+    const dateMatch = text.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
+    if (dateMatch) {
+      const day = dateMatch[1].padStart(2, '0');
+      const month = dateMatch[2].padStart(2, '0');
+      let year = dateMatch[3];
+      if (year.length === 2) year = '20' + year;
+      date = `${year}-${month}-${day}`;
+    }
+
+    // Find total amount
+    const totalPatterns = [
+      /(?:total|grand total|jumlah|bayar|tagihan)[:\s]*[\d,]+\.?\d*/i,
+      /Rp\s*([\d,.]+)/i,
+    ];
+    const amounts: number[] = [];
+    for (const line of lines) {
+      const match = line.match(/([\d,]+)\.?\d*$/);
+      if (match) {
+        const amount = parseInt(match[1].replace(/,/g, ''), 10);
+        if (amount > 0 && amount < 100000000) {
+          amounts.push(amount);
+        }
+      }
+    }
+    if (amounts.length > 0) {
+      totalAmount = Math.max(...amounts);
+    }
+
+    // First few lines as merchant name
+    const potentialMerchant = lines.slice(0, 3).find(line => 
+      line.trim().length > 3 && !line.match(/\d/) && !line.toLowerCase().includes('receipt')
+    );
+    if (potentialMerchant) {
+      merchantName = potentialMerchant.trim();
+    }
+
+    // Parse items
+    const itemPattern = /^(.+?)\s+([\d,]+)\s*$/;
+    for (const line of lines) {
+      const match = line.match(itemPattern);
+      if (match && match[1].length > 2) {
+        const itemName = match[1].trim();
+        const itemAmount = parseInt(match[2].replace(/,/g, ''), 10);
+        if (itemAmount > 0 && itemAmount < 10000000) {
+          items.push({ name: itemName, amount: itemAmount });
+        }
+      }
+    }
+
+    return { merchantName, date, totalAmount, items };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

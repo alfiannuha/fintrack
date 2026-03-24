@@ -182,12 +182,18 @@ export default function DashboardPage() {
 
         {/* Tabs for Charts & Insights */}
         <Tabs defaultValue="charts" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="charts">📊 Charts</TabsTrigger>
-            <TabsTrigger value="insights">💡 Insights</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 lg:w-[400px]">
+            <TabsTrigger value="charts" className="gap-2">
+              <span>📊</span>
+              <span>Charts</span>
+            </TabsTrigger>
+            <TabsTrigger value="insights" className="gap-2">
+              <span>💡</span>
+              <span>Insights</span>
+            </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="charts" className="space-y-4">
+          <TabsContent value="charts" className="space-y-4 animate-fade-in">
             <div className="grid gap-4 md:grid-cols-2">
               {/* Category Breakdown */}
               <Card>
@@ -260,7 +266,7 @@ export default function DashboardPage() {
             </div>
           </TabsContent>
 
-          <TabsContent value="insights" className="space-y-4">
+          <TabsContent value="insights" className="space-y-4 animate-fade-in">
             {!insights || insights.length === 0 ? (
               <Card>
                 <CardContent className="py-8 text-center text-muted-foreground">

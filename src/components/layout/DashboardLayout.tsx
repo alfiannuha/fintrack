@@ -24,26 +24,49 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 border-t bg-white/95 dark:bg-slate-900/95 backdrop-blur-md md:hidden z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <div className="grid grid-cols-5 gap-1 p-1">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'flex flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-200',
-                  isActive
-                    ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/30'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-slate-100 dark:hover:bg-slate-800'
-                )}
-              >
-                <span className="text-xl">{item.icon}</span>
-                <span className="text-[10px] mt-0.5 font-medium">{item.label}</span>
-              </Link>
-            );
-          })}
+      <nav className="fixed bottom-0 left-0 right-0 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 md:hidden z-50">
+        <div className="relative h-16">
+          {/* Active indicator background */}
+          <div className="absolute inset-x-0 top-1.5 h-[calc(100%-12px)] mx-3 rounded-2xl bg-slate-100 dark:bg-slate-800 transition-all duration-300" />
+          
+          <div className="relative flex h-full items-end justify-around pb-1">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="relative flex flex-col items-center justify-center w-16 h-14 -mb-0.5"
+                >
+                  {/* Active indicator */}
+                  <div 
+                    className={cn(
+                      "absolute top-1 w-10 h-10 rounded-2xl transition-all duration-300",
+                      isActive 
+                        ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                        : 'bg-transparent'
+                    )}
+                  />
+                  <span 
+                    className={cn(
+                      "relative text-xl transition-all duration-200 z-10",
+                      isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'
+                    )}
+                  >
+                    {item.icon}
+                  </span>
+                  <span 
+                    className={cn(
+                      "relative text-[10px] font-medium transition-all duration-200 z-10 -mt-0.5",
+                      isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'
+                    )}
+                  >
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </nav>
 

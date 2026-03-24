@@ -81,7 +81,7 @@ export default function ScanReceiptPage() {
       const response = await fetch('https://api.ocr.space/parse/image', {
         method: 'POST',
         headers: {
-          'apikey': 'helloworld', // Free tier key
+          'apikey': process.env.NEXT_PUBLIC_OCR_SPACE_API_KEY || 'helloworld',
         },
         body: formData,
       });

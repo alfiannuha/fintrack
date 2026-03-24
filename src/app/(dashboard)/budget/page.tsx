@@ -186,7 +186,7 @@ export default function BudgetPage() {
                       </div>
                     </div>
                   </div>
-                  <DialogFooter className="gap-3">
+                  <DialogFooter className="flex flex-row gap-3">
                     <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="flex-1 rounded-lg">
                       Batal
                     </Button>

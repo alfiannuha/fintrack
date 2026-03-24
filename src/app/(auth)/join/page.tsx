@@ -84,7 +84,7 @@ export default function JoinPage() {
         
         {step === 'code' ? (
           <form onSubmit={handleVerifyCode}>
-            <CardContent className="space-y-5">
+            <CardContent className="space-y-5 pt-4">
               <div className="space-y-2">
                 <Label htmlFor="code" className="text-sm font-medium ml-1">Kode Undangan</Label>
                 <Input
@@ -131,7 +131,7 @@ export default function JoinPage() {
           </form>
         ) : (
           <form onSubmit={handleJoin}>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-4">
               <div className="p-4 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl border border-indigo-100 dark:border-indigo-900">
                 <p className="text-sm font-medium text-indigo-700 dark:text-indigo-300">Wallet: {walletName}</p>
                 <p className="text-xs text-muted-foreground mt-1">

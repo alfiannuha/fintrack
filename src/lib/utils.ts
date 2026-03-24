@@ -32,10 +32,15 @@ export function formatDateTime(date: string | Date): string {
 }
 
 export function getMonthYear(month: string): string {
-  // Format: "2025-01" -> "Januari 2025"
   const [year, monthNum] = month.split('-');
   const date = new Date(parseInt(year), parseInt(monthNum) - 1, 1);
   return format(date, 'MMMM yyyy', { locale: id });
+}
+
+export function getMonthName(month: string): string {
+  const [year, monthNum] = month.split('-');
+  const date = new Date(parseInt(year), parseInt(monthNum) - 1, 1);
+  return format(date, 'MMMM', { locale: id });
 }
 
 export function getCurrentMonth(): string {

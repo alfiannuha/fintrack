@@ -293,6 +293,11 @@ class ApiClient {
     const queryString = month ? `?month=${month}` : '';
     return this.request(`/insights${queryString}`);
   }
+
+  // Monthly report endpoints
+  async getMonthlyReport(month: string): Promise<ApiResponse<any>> {
+    return this.request(`/reports/monthly?month=${month}`);
+  }
 }
 
 export const api = new ApiClient();

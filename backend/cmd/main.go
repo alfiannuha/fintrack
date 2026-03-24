@@ -70,6 +70,7 @@ func main() {
 	dashboardHandler := handler.NewDashboardHandler(transactionService, categoryService, budgetService)
 	recurringHandler := handler.NewRecurringHandler(recurringService)
 	insightsHandler := handler.NewInsightsHandler(insightsService)
+	reportHandler := handler.NewReportHandler(db)
 
 	// Setup Gin router
 	r := gin.Default()
@@ -156,6 +157,12 @@ func main() {
 			insights := protected.Group("/insights")
 			{
 				insights.GET("", insightsHandler.GetInsights)
+			}
+
+			// Reports
+			reports := protected.Group("/reports")
+			{
+				reports.GET("/monthly", reportHandler.GetMonthlyReport)
 			}
 
 			// Auto-category (for suggestions)

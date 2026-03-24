@@ -1,190 +1,36 @@
-# FinTrack PWA
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Progressive Web App untuk pencatatan keuangan personal dengan shared wallet functionality.
+## Getting Started
 
-## 🚀 Quick Deploy
-
-Deploy to production in 5 minutes:
+First, run the development server:
 
 ```bash
-./deploy.sh
-```
-
-See [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) for detailed instructions.
-
-## Tech Stack
-
-- **Frontend**: Next.js 14+ (TypeScript, App Router, PWA)
-- **Backend**: Go 1.26+ (Gin Framework)
-- **Database**: MongoDB Atlas
-- **UI**: Shadcn UI + Tailwind CSS
-
-## Project Structure
-
-```
-fintrack/
-├── frontend/          # Next.js application
-├── backend/           # Go REST API
-└── README.md
-```
-
-## Prerequisites
-
-1. **Node.js** v18+ dan pnpm
-2. **Go** v1.21+
-3. **MongoDB Atlas** connection string
-
-## Quick Start
-
-### 1. Clone dan Setup
-
-```bash
-cd fintrack
-```
-
-### 2. Backend Setup
-
-```bash
-cd backend
-
-# Copy environment file
-cp .env.example .env
-
-# Edit .env dan isi MONGO_URI dengan connection string MongoDB Anda
-
-# Install dependencies (otomatis saat build)
-go mod tidy
-
-# Build
-go build -o bin/server ./cmd/main.go
-
-# Run
-./bin/server
-# atau
-go run ./cmd/main.go
-```
-
-Server akan berjalan di `http://localhost:8080`
-
-### 3. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-pnpm install
-
-# Copy environment file
-cp .env.example .env.local
-
-# Run development server
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
+# or
+bun dev
 ```
 
-Frontend akan berjalan di `http://localhost:3000`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Environment Variables
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Backend (.env)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-```bash
-PORT=8080
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/fintrack
-DB_NAME=fintrack
-JWT_SECRET=your-secret-key-min-32-chars
-CORS_ORIGIN=http://localhost:3000
-```
+## Learn More
 
-### Frontend (.env.local)
+To learn more about Next.js, take a look at the following resources:
 
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
-NEXT_PUBLIC_VAPID_KEY=your-vapid-public-key
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## API Endpoints
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Authentication
+## Deploy on Vercel
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/v1/auth/register` | Registrasi user baru |
-| POST | `/api/v1/auth/login` | Login |
-| POST | `/api/v1/auth/join` | Join wallet dengan kode |
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Development
-
-### Frontend Commands
-
-```bash
-pnpm dev          # Development server
-pnpm build        # Build for production
-pnpm start        # Start production server
-pnpm lint         # Run linter
-```
-
-### Backend Commands
-
-```bash
-go run ./cmd/main.go          # Run server
-go build -o bin/server .      # Build binary
-```
-
-## Deployment
-
-### Frontend (Vercel)
-
-1. Push code ke GitHub
-2. Connect repository ke Vercel
-3. Set environment variables di Vercel
-4. Deploy otomatis pada setiap push
-
-### Backend (Railway / Fly.io)
-
-1. Buat akun di Railway.app atau Fly.io
-2. Connect GitHub repository
-3. Set environment variables
-4. Deploy otomatis
-
-### Database (MongoDB Atlas)
-
-1. Buat cluster di [MongoDB Atlas](https://cloud.mongodb.com)
-2. Dapatkan connection string
-3. Whitelist IP addresses atau gunakan 0.0.0.0/0 untuk development
-
-## Features
-
-### Phase 1 - Setup & Authentication ✅
-- [x] Project initialization
-- [x] Authentication system (register, login, join)
-- [x] JWT middleware
-- [x] Invitation code generator
-- [x] Database schema
-
-### Phase 2 - Core Features (Coming Soon)
-- [ ] Quick Transaction
-- [ ] Dashboard dengan charts
-- [ ] Category management
-- [ ] Budget control
-- [ ] Transaction history
-- [ ] Monthly reports
-
-### Phase 3 - Advanced Features (Coming Soon)
-- [ ] Recurring transactions
-- [ ] Auto categorization
-- [ ] Financial insights
-- [ ] OCR receipt
-
-### Phase 4 - PWA & Polish (Coming Soon)
-- [ ] Installable PWA
-- [ ] Offline mode
-- [ ] Push notifications
-- [ ] Production deployment
-
-## Documentation
-
-See [Project Plan](./FinTrack_PWA_Project_Plan.txt) for detailed documentation.
-
-## License
-
-MIT License
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

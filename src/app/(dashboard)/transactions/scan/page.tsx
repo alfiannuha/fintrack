@@ -24,6 +24,7 @@ export default function ScanReceiptPage() {
   const [isScanning, setIsScanning] = useState(false);
   const [receiptData, setReceiptData] = useState<ReceiptData | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [itemsExpanded, setItemsExpanded] = useState(false);
 
   const [formData, setFormData] = useState({
     amount: '',
@@ -135,18 +136,46 @@ export default function ScanReceiptPage() {
       date = `${year}-${month}-${day}`;
     }
 
-    const amounts: number[] = [];
+    // Find total amount - look for "total", "grand total", "jumlah", "bayar" first
+    const totalPatterns = [
+      /(?:total|grand total|grandtotal|jumlah|bayar|tagihan|netto|brutto)[\s:]*[\d,]+\.?\d*/i,
+      /(?:Rp\s*)[\d,]+\.?\d*/i,
+    ];
+    
+    let foundTotal = false;
     for (const line of lines) {
-      const match = line.match(/([\d,]+)\.?\d*$/);
-      if (match) {
-        const amount = parseInt(match[1].replace(/,/g, ''), 10);
-        if (amount > 0 && amount < 100000000) {
-          amounts.push(amount);
+      for (const pattern of totalPatterns) {
+        const match = line.match(pattern);
+        if (match) {
+          const amountMatch = match[0].match(/([\d,]+)/);
+          if (amountMatch) {
+            const amount = parseInt(amountMatch[1].replace(/,/g, ''), 10);
+            if (amount > 0 && amount < 100000000) {
+              totalAmount = amount;
+              foundTotal = true;
+              break;
+            }
+          }
         }
       }
+      if (foundTotal) break;
     }
-    if (amounts.length > 0) {
-      totalAmount = Math.max(...amounts);
+
+    // If no total found, use the highest amount
+    if (!foundTotal) {
+      const amounts: number[] = [];
+      for (const line of lines) {
+        const match = line.match(/([\d,]+)\.?\d*$/);
+        if (match) {
+          const amount = parseInt(match[1].replace(/,/g, ''), 10);
+          if (amount > 0 && amount < 100000000) {
+            amounts.push(amount);
+          }
+        }
+      }
+      if (amounts.length > 0) {
+        totalAmount = Math.max(...amounts);
+      }
     }
 
     const potentialMerchant = lines.slice(0, 3).find(line => 
@@ -402,16 +431,25 @@ export default function ScanReceiptPage() {
                   {/* Items */}
                   {receiptData.items && receiptData.items.length > 0 && (
                     <div className="space-y-2 p-4 rounded-xl bg-slate-50">
-                      <Label className="text-sm font-medium text-slate-600">Item Terdeteksi</Label>
+                      <button
+                        type="button"
+                        onClick={() => setItemsExpanded(!itemsExpanded)}
+                        className="w-full flex items-center justify-between text-sm font-medium text-slate-600"
+                      >
+                        <span>Item Terdeteksi ({receiptData.items.length})</span>
+                        <span className="text-xs text-slate-400">
+                          {itemsExpanded ? '▲ Sembunyikan' : '▼ Lihat semua'}
+                        </span>
+                      </button>
                       <div className="space-y-2 mt-2">
-                        {receiptData.items.slice(0, 5).map((item: { name: string; amount: number }, index: number) => (
+                        {(itemsExpanded ? receiptData.items : receiptData.items.slice(0, 5)).map((item: { name: string; amount: number }, index: number) => (
                           <div key={index} className="flex justify-between text-sm">
                             <span className="text-slate-600 truncate max-w-[70%]">{item.name}</span>
                             <span className="font-medium text-slate-700">{formatCurrency(item.amount)}</span>
                           </div>
                         ))}
-                        {receiptData.items.length > 5 && (
-                          <p className="text-xs text-slate-400 text-center">+{receiptData.items.length - 5} item lainnya</p>
+                        {!itemsExpanded && receiptData.items.length > 5 && (
+                          <p className="text-xs text-indigo-500 text-center font-medium">+{receiptData.items.length - 5} item lainnya</p>
                         )}
                       </div>
                     </div>

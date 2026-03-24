@@ -54,8 +54,8 @@ export default function HomePage() {
               Kelola keuanganmu dengan bijak
             </CardDescription>
           </div>
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900">
-            <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">✨ Free & Open Source</span>
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-50 bg-indigo-950/30 border border-indigo-100 border-indigo-900">
+            <span className="text-sm font-medium text-indigo-600 text-indigo-400">✨ Free & Open Source</span>
           </div>
         </CardHeader>
         
@@ -92,15 +92,15 @@ export default function HomePage() {
           <Separator className="w-full" />
           
           <div className="grid grid-cols-3 gap-3 w-full">
-            <div className="text-center space-y-1 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+            <div className="text-center space-y-1 p-3 rounded-xl bg-slate-50 bg-slate-800/50">
               <div className="text-2xl">💰</div>
               <p className="text-xs font-medium text-muted-foreground">Track</p>
             </div>
-            <div className="text-center space-y-1 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+            <div className="text-center space-y-1 p-3 rounded-xl bg-slate-50 bg-slate-800/50">
               <div className="text-2xl">📊</div>
               <p className="text-xs font-medium text-muted-foreground">Analytics</p>
             </div>
-            <div className="text-center space-y-1 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+            <div className="text-center space-y-1 p-3 rounded-xl bg-slate-50 bg-slate-800/50">
               <div className="text-2xl">🎯</div>
               <p className="text-xs font-medium text-muted-foreground">Budget</p>
             </div>

@@ -96,7 +96,7 @@ export default function JoinPage() {
                   required
                   maxLength={6}
                   disabled={isLoading}
-                  className="h-14 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 uppercase tracking-widest text-center text-2xl font-mono"
+                  className="h-14 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20 uppercase tracking-widest text-center text-2xl font-mono"
                 />
                 <p className="text-xs text-muted-foreground text-center mb-4">
                   Minta kode ini dari teman atau pasangan Anda
@@ -123,7 +123,7 @@ export default function JoinPage() {
               </Button>
               <div className="text-sm text-center text-muted-foreground">
                 Sudah punya akun?{' '}
-                <Link href="/login" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                <Link href="/login" className="text-indigo-600 text-indigo-400 font-medium hover:underline">
                   Masuk
                 </Link>
               </div>
@@ -132,8 +132,8 @@ export default function JoinPage() {
         ) : (
           <form onSubmit={handleJoin}>
             <CardContent className="space-y-4 pt-4">
-              <div className="p-4 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl border border-indigo-100 dark:border-indigo-900">
-                <p className="text-sm font-medium text-indigo-700 dark:text-indigo-300">Wallet: {walletName}</p>
+              <div className="p-4 bg-indigo-50 bg-indigo-950/30 rounded-xl border border-indigo-100 border-indigo-900">
+                <p className="text-sm font-medium text-indigo-700 text-indigo-300">Wallet: {walletName}</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Anda akan melihat semua transaksi dan budget di wallet ini
                 </p>
@@ -148,7 +148,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                  className="h-12 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
               <div className="space-y-2">
@@ -161,7 +161,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                  className="h-12 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
               <div className="space-y-2">
@@ -174,7 +174,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 mb-4"
+                  className="h-12 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20 mb-4"
                 />
               </div>
             </CardContent>
@@ -185,7 +185,7 @@ export default function JoinPage() {
                   variant="outline" 
                   onClick={() => setStep('code')}
                   disabled={isLoading}
-                  className="flex-1 h-12 rounded-xl border-slate-200 dark:border-slate-700"
+                  className="flex-1 h-12 rounded-xl border-slate-200 border-slate-700"
                 >
                   Kembali
                 </Button>

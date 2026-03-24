@@ -153,7 +153,7 @@ export default function RecurringPage() {
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-full bg-cyan-100 bg-cyan-900/30 flex items-center justify-center">
                       <span className="text-xl">🔄</span>
                     </div>
                     <div>
@@ -166,7 +166,7 @@ export default function RecurringPage() {
                   <div className="space-y-3">
                     <Label className="text-sm font-medium ml-1">Tipe Transaksi</Label>
                     <Tabs value={newRule.type} onValueChange={(v) => setNewRule(prev => ({ ...prev, type: v as 'income' | 'expense', category_id: '' }))} className="w-full">
-                      <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                      <TabsList className="grid w-full grid-cols-2 bg-slate-100 bg-slate-800 p-1 rounded-xl">
                         <TabsTrigger value="expense" className="rounded-lg data-[state=active]:bg-red-500 data-[state=active]:text-white font-medium">
                           💸 Pengeluaran
                         </TabsTrigger>
@@ -263,7 +263,7 @@ export default function RecurringPage() {
         ) : !rules || rules.length === 0 ? (
           <Card className="border-0 shadow-lg">
             <CardContent className="py-16 flex flex-col items-center gap-4 text-center">
-              <div className="h-20 w-20 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center">
+              <div className="h-20 w-20 rounded-full bg-cyan-100 bg-cyan-900/30 flex items-center justify-center">
                 <span className="text-4xl">🔄</span>
               </div>
               <div>
@@ -279,7 +279,7 @@ export default function RecurringPage() {
           <div className="grid gap-4 md:grid-cols-2">
             {rules.map((rule) => (
               <Card key={rule._id} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-                <div className={`h-1 ${rule.is_active ? 'bg-gradient-to-r from-cyan-500 to-blue-500' : 'bg-slate-300 dark:bg-slate-600'}`} />
+                <div className={`h-1 ${rule.is_active ? 'bg-gradient-to-r from-cyan-500 to-blue-500' : 'bg-slate-300 bg-slate-600'}`} />
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg flex items-center gap-2">
@@ -299,7 +299,7 @@ export default function RecurringPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteRule(rule._id)}
-                        className="text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                        className="text-muted-foreground hover:text-red-500 hover:bg-red-50 hover:bg-red-950/30"
                       >
                         🗑️
                       </Button>
@@ -308,20 +308,20 @@ export default function RecurringPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+                    <div className="p-3 rounded-xl bg-slate-50 bg-slate-800/50">
                       <p className="text-xs text-muted-foreground">Jumlah</p>
                       <p className={`font-bold text-lg ${rule.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
                         {formatCurrency(rule.amount)}
                       </p>
                     </div>
-                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+                    <div className="p-3 rounded-xl bg-slate-50 bg-slate-800/50">
                       <p className="text-xs text-muted-foreground">Jadwal</p>
                       <p className="font-semibold">Tanggal {rule.day_of_month}</p>
                     </div>
                   </div>
                   
                   {rule.note && (
-                    <div className="p-3 rounded-xl bg-cyan-50 dark:bg-cyan-950/30">
+                    <div className="p-3 rounded-xl bg-cyan-50 bg-cyan-950/30">
                       <p className="text-xs text-muted-foreground">Catatan</p>
                       <p className="font-medium">{rule.note}</p>
                     </div>
@@ -329,8 +329,8 @@ export default function RecurringPage() {
                   
                   <div className={`text-xs text-center py-2 rounded-lg ${
                     rule.is_active 
-                      ? 'bg-green-100 dark:bg-green-950/30 text-green-600 dark:text-green-400' 
-                      : 'bg-slate-100 dark:bg-slate-800 text-muted-foreground'
+                      ? 'bg-green-100 bg-green-950/30 text-green-600 text-green-400' 
+                      : 'bg-slate-100 bg-slate-800 text-muted-foreground'
                   }`}>
                     {rule.is_active ? '✅ Aktif - Berjalan otomatis' : '⏸️ Nonaktif - Tidak berjalan'}
                   </div>
@@ -348,19 +348,19 @@ export default function RecurringPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground space-y-3">
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 bg-slate-800/50">
               <span className="text-lg">1️⃣</span>
               <p>Transaksi berulang akan otomatis dibuat setiap bulan sesuai tanggal yang ditentukan</p>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 bg-slate-800/50">
               <span className="text-lg">2️⃣</span>
               <p>Sistem akan menjalankan cron job setiap hari untuk memeriksa aturan yang harus dijalankan</p>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 bg-slate-800/50">
               <span className="text-lg">3️⃣</span>
               <p>Transaksi yang sudah dibuat tidak akan dibuat ulang di hari yang sama</p>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 bg-slate-800/50">
               <span className="text-lg">4️⃣</span>
               <p>Anda bisa menonaktifkan aturan tanpa menghapusnya menggunakan switch</p>
             </div>

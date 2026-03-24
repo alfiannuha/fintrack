@@ -138,7 +138,7 @@ export default function BudgetPage() {
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-full bg-orange-100 bg-orange-900/30 flex items-center justify-center">
                       <span className="text-xl">🎯</span>
                     </div>
                     <div>
@@ -169,7 +169,7 @@ export default function BudgetPage() {
                     <Label htmlFor="amount" className="text-sm font-medium ml-1">Jumlah Budget</Label>
                     <div className="relative group">
                       <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-amber-500/20 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
-                      <div className="relative bg-slate-50 dark:bg-slate-800/50 rounded-lg border-2 border-transparent group-focus-within:border-orange-500/30 transition-all duration-300">
+                      <div className="relative bg-slate-50 bg-slate-800/50 rounded-lg border-2 border-transparent group-focus-within:border-orange-500/30 transition-all duration-300">
                         <div className="flex items-center px-4">
                           <span className="text-lg font-bold text-orange-600">Rp</span>
                           <Input
@@ -211,7 +211,7 @@ export default function BudgetPage() {
         ) : !budgets || budgets.length === 0 ? (
           <Card className="border-0 shadow-lg">
             <CardContent className="py-16 flex flex-col items-center gap-4 text-center">
-              <div className="h-20 w-20 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+              <div className="h-20 w-20 rounded-full bg-amber-100 bg-amber-900/30 flex items-center justify-center">
                 <span className="text-4xl">🎯</span>
               </div>
               <div>
@@ -249,7 +249,7 @@ export default function BudgetPage() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteBudget(budget._id)}
-                        className="text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                        className="text-muted-foreground hover:text-red-500 hover:bg-red-50 hover:bg-red-950/30"
                       >
                         🗑️
                       </Button>
@@ -262,22 +262,22 @@ export default function BudgetPage() {
                         <span className="text-muted-foreground">Terpakai</span>
                         <span className="font-medium">{progress.toFixed(0)}%</span>
                       </div>
-                      <Progress value={Math.min(progress, 100)} className="h-3 bg-slate-100 dark:bg-slate-800" />
+                      <Progress value={Math.min(progress, 100)} className="h-3 bg-slate-100 bg-slate-800" />
                     </div>
 
                     {/* Stats Grid */}
                     <div className="grid grid-cols-3 gap-3">
-                      <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/30 text-center">
+                      <div className="p-3 rounded-lg bg-red-50 bg-red-950/30 text-center">
                         <p className="text-xs text-muted-foreground">Terpakai</p>
                         <p className={`font-bold text-sm ${isOverBudget ? 'text-red-600' : ''}`}>
                           {formatCurrency(spent)}
                         </p>
                       </div>
-                      <div className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800 text-center">
+                      <div className="p-3 rounded-lg bg-slate-100 bg-slate-800 text-center">
                         <p className="text-xs text-muted-foreground">Budget</p>
                         <p className="font-bold text-sm">{formatCurrency(budget.amount)}</p>
                       </div>
-                      <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/30 text-center">
+                      <div className="p-3 rounded-lg bg-green-50 bg-green-950/30 text-center">
                         <p className="text-xs text-muted-foreground">Sisa</p>
                         <p className={`font-bold text-sm ${remaining < 0 ? 'text-red-600' : 'text-green-600'}`}>
                           {formatCurrency(Math.max(0, remaining))}
@@ -287,12 +287,12 @@ export default function BudgetPage() {
 
                     {/* Status */}
                     {isOverBudget && (
-                      <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-red-100 dark:bg-red-950/30 text-red-600 text-sm font-medium">
+                      <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-red-100 bg-red-950/30 text-red-600 text-sm font-medium">
                         ⚠️ Over budget! Melebihi {formatCurrency(Math.abs(remaining))}
                       </div>
                     )}
                     {isWarning && !isOverBudget && (
-                      <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-yellow-100 dark:bg-yellow-950/30 text-yellow-700 dark:text-yellow-400 text-sm font-medium">
+                      <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-yellow-100 bg-yellow-950/30 text-yellow-700 text-yellow-400 text-sm font-medium">
                         ⚠️ Hampir habis! Sisa {formatCurrency(remaining)}
                       </div>
                     )}

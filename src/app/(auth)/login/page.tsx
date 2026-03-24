@@ -75,7 +75,7 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 disabled={isLoading}
-                className="h-12 rounded-xl border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                className="h-12 rounded-xl border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
                 autoComplete="email"
               />
             </div>
@@ -91,7 +91,7 @@ export default function LoginPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 pr-12"
+                  className="h-12 rounded-xl border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20 pr-12"
                   autoComplete="current-password"
                 />
                 <button
@@ -129,13 +129,13 @@ export default function LoginPage() {
             <div className="text-sm text-center space-y-2 text-muted-foreground">
               <div>
                 Belum punya akun?{' '}
-                <Link href="/register" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                <Link href="/register" className="text-indigo-600 text-indigo-400 font-medium hover:underline">
                   Daftar Sekarang
                 </Link>
               </div>
               <div>
                 Punya kode undangan?{' '}
-                <Link href="/join" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                <Link href="/join" className="text-indigo-600 text-indigo-400 font-medium hover:underline">
                   Gabung Wallet
                 </Link>
               </div>

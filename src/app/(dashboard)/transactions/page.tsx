@@ -104,22 +104,22 @@ export default function TransactionsPage() {
 
         {/* Filter Tabs */}
         <Tabs value={filterType} onValueChange={(v) => setFilterType(v as typeof filterType)}>
-          <TabsList className="flex w-full max-w-md bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+          <TabsList className="flex w-full max-w-md bg-slate-100 bg-slate-800 p-1 rounded-xl">
             <TabsTrigger 
               value="all" 
-              className="flex-1 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium"
+              className="flex-1 rounded-lg data-[state=active]:bg-white data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium"
             >
               Semua
             </TabsTrigger>
             <TabsTrigger 
               value="income" 
-              className="flex-1 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
+              className="flex-1 rounded-lg data-[state=active]:bg-white data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
             >
               💰 Pemasukan
             </TabsTrigger>
             <TabsTrigger 
               value="expense" 
-              className="flex-1 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
+              className="flex-1 rounded-lg data-[state=active]:bg-white data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
             >
               💸 Pengeluaran
             </TabsTrigger>
@@ -137,7 +137,7 @@ export default function TransactionsPage() {
         ) : filteredTransactions.length === 0 ? (
           <Card className="border-0 shadow-lg">
             <CardContent className="py-16 flex flex-col items-center gap-4 text-center">
-              <div className="h-20 w-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+              <div className="h-20 w-20 rounded-full bg-slate-100 bg-slate-800 flex items-center justify-center">
                 <span className="text-4xl">📋</span>
               </div>
               <div>
@@ -166,8 +166,8 @@ export default function TransactionsPage() {
                           <div className="flex items-center gap-4">
                             <div className={`h-12 w-12 rounded-xl flex items-center justify-center ${
                               tx.type === 'income' 
-                                ? 'bg-green-100 dark:bg-green-900/30' 
-                                : 'bg-red-100 dark:bg-red-900/30'
+                                ? 'bg-green-100 bg-green-900/30' 
+                                : 'bg-red-100 bg-red-900/30'
                             }`}>
                               <span className="text-xl">
                                 {tx.type === 'income' ? '💰' : '💸'}
@@ -200,7 +200,7 @@ export default function TransactionsPage() {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleDelete(tx._id)}
-                              className="text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                              className="text-muted-foreground hover:text-red-500 hover:bg-red-50 hover:bg-red-950/30"
                             >
                               🗑️
                             </Button>

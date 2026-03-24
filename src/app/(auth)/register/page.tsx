@@ -84,7 +84,7 @@ export default function RegisterPage() {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
                 disabled={isLoading}
-                className="h-12 rounded-xl border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                className="h-12 rounded-xl border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
               />
             </div>
             <div className="space-y-2">
@@ -97,7 +97,7 @@ export default function RegisterPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 disabled={isLoading}
-                className="h-12 rounded-xl border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                className="h-12 rounded-xl border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
               />
             </div>
             <div className="space-y-2 mb-3">
@@ -111,7 +111,7 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 pr-12"
+                  className="h-12 rounded-xl border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20 pr-12"
                 />
                 <button
                   type="button"
@@ -132,7 +132,7 @@ export default function RegisterPage() {
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 required
                 disabled={isLoading}
-                className="h-12 rounded-xl border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                className="h-12 rounded-xl border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
               />
             </div>
           </CardContent>
@@ -160,7 +160,7 @@ export default function RegisterPage() {
             
             <div className="text-sm text-center text-muted-foreground">
               Sudah punya akun?{' '}
-              <Link href="/login" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+              <Link href="/login" className="text-indigo-600 text-indigo-400 font-medium hover:underline">
                 Masuk
               </Link>
             </div>

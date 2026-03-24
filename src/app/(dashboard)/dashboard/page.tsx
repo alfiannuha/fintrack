@@ -137,7 +137,7 @@ export default function DashboardPage() {
           <Button variant="outline" size="sm" onClick={handlePreviousMonth} className="rounded-full w-10 h-10 p-0">
             ←
           </Button>
-          <div className="bg-slate-100 dark:bg-slate-800 px-6 py-2 rounded-full">
+          <div className="bg-slate-100 bg-slate-800 px-6 py-2 rounded-full">
             <p className="text-sm font-semibold">{getMonthYear(currentMonth)}</p>
           </div>
           <Button variant="outline" size="sm" onClick={handleNextMonth} className="rounded-full w-10 h-10 p-0">
@@ -151,7 +151,7 @@ export default function DashboardPage() {
             <div className="h-1.5 bg-gradient-to-r from-green-400 to-green-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pemasukan</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-green-100 bg-green-900/30 flex items-center justify-center">
                 <span className="text-xl">💰</span>
               </div>
             </CardHeader>
@@ -167,7 +167,7 @@ export default function DashboardPage() {
             <div className="h-1.5 bg-gradient-to-r from-red-400 to-red-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pengeluaran</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-red-100 bg-red-900/30 flex items-center justify-center">
                 <span className="text-xl">💸</span>
               </div>
             </CardHeader>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
             <div className={`h-1.5 bg-gradient-to-r ${(summary?.net_balance || 0) >= 0 ? 'from-blue-400 to-blue-600' : 'from-orange-400 to-orange-600'}`} />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Saldo</CardTitle>
-              <div className={`h-10 w-10 rounded-full flex items-center justify-center ${(summary?.net_balance || 0) >= 0 ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+              <div className={`h-10 w-10 rounded-full flex items-center justify-center ${(summary?.net_balance || 0) >= 0 ? 'bg-blue-100 bg-blue-900/30' : 'bg-orange-100 bg-orange-900/30'}`}>
                 <span className="text-xl">💵</span>
               </div>
             </CardHeader>
@@ -222,12 +222,12 @@ export default function DashboardPage() {
                         const percentage = total > 0 ? ((item.amount || 0) / total) * 100 : 0;
                         
                         return (
-                          <div key={index} className="space-y-1 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                          <div key={index} className="space-y-1 p-2 rounded-lg bg-slate-50 bg-slate-800/50 hover:bg-slate-100 hover:bg-slate-800 transition-colors">
                             <div className="flex justify-between items-center">
                               <span className="font-medium text-sm">{item.category}</span>
                               <span className="text-sm font-semibold">{formatCurrency(item.amount)}</span>
                             </div>
-                            <Progress value={percentage} className="h-2 bg-slate-200 dark:bg-slate-700" />
+                            <Progress value={percentage} className="h-2 bg-slate-200 bg-slate-700" />
                             <p className="text-xs text-muted-foreground text-right">
                               {percentage.toFixed(1)}%
                             </p>
@@ -252,17 +252,17 @@ export default function DashboardPage() {
                     <span className="font-medium">Total Pengeluaran</span>
                     <span className="text-muted-foreground font-medium">{budgetProgress.toFixed(1)}%</span>
                   </div>
-                  <Progress value={budgetProgress} className="h-3 bg-slate-200 dark:bg-slate-700" />
+                  <Progress value={budgetProgress} className="h-3 bg-slate-200 bg-slate-700" />
                 </div>
                 <Separator />
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/30 text-center">
+                  <div className="p-3 rounded-xl bg-red-50 bg-red-950/30 text-center">
                     <p className="text-xs text-muted-foreground">Terpakai</p>
                     <p className="text-base font-bold text-red-600">
                       {formatCurrency(spentBudget)}
                     </p>
                   </div>
-                  <div className="p-3 rounded-xl bg-green-50 dark:bg-green-950/30 text-center">
+                  <div className="p-3 rounded-xl bg-green-50 bg-green-950/30 text-center">
                     <p className="text-xs text-muted-foreground">Sisa</p>
                     <p className="text-base font-bold text-green-600">
                       {formatCurrency(Math.max(0, totalBudget - spentBudget))}
@@ -297,10 +297,10 @@ export default function DashboardPage() {
                   <CardContent className="pt-4">
                     <div className="flex items-start gap-3">
                       <div className={`h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        insight.type === 'warning' ? 'bg-yellow-100 dark:bg-yellow-900/30' :
-                        insight.type === 'success' ? 'bg-green-100 dark:bg-green-900/30' :
-                        insight.type === 'anomaly' ? 'bg-red-100 dark:bg-red-900/30' :
-                        'bg-blue-100 dark:bg-blue-900/30'
+                        insight.type === 'warning' ? 'bg-yellow-100 bg-yellow-900/30' :
+                        insight.type === 'success' ? 'bg-green-100 bg-green-900/30' :
+                        insight.type === 'anomaly' ? 'bg-red-100 bg-red-900/30' :
+                        'bg-blue-100 bg-blue-900/30'
                       }`}>
                         <span className="text-lg">
                           {insight.type === 'warning' ? '⚠️' :
@@ -312,9 +312,9 @@ export default function DashboardPage() {
                         <p className="font-semibold text-sm">{insight.title}</p>
                         <p className="text-xs text-muted-foreground line-clamp-2">{insight.message}</p>
                         <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-medium capitalize ${
-                          insight.severity === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
-                          insight.severity === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                          'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                          insight.severity === 'high' ? 'bg-red-100 text-red-700 bg-red-900/30 text-red-400' :
+                          insight.severity === 'medium' ? 'bg-yellow-100 text-yellow-700 bg-yellow-900/30 text-yellow-400' :
+                          'bg-blue-100 text-blue-700 bg-blue-900/30 text-blue-400'
                         }`}>
                           {insight.severity}
                         </span>

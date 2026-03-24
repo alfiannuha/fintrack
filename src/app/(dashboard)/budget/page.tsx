@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
 import {
   Dialog,
   DialogContent,
@@ -53,12 +54,12 @@ export default function BudgetPage() {
         api.getCategories(),
       ]);
 
-      if (budgetsRes.success) {
+      if (budgetsRes.success && budgetsRes.data) {
         setBudgets(budgetsRes.data);
       }
-      if (categoriesRes.success) {
-        // Filter only expense categories
-        setCategories(categoriesRes.data.filter((c: Category) => c.type === 'expense'));
+      if (categoriesRes.success && categoriesRes.data) {
+        const expenseCategories = categoriesRes.data.filter((c: Category) => c.type === 'expense');
+        setCategories(expenseCategories);
       }
     } catch (error) {
       console.error('Failed to load data:', error);
@@ -118,85 +119,98 @@ export default function BudgetPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Budget</h1>
-            <p className="text-muted-foreground">
-              Kontrol pengeluaran per kategori • {getMonthYear(currentMonth)}
-            </p>
+      <div className="space-y-6 animate-fade-in">
+        {/* Header Card */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white shadow-xl">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MzUgMC0xMC00LjQ2NS0xMC0xMHM0LjQ2NS0xMCAxMC0xMCAxMCA0LjQ2NSAxMCAxMC00LjQ2NSAxMC0xMCAxMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
+          <div className="relative flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">Budget</h1>
+              <p className="text-white/80 text-sm mt-1">Kontrol pengeluaran per kategori • {getMonthYear(currentMonth)}</p>
+            </div>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger>
+                <Button className="bg-white text-orange-600 hover:bg-white/90 font-semibold shadow-lg">
+                  <span className="mr-1">+</span> Budget Baru
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Buat Budget Baru</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleCreateBudget} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Kategori</Label>
+                    <select
+                      id="category"
+                      value={newBudget.category_id}
+                      onChange={(e) => setNewBudget(prev => ({ ...prev, category_id: e.target.value }))}
+                      className="w-full p-2.5 border rounded-lg bg-background text-sm"
+                      required
+                    >
+                      <option value="">Pilih kategori</option>
+                      {categories.map((cat) => (
+                        <option key={cat._id} value={cat._id}>
+                          {cat.icon} {cat.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="amount">Budget (Rp)</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">Rp</span>
+                      <Input
+                        id="amount"
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="0"
+                        value={newBudget.amount}
+                        onChange={handleAmountChange}
+                        className="text-lg font-bold pl-10"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-3 pt-2">
+                    <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="flex-1 rounded-lg">
+                      Batal
+                    </Button>
+                    <Button type="submit" className="flex-1 rounded-lg bg-orange-500 hover:bg-orange-600">
+                      Simpan
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger>
-              <Button>+ Budget Baru</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Buat Budget Baru</DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleCreateBudget} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="category">Kategori</Label>
-                  <select
-                    id="category"
-                    value={newBudget.category_id}
-                    onChange={(e) => setNewBudget(prev => ({ ...prev, category_id: e.target.value }))}
-                    className="w-full p-2 border rounded-md"
-                    required
-                  >
-                    <option value="">Pilih kategori</option>
-                    {categories.map((cat) => (
-                      <option key={cat._id} value={cat._id}>
-                        {cat.icon} {cat.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="amount">Budget (Rp)</Label>
-                  <Input
-                    id="amount"
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="0"
-                    value={newBudget.amount}
-                    onChange={handleAmountChange}
-                    className="text-xl font-bold"
-                    required
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="flex-1">
-                    Batal
-                  </Button>
-                  <Button type="submit" className="flex-1">
-                    Simpan
-                  </Button>
-                </div>
-              </form>
-            </DialogContent>
-          </Dialog>
         </div>
 
         {/* Budgets List */}
         {isLoading ? (
-          <Card>
-            <CardContent className="py-8 text-center text-muted-foreground">
-              Loading...
+          <Card className="border-0 shadow-lg">
+            <CardContent className="py-12 text-center">
+              <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+              <p className="text-muted-foreground mt-4">Memuat budget...</p>
             </CardContent>
           </Card>
-        ) : budgets.length === 0 ? (
-          <Card>
-            <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground">Belum ada budget</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Buat budget untuk mengontrol pengeluaran per kategori
-              </p>
+        ) : !budgets || budgets.length === 0 ? (
+          <Card className="border-0 shadow-lg">
+            <CardContent className="py-16 flex flex-col items-center gap-4 text-center">
+              <div className="h-20 w-20 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
+                <span className="text-4xl">🎯</span>
+              </div>
+              <div>
+                <p className="text-lg font-semibold">Belum ada budget</p>
+                <p className="text-muted-foreground text-sm mt-1">Buat budget untuk mengontrol pengeluaran per kategori</p>
+              </div>
+              <Button onClick={() => setIsDialogOpen(true)} className="mt-2 bg-orange-500 hover:bg-orange-600">
+                + Tambah Budget
+              </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2">
             {budgets.map((budget) => {
               const spent = budget.spent || 0;
               const progress = budget.progress || 0;
@@ -205,72 +219,69 @@ export default function BudgetPage() {
               const isWarning = progress >= 80 && !isOverBudget;
 
               return (
-                <Card key={budget._id}>
+                <Card key={budget._id} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className={`h-1 ${
+                    isOverBudget ? 'bg-gradient-to-r from-red-500 to-red-600' : 
+                    isWarning ? 'bg-gradient-to-r from-yellow-500 to-amber-500' : 
+                    'bg-gradient-to-r from-green-500 to-emerald-500'
+                  }`} />
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-lg">
-                        {budget.category?.icon || '📁'} {budget.category?.name || 'Unknown'}
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <span className="text-2xl">{budget.category?.icon || '📁'}</span>
+                        {budget.category?.name || 'Unknown'}
                       </CardTitle>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDeleteBudget(budget._id)}
+                        className="text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
                       >
                         🗑️
                       </Button>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-4">
                     {/* Progress Bar */}
-                    <div className="relative h-4 bg-muted rounded-full overflow-hidden">
-                      <div
-                        className={`absolute left-0 top-0 h-full transition-all ${
-                          isOverBudget
-                            ? 'bg-red-500'
-                            : isWarning
-                            ? 'bg-yellow-500'
-                            : 'bg-green-500'
-                        }`}
-                        style={{ width: `${Math.min(progress, 100)}%` }}
-                      />
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Terpakai</span>
+                        <span className="font-medium">{progress.toFixed(0)}%</span>
+                      </div>
+                      <Progress value={Math.min(progress, 100)} className="h-3 bg-slate-100 dark:bg-slate-800" />
                     </div>
 
-                    {/* Stats */}
-                    <div className="flex justify-between text-sm">
-                      <div>
-                        <p className="text-muted-foreground">Terpakai</p>
-                        <p className={`font-semibold ${isOverBudget ? 'text-red-600' : ''}`}>
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/30 text-center">
+                        <p className="text-xs text-muted-foreground">Terpakai</p>
+                        <p className={`font-bold text-sm ${isOverBudget ? 'text-red-600' : ''}`}>
                           {formatCurrency(spent)}
                         </p>
                       </div>
-                      <div className="text-right">
-                        <p className="text-muted-foreground">Budget</p>
-                        <p className="font-semibold">{formatCurrency(budget.amount)}</p>
+                      <div className="p-3 rounded-lg bg-slate-100 dark:bg-slate-800 text-center">
+                        <p className="text-xs text-muted-foreground">Budget</p>
+                        <p className="font-bold text-sm">{formatCurrency(budget.amount)}</p>
                       </div>
-                      <div className="text-right">
-                        <p className="text-muted-foreground">Sisa</p>
-                        <p className={`font-semibold ${remaining < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                      <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/30 text-center">
+                        <p className="text-xs text-muted-foreground">Sisa</p>
+                        <p className={`font-bold text-sm ${remaining < 0 ? 'text-red-600' : 'text-green-600'}`}>
                           {formatCurrency(Math.max(0, remaining))}
                         </p>
                       </div>
                     </div>
 
-                    {/* Percentage */}
-                    <div className="flex justify-between items-center pt-2 border-t">
-                      <span className="text-sm text-muted-foreground">
-                        {progress.toFixed(1)}% digunakan
-                      </span>
-                      {isOverBudget && (
-                        <span className="text-sm text-red-600 font-semibold">
-                          ⚠️ Over budget!
-                        </span>
-                      )}
-                      {isWarning && !isOverBudget && (
-                        <span className="text-sm text-yellow-600 font-semibold">
-                          ⚠️ Hampir habis
-                        </span>
-                      )}
-                    </div>
+                    {/* Status */}
+                    {isOverBudget && (
+                      <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-red-100 dark:bg-red-950/30 text-red-600 text-sm font-medium">
+                        ⚠️ Over budget! Melebihi {formatCurrency(Math.abs(remaining))}
+                      </div>
+                    )}
+                    {isWarning && !isOverBudget && (
+                      <div className="flex items-center justify-center gap-2 p-2 rounded-lg bg-yellow-100 dark:bg-yellow-950/30 text-yellow-700 dark:text-yellow-400 text-sm font-medium">
+                        ⚠️ Hampir habis! Sisa {formatCurrency(remaining)}
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               );

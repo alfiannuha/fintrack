@@ -75,7 +75,7 @@ export default function ScanReceiptPage() {
       // Using OCR.space free API
       const formData = new FormData();
       formData.append('base64Image', `data:image/png;base64,${imageBase64}`);
-      formData.append('language', 'ind');
+      formData.append('language', 'eng');
       formData.append('isOverlayRequired', 'false');
 
       const response = await fetch('https://api.ocr.space/parse/image', {

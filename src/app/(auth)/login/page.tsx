@@ -26,7 +26,7 @@ export default function LoginPage() {
 
     try {
       await login(formData);
-      toast.success('Login berhasil!');
+      toast.success('🎉 Login berhasil! Selamat datang kembali!');
       router.push('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
@@ -37,22 +37,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-2">
-          <div className="mx-auto w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-2">
-            <span className="text-3xl font-bold text-primary-foreground">F</span>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 p-4">
+      <Card className="w-full max-w-md shadow-2xl border-slate-200 animate-slide-up">
+        <CardHeader className="space-y-3 text-center">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <span className="text-3xl font-bold text-white">F</span>
           </div>
-          <CardTitle className="text-2xl font-bold text-center">Selamat Datang Kembali</CardTitle>
-          <CardDescription className="text-center">
-            Masuk untuk melanjutkan ke dashboard
-          </CardDescription>
+          <div className="space-y-2">
+            <CardTitle className="text-3xl font-bold">Selamat Datang Kembali</CardTitle>
+            <CardDescription className="text-base">
+              Masuk untuk melanjutkan ke dashboard
+            </CardDescription>
+          </div>
         </CardHeader>
         
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="font-medium">📧 Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -61,11 +63,12 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 disabled={isLoading}
+                className="h-11"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="font-medium">🔒 Password</Label>
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
@@ -74,32 +77,46 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
                 disabled={isLoading}
+                className="h-11"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="text-xs text-muted-foreground hover:underline"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
               >
-                {showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
+                {showPassword ? '🙈 Sembunyikan' : '👁️ Tampilkan'} password
               </button>
             </div>
           </CardContent>
           
-          <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Memuat...' : 'Masuk'}
+          <CardFooter className="flex flex-col space-y-4 pt-2">
+            <Button 
+              type="submit" 
+              className="w-full h-12 text-base font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                  Memuat...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <span>🚀</span> Masuk
+                </span>
+              )}
             </Button>
             
-            <div className="text-sm text-center space-y-2">
-              <div className="text-muted-foreground">
+            <div className="text-sm text-center space-y-2 text-muted-foreground">
+              <div>
                 Belum punya akun?{' '}
-                <Link href="/register" className="text-primary hover:underline">
+                <Link href="/register" className="text-primary font-medium hover:underline">
                   Daftar Sekarang
                 </Link>
               </div>
-              <div className="text-muted-foreground">
+              <div>
                 Punya kode undangan?{' '}
-                <Link href="/join" className="text-primary hover:underline">
+                <Link href="/join" className="text-primary font-medium hover:underline">
                   Gabung Wallet
                 </Link>
               </div>

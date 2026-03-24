@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,7 @@ interface QuickTransactionProps {
 
 export default function QuickTransaction({ onSuccess, onCancel }: QuickTransactionProps) {
   const router = useRouter();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [txType, setTxType] = useState<'income' | 'expense'>('expense');
@@ -29,18 +31,12 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
     note: '',
   });
 
-  useEffect(() => {
-    loadCategories();
-  }, []);
-
   const loadCategories = async () => {
     try {
       const response = await api.getCategories();
       if (response.success) {
-        // Filter categories by type
         const filtered = response.data.filter((c: Category) => c.type === txType);
         setCategories(filtered);
-        // Set default category if not selected
         if (!formData.category_id && filtered.length > 0) {
           setFormData(prev => ({ ...prev, category_id: filtered[0]._id }));
         }
@@ -51,8 +47,10 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
   };
 
   useEffect(() => {
-    loadCategories();
-  }, [txType]);
+    if (isAuthenticated && !authLoading) {
+      loadCategories();
+    }
+  }, [isAuthenticated, authLoading, txType]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

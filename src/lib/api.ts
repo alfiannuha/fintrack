@@ -20,6 +20,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/a
 
 class ApiClient {
   private accessToken: string | null = null;
+  private isRefreshing = false;
 
   setAccessToken(token: string | null) {
     this.accessToken = token;
@@ -48,6 +49,48 @@ class ApiClient {
       ...options,
       headers,
     });
+
+    if (response.status === 401) {
+      const data = await response.json();
+      
+      if (data.error === 'invalid or expired token' || data.error === 'missing authorization header') {
+        if (!this.isRefreshing) {
+          this.isRefreshing = true;
+          try {
+            const refreshResponse = await this.refreshToken();
+            if (refreshResponse.success) {
+              const newToken = refreshResponse.data.access_token;
+              this.accessToken = newToken;
+              localStorage.setItem('fintrack_access_token', newToken);
+              
+              headers['Authorization'] = `Bearer ${newToken}`;
+              const retryResponse = await fetch(url, {
+                ...options,
+                headers,
+              });
+              
+              const retryData = await retryResponse.json();
+              if (!retryResponse.ok) {
+                const error = retryData as ApiError;
+                throw new Error(error.message || error.error || 'Request failed');
+              }
+              
+              this.isRefreshing = false;
+              return retryData as T;
+            }
+          } catch (refreshError) {
+            this.isRefreshing = false;
+            localStorage.removeItem('fintrack_access_token');
+            localStorage.removeItem('fintrack_user');
+            localStorage.removeItem('fintrack_wallet');
+            window.location.href = '/login';
+            throw refreshError;
+          }
+        }
+      }
+      
+      throw new Error(data.message || data.error || 'Unauthorized');
+    }
 
     const data = await response.json();
 
@@ -82,9 +125,11 @@ class ApiClient {
   }
 
   async refreshToken(): Promise<ApiResponse<AuthTokens>> {
+    const currentToken = this.accessToken;
+    
     return this.request('/auth/refresh', {
       method: 'POST',
-      credentials: 'include',
+      headers: currentToken ? { 'Authorization': `Bearer ${currentToken}` } : {},
     });
   }
 

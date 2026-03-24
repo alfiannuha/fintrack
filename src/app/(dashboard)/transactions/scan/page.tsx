@@ -72,7 +72,6 @@ export default function ScanReceiptPage() {
   const scanReceipt = async (imageBase64: string) => {
     setIsScanning(true);
     try {
-      // Using OCR.space free API
       const formData = new FormData();
       formData.append('base64Image', `data:image/png;base64,${imageBase64}`);
       formData.append('language', 'eng');
@@ -111,10 +110,10 @@ export default function ScanReceiptPage() {
         note: parsedData.items.map(item => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
       }));
 
-      toast.success('Receipt scanned successfully');
+      toast.success('Struk berhasil dipindai');
     } catch (error) {
       console.error('Scan error:', error);
-      toast.error('Error scanning receipt. Please try again.');
+      toast.error('Gagal memindai struk. Silakan coba lagi.');
     } finally {
       setIsScanning(false);
     }
@@ -127,7 +126,6 @@ export default function ScanReceiptPage() {
     let totalAmount = 0;
     const items: { name: string; amount: number }[] = [];
 
-    // Find date
     const dateMatch = text.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
     if (dateMatch) {
       const day = dateMatch[1].padStart(2, '0');
@@ -137,11 +135,6 @@ export default function ScanReceiptPage() {
       date = `${year}-${month}-${day}`;
     }
 
-    // Find total amount
-    const totalPatterns = [
-      /(?:total|grand total|jumlah|bayar|tagihan)[:\s]*[\d,]+\.?\d*/i,
-      /Rp\s*([\d,.]+)/i,
-    ];
     const amounts: number[] = [];
     for (const line of lines) {
       const match = line.match(/([\d,]+)\.?\d*$/);
@@ -156,7 +149,6 @@ export default function ScanReceiptPage() {
       totalAmount = Math.max(...amounts);
     }
 
-    // First few lines as merchant name
     const potentialMerchant = lines.slice(0, 3).find(line => 
       line.trim().length > 3 && !line.match(/\d/) && !line.toLowerCase().includes('receipt')
     );
@@ -164,7 +156,6 @@ export default function ScanReceiptPage() {
       merchantName = potentialMerchant.trim();
     }
 
-    // Parse items
     const itemPattern = /^(.+?)\s+([\d,]+)\s*$/;
     for (const line of lines) {
       const match = line.match(itemPattern);
@@ -184,7 +175,7 @@ export default function ScanReceiptPage() {
     e.preventDefault();
 
     if (!formData.amount || !formData.category_id) {
-      toast.error('Please fill in required fields');
+      toast.error('Mohon lengkapi nominal dan kategori');
       return;
     }
 
@@ -199,14 +190,14 @@ export default function ScanReceiptPage() {
       });
 
       if (res.success) {
-        toast.success('Transaction created successfully');
+        toast.success('Transaksi berhasil dibuat');
         router.push('/transactions');
       } else {
-        toast.error('Failed to create transaction');
+        toast.error('Gagal membuat transaksi');
       }
     } catch (error) {
       console.error('Create transaction error:', error);
-      toast.error('Error creating transaction');
+      toast.error('Error membuat transaksi');
     }
   };
 
@@ -239,22 +230,31 @@ export default function ScanReceiptPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">Scan Receipt</h1>
-          <p className="text-muted-foreground">Scan a receipt to create a transaction</p>
+        {/* Header */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 p-4 md:p-6 text-white shadow-xl">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MzUgMC0xMC00LjQ2NS0xMC0xMHM0LjQ2NS0xMCAxMC0xMCAxMCA0LjQ2NSAxMCAxMC00LjQ2NSAxMC0xMCAxMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
+          <div className="relative">
+            <h1 className="text-xl md:text-2xl font-bold">📷 Pindai Struk</h1>
+            <p className="text-white/80 text-xs md:text-sm mt-1">Pindai struk atau upload foto receipt</p>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {!imagePreview && (
-            <Card>
+            <Card className="border-0 shadow-lg">
               <CardContent className="pt-6">
                 <div 
-                  className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-12 text-center cursor-pointer hover:border-muted-foreground/50 transition-colors"
+                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 text-center cursor-pointer hover:border-indigo-400 hover:from-indigo-100 hover:to-purple-100 transition-all duration-300 group"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <div className="text-6xl mb-4">📷</div>
-                  <p className="text-lg font-medium">Tap to take a photo</p>
-                  <p className="text-sm text-muted-foreground">or select from gallery</p>
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center shadow-inner">
+                      <span className="text-4xl">📸</span>
+                    </div>
+                    <p className="text-lg font-semibold text-slate-700">Ambil Foto Struk</p>
+                    <p className="text-sm text-slate-500 mt-1">Ketuk untuk kamera atau pilih dari galeri</p>
+                  </div>
                 </div>
                 <input
                   ref={fileInputRef}
@@ -269,150 +269,174 @@ export default function ScanReceiptPage() {
           )}
 
           {isScanning && (
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-lg font-medium">Scanning receipt...</p>
-                <p className="text-sm text-muted-foreground">Please wait</p>
+            <Card className="border-0 shadow-lg">
+              <CardContent className="pt-8 pb-8 text-center">
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 animate-ping opacity-20"></div>
+                  <div className="relative w-full h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                    <span className="text-4xl">🔍</span>
+                  </div>
+                  <div className="absolute inset-0 rounded-full border-4 border-indigo-200 border-t-indigo-500 animate-spin"></div>
+                </div>
+                <p className="text-lg font-semibold text-slate-700">Memindai Struk...</p>
+                <p className="text-sm text-slate-500 mt-1">Mohon tunggu sebentar</p>
               </CardContent>
             </Card>
           )}
 
           {imagePreview && !isScanning && receiptData && (
-            <>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Receipt Preview</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative">
-                    <img 
-                      src={imagePreview} 
-                      alt="Receipt preview" 
-                      className="w-full max-h-64 object-contain rounded-lg"
-                    />
+            <div className="space-y-4">
+              {/* Preview Card */}
+              <Card className="border-0 shadow-lg overflow-hidden">
+                <div className="h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <span>🖼️</span> Preview
+                    </CardTitle>
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
-                      className="absolute top-2 right-2"
                       onClick={handleRetake}
+                      className="text-xs h-8 rounded-lg"
                     >
-                      Retake
+                      Ganti Foto
                     </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative rounded-xl overflow-hidden bg-slate-100">
+                    <img 
+                      src={imagePreview} 
+                      alt="Receipt preview" 
+                      className="w-full h-48 object-contain"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Scanned Data</CardTitle>
+              {/* Form Card */}
+              <Card className="border-0 shadow-lg">
+                <div className="h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <span>📝</span> Data Transaksi
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {receiptData.raw_text && (
-                    <div>
-                      <Label className="text-muted-foreground">Raw Text (for verification)</Label>
-                      <Textarea
-                        value={receiptData.raw_text}
-                        readOnly
-                        className="h-24 text-xs mt-1"
-                      />
-                    </div>
-                  )}
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <Label htmlFor="merchant_name">Merchant Name</Label>
+                  {/* Amount */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-slate-600 ml-1">Nominal *</Label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-slate-400">Rp</span>
                       <Input
-                        id="merchant_name"
-                        value={formData.merchant_name}
-                        onChange={(e) => setFormData({ ...formData, merchant_name: e.target.value })}
-                        placeholder="Store name"
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="date">Date</Label>
-                      <Input
-                        id="date"
-                        type="date"
-                        value={formData.date}
-                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        className="mt-1"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <Label htmlFor="amount">Amount *</Label>
-                      <Input
-                        id="amount"
                         type="number"
                         value={formData.amount}
                         onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                         placeholder="0"
-                        className="mt-1"
+                        className="pl-12 h-12 text-lg font-semibold rounded-xl border-slate-200 bg-slate-50"
                       />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="category">Category *</Label>
-                      <select
-                        id="category"
-                        value={formData.category_id}
-                        onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
-                      >
-                        <option value="">Select category</option>
-                        {categories
-                          .filter((cat) => cat.type === 'expense')
-                          .map((cat) => (
-                            <option key={cat._id} value={cat._id}>
-                              {cat.icon} {cat.name}
-                            </option>
-                          ))}
-                      </select>
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="note">Note</Label>
-                    <Textarea
-                      id="note"
-                      value={formData.note}
-                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, note: e.target.value })}
-                      placeholder="Additional notes..."
-                      className="mt-1"
+                  {/* Category */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-slate-600 ml-1">Kategori *</Label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {categories
+                        .filter((cat) => cat.type === 'expense')
+                        .map((cat) => (
+                          <button
+                            key={cat._id}
+                            type="button"
+                            onClick={() => setFormData({ ...formData, category_id: cat._id })}
+                            className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl border-2 transition-all duration-200 ${
+                              formData.category_id === cat._id
+                                ? 'bg-red-50 text-red-600 border-red-400 shadow-md'
+                                : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:bg-indigo-50'
+                            }`}
+                          >
+                            <span className="text-xl">{cat.icon || '📁'}</span>
+                            <span className="text-[9px] font-semibold truncate w-full text-center">{cat.name}</span>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Merchant */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-slate-600 ml-1">Nama Toko</Label>
+                    <Input
+                      value={formData.merchant_name}
+                      onChange={(e) => setFormData({ ...formData, merchant_name: e.target.value })}
+                      placeholder="Nama merchant (opsional)"
+                      className="rounded-xl border-slate-200 bg-slate-50"
                     />
                   </div>
 
+                  {/* Date */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-slate-600 ml-1">Tanggal</Label>
+                    <Input
+                      type="date"
+                      value={formData.date}
+                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      className="rounded-xl border-slate-200 bg-slate-50"
+                    />
+                  </div>
+
+                  {/* Note */}
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-slate-600 ml-1">Catatan</Label>
+                    <Textarea
+                      value={formData.note}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, note: e.target.value })}
+                      placeholder="Catatan tambahan..."
+                      className="rounded-xl border-slate-200 bg-slate-50 resize-none"
+                      rows={2}
+                    />
+                  </div>
+
+                  {/* Items */}
                   {receiptData.items && receiptData.items.length > 0 && (
-                    <div>
-                      <Label className="text-muted-foreground">Items Found</Label>
-                      <div className="mt-2 space-y-2">
-                        {receiptData.items.map((item: { name: string; amount: number }, index: number) => (
+                    <div className="space-y-2 p-4 rounded-xl bg-slate-50">
+                      <Label className="text-sm font-medium text-slate-600">Item Terdeteksi</Label>
+                      <div className="space-y-2 mt-2">
+                        {receiptData.items.slice(0, 5).map((item: { name: string; amount: number }, index: number) => (
                           <div key={index} className="flex justify-between text-sm">
-                            <span>{item.name}</span>
-                            <span className="font-medium">{formatCurrency(item.amount)}</span>
+                            <span className="text-slate-600 truncate max-w-[70%]">{item.name}</span>
+                            <span className="font-medium text-slate-700">{formatCurrency(item.amount)}</span>
                           </div>
                         ))}
+                        {receiptData.items.length > 5 && (
+                          <p className="text-xs text-slate-400 text-center">+{receiptData.items.length - 5} item lainnya</p>
+                        )}
                       </div>
                     </div>
                   )}
 
-                  <div className="flex gap-4 pt-4">
-                    <Button type="submit" className="flex-1">
-                      Create Transaction
+                  {/* Actions */}
+                  <div className="flex gap-3 pt-2">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={handleRetake}
+                      className="flex-1 h-12 text-base font-semibold rounded-xl border-slate-200 hover:bg-slate-50"
+                    >
+                      Pindai Ulang
                     </Button>
-                    <Button type="button" variant="outline" onClick={handleRetake}>
-                      Scan Another
+                    <Button 
+                      type="submit" 
+                      className="flex-1 h-12 text-base font-bold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
+                    >
+                      Simpan Transaksi
                     </Button>
                   </div>
                 </CardContent>
               </Card>
-            </>
+            </div>
           )}
         </form>
       </div>

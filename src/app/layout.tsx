@@ -12,10 +12,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "FinTrack - Kelola Keuanganmu Dengan Bijak",
-  description: "Aplikasi pencatatan keuangan personal dengan shared wallet. Track income, expense, budget, dan insights keuanganmu.",
+  title: "FinTrack - Kelola Keuanganmu",
+  description: "Aplikasi pencatatan keuangan personal dengan shared wallet",
   manifest: "/manifest.json",
-  themeColor: "#667eea",
+  themeColor: "#000000",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -24,18 +24,12 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  icons: {
-    apple: "/icons/icon-192x192.png",
-  },
-  keywords: ["finance", "money", "budget", "tracking", "indonesia", "pwa"],
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: "#667eea",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -46,12 +40,12 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${poppins.variable} h-full antialiased`}
+      className={`${poppins.variable}`}
     >
-      <body className={`${poppins.className} min-h-full flex flex-col bg-gradient-to-br from-purple-50 via-white to-blue-50`}>
+      <body className="min-h-full flex flex-col bg-background font-sans antialiased">
         <AuthProvider>
           {children}
-          <Toaster position="top-center" richColors closeButton />
+          <Toaster position="top-center" richColors />
         </AuthProvider>
       </body>
     </html>

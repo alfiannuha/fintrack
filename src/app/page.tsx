@@ -57,40 +57,29 @@ export default function HomePage() {
         </CardHeader>
         
         <CardContent className="space-y-3">
-          <Button 
-            asChild 
-            className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
-          >
-            <Link href="/login">
+          <Link href="/login" className="block">
+            <Button className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
               <span className="flex items-center justify-center gap-2">
                 <span>🔐</span> Masuk ke Akun
               </span>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
           
-          <Button 
-            asChild 
-            variant="outline" 
-            className="w-full h-12 text-lg font-semibold border-2 border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all"
-          >
-            <Link href="/register">
+          <Link href="/register" className="block">
+            <Button variant="outline" className="w-full h-12 text-lg font-semibold border-2 border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all">
               <span className="flex items-center justify-center gap-2">
                 <span>✨</span> Daftar Baru
               </span>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
           
-          <Button 
-            asChild 
-            variant="ghost" 
-            className="w-full h-12 text-lg text-white/80 hover:text-white hover:bg-white/10 transition-all"
-          >
-            <Link href="/join">
+          <Link href="/join" className="block">
+            <Button variant="ghost" className="w-full h-12 text-lg text-white/80 hover:text-white hover:bg-white/10 transition-all">
               <span className="flex items-center justify-center gap-2">
                 <span>🎫</span> Gabung Wallet
               </span>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
 
           <div className="pt-4 mt-4 border-t border-white/20">
             <p className="text-xs text-center text-purple-200">

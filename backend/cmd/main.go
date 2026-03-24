@@ -71,6 +71,7 @@ func main() {
 	recurringHandler := handler.NewRecurringHandler(recurringService)
 	insightsHandler := handler.NewInsightsHandler(insightsService)
 	reportHandler := handler.NewReportHandler(db)
+	ocrHandler := handler.NewOCRHandler()
 
 	// Setup Gin router
 	r := gin.Default()
@@ -163,6 +164,12 @@ func main() {
 			reports := protected.Group("/reports")
 			{
 				reports.GET("/monthly", reportHandler.GetMonthlyReport)
+			}
+
+			// OCR
+			ocr := protected.Group("/ocr")
+			{
+				ocr.POST("/scan", ocrHandler.ScanReceipt)
 			}
 
 			// Auto-category (for suggestions)

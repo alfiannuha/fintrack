@@ -15,7 +15,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: '📊' },
     { href: '/transactions', label: 'Transaksi', icon: '💳' },
+    { href: '/transactions/scan', label: 'Scan Receipt', icon: '📷' },
     { href: '/budget', label: 'Budget', icon: '🎯' },
+    { href: '/report', label: 'Laporan', icon: '📈' },
     { href: '/settings', label: 'Pengaturan', icon: '⚙️' },
   ];
 

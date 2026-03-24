@@ -164,3 +164,16 @@ export interface MonthComparison {
   expense_change: number;
   expense_change_percent: number;
 }
+
+export interface ReceiptData {
+  merchant_name: string;
+  date: string;
+  total_amount: number;
+  items: ReceiptItem[];
+  raw_text: string;
+}
+
+export interface ReceiptItem {
+  name: string;
+  amount: number;
+}

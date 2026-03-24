@@ -298,6 +298,14 @@ class ApiClient {
   async getMonthlyReport(month: string): Promise<ApiResponse<any>> {
     return this.request(`/reports/monthly?month=${month}`);
   }
+
+  // OCR endpoints
+  async scanReceipt(imageBase64: string): Promise<ApiResponse<any>> {
+    return this.request('/ocr/scan', {
+      method: 'POST',
+      body: JSON.stringify({ image: imageBase64 }),
+    });
+  }
 }
 
 export const api = new ApiClient();

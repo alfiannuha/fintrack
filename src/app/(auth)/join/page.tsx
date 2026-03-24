@@ -98,7 +98,7 @@ export default function JoinPage() {
                   disabled={isLoading}
                   className="h-14 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 uppercase tracking-widest text-center text-2xl font-mono"
                 />
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs text-muted-foreground text-center mb-4">
                   Minta kode ini dari teman atau pasangan Anda
                 </p>
               </div>

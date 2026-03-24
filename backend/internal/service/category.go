@@ -28,29 +28,49 @@ func (s *CategoryService) GetDefaultCategories() []model.Category {
 	incomeIcon := "💵"
 	incomeColor := "#22c55e"
 
+	// Pre-defined unique IDs for default categories to ensure consistency
+	ids := []primitive.ObjectID{
+		mustObjectIDFromHex("650000000000000000000001"),
+		mustObjectIDFromHex("650000000000000000000002"),
+		mustObjectIDFromHex("650000000000000000000003"),
+		mustObjectIDFromHex("650000000000000000000004"),
+		mustObjectIDFromHex("650000000000000000000005"),
+		mustObjectIDFromHex("650000000000000000000006"),
+		mustObjectIDFromHex("650000000000000000000007"),
+		mustObjectIDFromHex("650000000000000000000008"),
+		mustObjectIDFromHex("650000000000000000000009"),
+		mustObjectIDFromHex("65000000000000000000000a"),
+		mustObjectIDFromHex("65000000000000000000000b"),
+	}
+
 	return []model.Category{
 		// Expense categories
-		{Name: "Makan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
-		{Name: "Transport", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
-		{Name: "Tagihan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
-		{Name: "Belanja", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
-		{Name: "Hiburan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
-		{Name: "Kesehatan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
-		{Name: "Lainnya", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[0], Name: "Makan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[1], Name: "Transport", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[2], Name: "Tagihan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[3], Name: "Belanja", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[4], Name: "Hiburan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[5], Name: "Kesehatan", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
+		{ID: ids[6], Name: "Lainnya", Type: "expense", Icon: &expenseIcon, Color: &expenseColor, IsDefault: true},
 		// Income categories
-		{Name: "Gaji", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
-		{Name: "Freelance", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
-		{Name: "Bonus", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
-		{Name: "Investasi", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
+		{ID: ids[7], Name: "Gaji", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
+		{ID: ids[8], Name: "Freelance", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
+		{ID: ids[9], Name: "Bonus", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
+		{ID: ids[10], Name: "Investasi", Type: "income", Icon: &incomeIcon, Color: &incomeColor, IsDefault: true},
 	}
 }
 
-func (s *CategoryService) GetAll(ctx context.Context, walletID primitive.ObjectID) ([]model.Category, error) {
-	// Get default categories with unique IDs
-	categories := s.GetDefaultCategories()
-	for i := range categories {
-		categories[i].ID = primitive.NewObjectID()
+func mustObjectIDFromHex(s string) primitive.ObjectID {
+	id, err := primitive.ObjectIDFromHex(s)
+	if err != nil {
+		return primitive.NewObjectID()
 	}
+	return id
+}
+
+func (s *CategoryService) GetAll(ctx context.Context, walletID primitive.ObjectID) ([]model.Category, error) {
+	// Get default categories with pre-defined unique IDs
+	categories := s.GetDefaultCategories()
 
 	// Get custom categories for this wallet
 	filter := bson.M{"wallet_id": walletID}
@@ -87,6 +107,14 @@ func (s *CategoryService) GetByID(ctx context.Context, walletID, id primitive.Ob
 	err = s.db.Categories.FindOne(ctx, filter).Decode(&category)
 	if err == nil {
 		return &category, nil
+	}
+
+	// Check default categories (in-memory)
+	defaultCategories := s.GetDefaultCategories()
+	for _, cat := range defaultCategories {
+		if cat.ID == id {
+			return &cat, nil
+		}
 	}
 
 	return nil, errors.New("category not found")

@@ -7,12 +7,12 @@ import (
 )
 
 type User struct {
-	ID         primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
-	WalletID   primitive.ObjectID `bson:"wallet_id" json:"wallet_id"`
-	Name       string             `bson:"name" json:"name"`
-	Email      string             `bson:"email" json:"email"`
-	PasswordHash string           `bson:"password_hash" json:"-"`
-	CreatedAt  time.Time          `bson:"created_at" json:"created_at"`
+	ID           primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
+	WalletID     primitive.ObjectID `bson:"wallet_id" json:"wallet_id"`
+	Name         string             `bson:"name" json:"name"`
+	Email        string             `bson:"email" json:"email"`
+	PasswordHash string             `bson:"password_hash" json:"-"`
+	CreatedAt    time.Time          `bson:"created_at" json:"created_at"`
 }
 
 type Wallet struct {
@@ -36,6 +36,7 @@ type Transaction struct {
 	WalletID     primitive.ObjectID `bson:"wallet_id" json:"wallet_id"`
 	UserID       primitive.ObjectID `bson:"user_id" json:"user_id"`
 	CategoryID   primitive.ObjectID `bson:"category_id" json:"category_id"`
+	Category     *Category          `bson:"category,omitempty" json:"category,omitempty"`
 	Amount       int64              `bson:"amount" json:"amount"` // In Rupiah (no decimals)
 	Type         TransactionType    `bson:"type" json:"type"`
 	Date         time.Time          `bson:"date" json:"date"`
@@ -53,13 +54,13 @@ const (
 )
 
 type Category struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
+	ID        primitive.ObjectID  `bson:"_id,omitempty" json:"_id,omitempty"`
 	WalletID  *primitive.ObjectID `bson:"wallet_id,omitempty" json:"wallet_id,omitempty"`
-	Name      string             `bson:"name" json:"name"`
-	Type      CategoryType       `bson:"type" json:"type"`
-	Icon      *string            `bson:"icon,omitempty" json:"icon,omitempty"`
-	Color     *string            `bson:"color,omitempty" json:"color,omitempty"`
-	IsDefault bool               `bson:"is_default" json:"is_default"`
+	Name      string              `bson:"name" json:"name"`
+	Type      CategoryType        `bson:"type" json:"type"`
+	Icon      *string             `bson:"icon,omitempty" json:"icon,omitempty"`
+	Color     *string             `bson:"color,omitempty" json:"color,omitempty"`
+	IsDefault bool                `bson:"is_default" json:"is_default"`
 }
 
 type BudgetPeriod string
@@ -81,13 +82,13 @@ type Budget struct {
 }
 
 type RecurringRule struct {
-	ID          primitive.ObjectID  `bson:"_id,omitempty" json:"_id,omitempty"`
-	WalletID    primitive.ObjectID  `bson:"wallet_id" json:"wallet_id"`
-	CategoryID  primitive.ObjectID  `bson:"category_id" json:"category_id"`
-	Amount      int64               `bson:"amount" json:"amount"`
-	Type        TransactionType     `bson:"type" json:"type"`
-	Note        *string             `bson:"note,omitempty" json:"note,omitempty"`
-	DayOfMonth  int                 `bson:"day_of_month" json:"day_of_month"`
-	IsActive    bool                `bson:"is_active" json:"is_active"`
-	LastRunAt   *time.Time          `bson:"last_run_at,omitempty" json:"last_run_at,omitempty"`
+	ID         primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
+	WalletID   primitive.ObjectID `bson:"wallet_id" json:"wallet_id"`
+	CategoryID primitive.ObjectID `bson:"category_id" json:"category_id"`
+	Amount     int64              `bson:"amount" json:"amount"`
+	Type       TransactionType    `bson:"type" json:"type"`
+	Note       *string            `bson:"note,omitempty" json:"note,omitempty"`
+	DayOfMonth int                `bson:"day_of_month" json:"day_of_month"`
+	IsActive   bool               `bson:"is_active" json:"is_active"`
+	LastRunAt  *time.Time         `bson:"last_run_at,omitempty" json:"last_run_at,omitempty"`
 }

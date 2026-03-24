@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/fintrack/app/internal/model"
+	"github.com/fintrack/app/internal/repository"
 	"github.com/fintrack/app/internal/service"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -13,11 +14,13 @@ import (
 
 type TransactionHandler struct {
 	transactionService *service.TransactionService
+	db                 *repository.Database
 }
 
-func NewTransactionHandler(transactionService *service.TransactionService) *TransactionHandler {
+func NewTransactionHandler(transactionService *service.TransactionService, db *repository.Database) *TransactionHandler {
 	return &TransactionHandler{
 		transactionService: transactionService,
+		db:                 db,
 	}
 }
 
@@ -109,6 +112,17 @@ func (h *TransactionHandler) GetTransactions(c *gin.Context) {
 			Error:   err.Error(),
 		})
 		return
+	}
+
+	// Populate categories for each transaction
+	categoryService := service.NewCategoryService(h.db)
+	for i := range transactions {
+		if !transactions[i].CategoryID.IsZero() {
+			category, err := categoryService.GetByID(c.Request.Context(), walletID, transactions[i].CategoryID)
+			if err == nil && category != nil {
+				transactions[i].Category = category
+			}
+		}
 	}
 
 	c.JSON(http.StatusOK, model.SuccessResponse{

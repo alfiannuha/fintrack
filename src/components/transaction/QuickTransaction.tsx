@@ -204,7 +204,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             </div>
 
             {/* Date & Note */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-3">
               {/* Date */}
               <div className="space-y-2">
                 <Label htmlFor="date" className="text-sm font-medium text-muted-foreground ml-1">Tanggal</Label>

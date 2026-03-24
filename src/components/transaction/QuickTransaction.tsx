@@ -104,9 +104,19 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
         <CardContent className="space-y-4">
           {/* Type Toggle */}
           <Tabs value={txType} onValueChange={(v) => setTxType(v as 'income' | 'expense')} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="expense">💸 Pengeluaran</TabsTrigger>
-              <TabsTrigger value="income">💰 Pemasukan</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 bg-muted p-1">
+              <TabsTrigger 
+                value="expense"
+                className="data-[state=active]:bg-red-100 data-[state=active]:text-red-700 data-[state=active]:shadow-sm"
+              >
+                💸 Pengeluaran
+              </TabsTrigger>
+              <TabsTrigger 
+                value="income"
+                className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700 data-[state=active]:shadow-sm"
+              >
+                💰 Pemasukan
+              </TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -131,18 +141,20 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             <Label>Kategori</Label>
             <div className="grid grid-cols-3 gap-2">
               {categories.map((category) => (
-                <Button
+                <button
                   key={category._id}
                   type="button"
-                  variant={formData.category_id === category._id ? 'default' : 'outline'}
-                  size="sm"
                   onClick={() => setFormData(prev => ({ ...prev, category_id: category._id }))}
-                  className="h-auto py-3 flex flex-col gap-1"
                   disabled={isLoading}
+                  className={`flex flex-col items-center justify-center gap-1 p-3 rounded-lg border-2 transition-all ${
+                    formData.category_id === category._id
+                      ? 'border-primary bg-primary/10 ring-2 ring-primary/20'
+                      : 'border-border hover:border-primary/50 hover:bg-muted'
+                  }`}
                 >
-                  <span className="text-xl">{category.icon || '📁'}</span>
-                  <span className="text-xs">{category.name}</span>
-                </Button>
+                  <span className="text-2xl">{category.icon || '📁'}</span>
+                  <span className="text-xs font-medium">{category.name}</span>
+                </button>
               ))}
             </div>
           </div>
@@ -173,15 +185,21 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
           </div>
 
           {/* Actions */}
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-3 pt-4">
             {onCancel && (
-              <Button type="button" variant="outline" onClick={onCancel} className="flex-1" disabled={isLoading}>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={onCancel} 
+                className="flex-1 h-12 text-base font-medium"
+                disabled={isLoading}
+              >
                 Batal
               </Button>
             )}
             <Button 
               type="submit" 
-              className="flex-1 h-12 text-lg font-semibold"
+              className="flex-1 h-12 text-base font-semibold"
               disabled={isLoading || !formData.amount || !formData.category_id}
             >
               {isLoading ? 'Menyimpan...' : `Simpan ${txType === 'expense' ? 'Pengeluaran' : 'Pemasukan'}`}

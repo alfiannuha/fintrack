@@ -46,8 +46,11 @@ func (s *CategoryService) GetDefaultCategories() []model.Category {
 }
 
 func (s *CategoryService) GetAll(ctx context.Context, walletID primitive.ObjectID) ([]model.Category, error) {
-	// Get default categories
+	// Get default categories with unique IDs
 	categories := s.GetDefaultCategories()
+	for i := range categories {
+		categories[i].ID = primitive.NewObjectID()
+	}
 
 	// Get custom categories for this wallet
 	filter := bson.M{"wallet_id": walletID}
@@ -116,8 +119,8 @@ func (s *CategoryService) Create(ctx context.Context, walletID primitive.ObjectI
 func (s *CategoryService) Update(ctx context.Context, walletID, id primitive.ObjectID, req model.CreateCategoryRequest) (*model.Category, error) {
 	// Check if category exists and is custom
 	filter := bson.M{
-		"_id":       id,
-		"wallet_id": walletID,
+		"_id":        id,
+		"wallet_id":  walletID,
 		"is_default": false,
 	}
 
@@ -159,8 +162,8 @@ func (s *CategoryService) Update(ctx context.Context, walletID, id primitive.Obj
 
 func (s *CategoryService) Delete(ctx context.Context, walletID, id primitive.ObjectID) error {
 	filter := bson.M{
-		"_id":       id,
-		"wallet_id": walletID,
+		"_id":        id,
+		"wallet_id":  walletID,
 		"is_default": false,
 	}
 

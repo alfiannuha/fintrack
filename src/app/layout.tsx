@@ -1,24 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
-  title: "FinTrack - Pencatatan Keuangan",
-  description: "Aplikasi pencatatan keuangan personal dengan shared wallet",
+  title: "FinTrack - Kelola Keuanganmu Dengan Bijak",
+  description: "Aplikasi pencatatan keuangan personal dengan shared wallet. Track income, expense, budget, dan insights keuanganmu.",
   manifest: "/manifest.json",
-  themeColor: "#000000",
+  themeColor: "#667eea",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -30,6 +27,7 @@ export const metadata: Metadata = {
   icons: {
     apple: "/icons/icon-192x192.png",
   },
+  keywords: ["finance", "money", "budget", "tracking", "indonesia", "pwa"],
 };
 
 export const viewport: Viewport = {
@@ -37,7 +35,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#000000",
+  themeColor: "#667eea",
 };
 
 export default function RootLayout({
@@ -48,12 +46,12 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className={`${poppins.className} min-h-full flex flex-col bg-gradient-to-br from-purple-50 via-white to-blue-50`}>
         <AuthProvider>
           {children}
-          <Toaster position="top-center" richColors />
+          <Toaster position="top-center" richColors closeButton />
         </AuthProvider>
       </body>
     </html>

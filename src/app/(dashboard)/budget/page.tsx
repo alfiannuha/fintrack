@@ -15,6 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from '@/components/ui/dialog';
 import { api } from '@/lib/api';
 import { formatCurrency, getCurrentMonth, getMonthYear } from '@/lib/utils';
@@ -134,21 +135,29 @@ export default function BudgetPage() {
                   <span className="mr-1">+</span> Budget Baru
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle>Buat Budget Baru</DialogTitle>
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                      <span className="text-xl">🎯</span>
+                    </div>
+                    <div>
+                      <DialogTitle>Buat Budget Baru</DialogTitle>
+                      <p className="text-sm text-muted-foreground font-normal">Atur budget untuk kategori tertentu</p>
+                    </div>
+                  </div>
                 </DialogHeader>
-                <form onSubmit={handleCreateBudget} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Kategori</Label>
+                <form onSubmit={handleCreateBudget} className="space-y-5">
+                  <div className="space-y-3">
+                    <Label htmlFor="category" className="text-sm font-medium ml-1">Kategori</Label>
                     <select
                       id="category"
                       value={newBudget.category_id}
                       onChange={(e) => setNewBudget(prev => ({ ...prev, category_id: e.target.value }))}
-                      className="w-full p-2.5 border rounded-lg bg-background text-sm"
+                      className="w-full p-3 border rounded-lg bg-background text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
                       required
                     >
-                      <option value="">Pilih kategori</option>
+                      <option value="">Pilih kategori...</option>
                       {categories.map((cat) => (
                         <option key={cat._id} value={cat._id}>
                           {cat.icon} {cat.name}
@@ -156,30 +165,35 @@ export default function BudgetPage() {
                       ))}
                     </select>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="amount">Budget (Rp)</Label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">Rp</span>
-                      <Input
-                        id="amount"
-                        type="text"
-                        inputMode="numeric"
-                        placeholder="0"
-                        value={newBudget.amount}
-                        onChange={handleAmountChange}
-                        className="text-lg font-bold pl-10"
-                        required
-                      />
+                  <div className="space-y-3">
+                    <Label htmlFor="amount" className="text-sm font-medium ml-1">Jumlah Budget</Label>
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-amber-500/20 rounded-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+                      <div className="relative bg-slate-50 dark:bg-slate-800/50 rounded-lg border-2 border-transparent group-focus-within:border-orange-500/30 transition-all duration-300">
+                        <div className="flex items-center px-4">
+                          <span className="text-lg font-bold text-orange-600">Rp</span>
+                          <Input
+                            id="amount"
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="0"
+                            value={newBudget.amount}
+                            onChange={handleAmountChange}
+                            className="text-xl font-bold border-0 bg-transparent focus-visible:ring-0 pl-3"
+                            required
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex gap-3 pt-2">
+                  <DialogFooter className="gap-3">
                     <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="flex-1 rounded-lg">
                       Batal
                     </Button>
-                    <Button type="submit" className="flex-1 rounded-lg bg-orange-500 hover:bg-orange-600">
-                      Simpan
+                    <Button type="submit" className="flex-1 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 font-semibold">
+                      💾 Simpan
                     </Button>
-                  </div>
+                  </DialogFooter>
                 </form>
               </DialogContent>
             </Dialog>

@@ -66,7 +66,7 @@ func main() {
 	authHandler := handler.NewAuthHandler(authService)
 	transactionHandler := handler.NewTransactionHandler(transactionService, db)
 	categoryHandler := handler.NewCategoryHandler(categoryService)
-	budgetHandler := handler.NewBudgetHandler(budgetService)
+	budgetHandler := handler.NewBudgetHandler(budgetService, db)
 	dashboardHandler := handler.NewDashboardHandler(transactionService, categoryService, budgetService)
 	recurringHandler := handler.NewRecurringHandler(recurringService)
 	insightsHandler := handler.NewInsightsHandler(insightsService)

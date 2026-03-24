@@ -73,6 +73,7 @@ type Budget struct {
 	ID         primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
 	WalletID   primitive.ObjectID `bson:"wallet_id" json:"wallet_id"`
 	CategoryID primitive.ObjectID `bson:"category_id" json:"category_id"`
+	Category   *Category          `bson:"category,omitempty" json:"category,omitempty"`
 	Amount     int64              `bson:"amount" json:"amount"`
 	Period     BudgetPeriod       `bson:"period" json:"period"`
 	Month      string             `bson:"month" json:"month"` // Format: "2025-01"

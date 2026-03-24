@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/fintrack/app/internal/model"
+	"github.com/fintrack/app/internal/repository"
 	"github.com/fintrack/app/internal/service"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -11,11 +12,13 @@ import (
 
 type BudgetHandler struct {
 	budgetService *service.BudgetService
+	db            *repository.Database
 }
 
-func NewBudgetHandler(budgetService *service.BudgetService) *BudgetHandler {
+func NewBudgetHandler(budgetService *service.BudgetService, db *repository.Database) *BudgetHandler {
 	return &BudgetHandler{
 		budgetService: budgetService,
+		db:            db,
 	}
 }
 
@@ -40,6 +43,17 @@ func (h *BudgetHandler) GetBudgets(c *gin.Context) {
 			Error:   err.Error(),
 		})
 		return
+	}
+
+	// Populate categories for each budget
+	categoryService := service.NewCategoryService(h.db)
+	for i := range budgets {
+		if !budgets[i].CategoryID.IsZero() {
+			category, err := categoryService.GetByID(c.Request.Context(), walletID, budgets[i].CategoryID)
+			if err == nil && category != nil {
+				budgets[i].Category = category
+			}
+		}
 	}
 
 	c.JSON(http.StatusOK, model.SuccessResponse{

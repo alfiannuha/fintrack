@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
@@ -20,7 +22,6 @@ export default function LoginPage() {
     password: '',
   });
 
-  // Redirect if already authenticated
   React.useEffect(() => {
     if (isAuthenticated) {
       router.push('/dashboard');
@@ -34,8 +35,6 @@ export default function LoginPage() {
     try {
       await login(formData);
       toast.success('🎉 Login berhasil! Selamat datang kembali!');
-      
-      // Wait a bit for auth state to update
       setTimeout(() => {
         router.push('/dashboard');
       }, 500);
@@ -50,9 +49,14 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 p-4">
       <Card className="w-full max-w-md shadow-2xl border-slate-200 animate-slide-up">
-        <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <span className="text-3xl font-bold text-white">F</span>
+        <CardHeader className="space-y-4 text-center">
+          <div className="flex justify-center">
+            <Avatar className="h-20 w-20">
+              <AvatarImage src="https://avatar.vercel.sh/fintrack" />
+              <AvatarFallback className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white text-3xl font-bold">
+                F
+              </AvatarFallback>
+            </Avatar>
           </div>
           <div className="space-y-2">
             <CardTitle className="text-3xl font-bold">Selamat Datang Kembali</CardTitle>
@@ -105,7 +109,7 @@ export default function LoginPage() {
           <CardFooter className="flex flex-col space-y-4 pt-2">
             <Button 
               type="submit" 
-              className="w-full h-12 text-base font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all"
+              className="w-full h-12 text-base font-medium shadow-md hover:shadow-lg transition-all"
               disabled={isLoading}
             >
               {isLoading ? (

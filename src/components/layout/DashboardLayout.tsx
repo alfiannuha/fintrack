@@ -16,7 +16,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { href: '/dashboard', label: 'Dashboard', icon: '📊' },
     { href: '/transactions', label: 'Transaksi', icon: '💳' },
     { href: '/budget', label: 'Budget', icon: '🎯' },
-    { href: '/recurring', label: 'Berulang', icon: '🔄' },
     { href: '/settings', label: 'Pengaturan', icon: '⚙️' },
   ];
 
@@ -24,49 +23,94 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="min-h-screen bg-background">
       {/* Mobile Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 md:hidden z-50">
-        <div className="relative h-16">
+        <div className="relative h-14">
           {/* Active indicator background */}
-          <div className="absolute inset-x-0 top-1.5 h-[calc(100%-12px)] mx-3 rounded-2xl bg-slate-100 dark:bg-slate-800 transition-all duration-300" />
+          <div className="absolute inset-x-0 top-1 h-[calc(100%-8px)] mx-3 rounded-2xl bg-slate-100 dark:bg-slate-800 transition-all duration-300" />
           
-          <div className="relative flex h-full items-end justify-around pb-1">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="relative flex flex-col items-center justify-center w-14 h-14 -mb-0.5"
-                >
-                  {/* Active indicator */}
-                  <div 
-                    className={cn(
-                      "absolute top-1 w-10 h-10 rounded-2xl transition-all duration-300",
-                      isActive 
-                        ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
-                        : 'bg-transparent'
-                    )}
-                  />
-                  <span 
-                    className={cn(
-                      "relative text-xl transition-all duration-200 z-10",
-                      isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'
-                    )}
-                  >
-                    {item.icon}
-                  </span>
-                </Link>
-              );
-            })}
-            
-            {/* Floating Action Button */}
+          <div className="relative flex h-full items-center justify-between px-2">
+            {/* Left side items */}
+            <div className="flex items-center justify-center w-14 h-14">
+              <Link
+                href="/dashboard"
+                className="relative flex flex-col items-center justify-center w-full h-full"
+              >
+                <div className={cn(
+                  "absolute w-10 h-10 rounded-2xl transition-all duration-300",
+                  pathname === '/dashboard' 
+                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                    : 'bg-transparent'
+                )} />
+                <span className={cn(
+                  "relative text-xl transition-all duration-200 z-10",
+                  pathname === '/dashboard' ? 'text-white' : 'text-slate-400 dark:text-slate-500'
+                )}>📊</span>
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-center w-14 h-14">
+              <Link
+                href="/transactions"
+                className="relative flex flex-col items-center justify-center w-full h-full"
+              >
+                <div className={cn(
+                  "absolute w-10 h-10 rounded-2xl transition-all duration-300",
+                  pathname === '/transactions' 
+                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                    : 'bg-transparent'
+                )} />
+                <span className={cn(
+                  "relative text-xl transition-all duration-200 z-10",
+                  pathname === '/transactions' ? 'text-white' : 'text-slate-400 dark:text-slate-500'
+                )}>💳</span>
+              </Link>
+            </div>
+
+            {/* FAB - Center */}
             <Link
               href="/transactions/new"
-              className="relative flex items-center justify-center w-14 h-14 -mb-3"
+              className="relative flex items-center justify-center -mt-8"
             >
-              <div className="absolute w-14 h-14 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/40 flex items-center justify-center -mt-2">
-                <span className="text-2xl text-white font-bold">+</span>
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/40 flex items-center justify-center border-4 border-white dark:border-slate-950">
+                <span className="text-3xl text-white font-bold">+</span>
               </div>
             </Link>
+
+            {/* Right side items */}
+            <div className="flex items-center justify-center w-14 h-14">
+              <Link
+                href="/budget"
+                className="relative flex flex-col items-center justify-center w-full h-full"
+              >
+                <div className={cn(
+                  "absolute w-10 h-10 rounded-2xl transition-all duration-300",
+                  pathname === '/budget' 
+                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                    : 'bg-transparent'
+                )} />
+                <span className={cn(
+                  "relative text-xl transition-all duration-200 z-10",
+                  pathname === '/budget' ? 'text-white' : 'text-slate-400 dark:text-slate-500'
+                )}>🎯</span>
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-center w-14 h-14">
+              <Link
+                href="/settings"
+                className="relative flex flex-col items-center justify-center w-full h-full"
+              >
+                <div className={cn(
+                  "absolute w-10 h-10 rounded-2xl transition-all duration-300",
+                  pathname === '/settings' 
+                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                    : 'bg-transparent'
+                )} />
+                <span className={cn(
+                  "relative text-xl transition-all duration-200 z-10",
+                  pathname === '/settings' ? 'text-white' : 'text-slate-400 dark:text-slate-500'
+                )}>⚙️</span>
+              </Link>
+            </div>
           </div>
         </div>
       </nav>

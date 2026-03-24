@@ -17,7 +17,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { href: '/transactions', label: 'Transaksi', icon: '💳' },
     { href: '/budget', label: 'Budget', icon: '🎯' },
     { href: '/recurring', label: 'Berulang', icon: '🔄' },
-    { href: '/report', label: 'Laporan', icon: '📈' },
     { href: '/settings', label: 'Pengaturan', icon: '⚙️' },
   ];
 
@@ -36,7 +35,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="relative flex flex-col items-center justify-center w-16 h-14 -mb-0.5"
+                  className="relative flex flex-col items-center justify-center w-14 h-14 -mb-0.5"
                 >
                   {/* Active indicator */}
                   <div 
@@ -55,17 +54,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   >
                     {item.icon}
                   </span>
-                  <span 
-                    className={cn(
-                      "relative text-[10px] font-medium transition-all duration-200 z-10 -mt-0.5",
-                      isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'
-                    )}
-                  >
-                    {item.label}
-                  </span>
                 </Link>
               );
             })}
+            
+            {/* Floating Action Button */}
+            <Link
+              href="/transactions/new"
+              className="relative flex items-center justify-center w-14 h-14 -mb-3"
+            >
+              <div className="absolute w-14 h-14 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/40 flex items-center justify-center -mt-2">
+                <span className="text-2xl text-white font-bold">+</span>
+              </div>
+            </Link>
           </div>
         </div>
       </nav>

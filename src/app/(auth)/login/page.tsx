@@ -12,13 +12,20 @@ import { toast } from 'sonner';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  // Redirect if already authenticated
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +34,11 @@ export default function LoginPage() {
     try {
       await login(formData);
       toast.success('🎉 Login berhasil! Selamat datang kembali!');
-      router.push('/dashboard');
+      
+      // Wait a bit for auth state to update
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 500);
     } catch (error) {
       console.error('Login error:', error);
       toast.error(error instanceof Error ? error.message : 'Login gagal');
@@ -64,6 +75,7 @@ export default function LoginPage() {
                 required
                 disabled={isLoading}
                 className="h-11"
+                autoComplete="email"
               />
             </div>
             
@@ -78,6 +90,7 @@ export default function LoginPage() {
                 required
                 disabled={isLoading}
                 className="h-11"
+                autoComplete="current-password"
               />
               <button
                 type="button"

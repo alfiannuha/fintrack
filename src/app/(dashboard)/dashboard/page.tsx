@@ -89,8 +89,8 @@ export default function DashboardPage() {
     return null;
   }
 
-  const totalBudget = categoryData.reduce((sum, c) => sum + (c.amount || 0), 0);
-  const spentBudget = categoryData.reduce((sum, c) => sum + (c.amount || 0), 0);
+  const totalBudget = categoryData ? categoryData.reduce((sum, c) => sum + (c.amount || 0), 0) : 0;
+  const spentBudget = categoryData ? categoryData.reduce((sum, c) => sum + (c.amount || 0), 0) : 0;
   const budgetProgress = totalBudget > 0 ? (spentBudget / totalBudget) * 100 : 0;
 
   return (
@@ -205,7 +205,7 @@ export default function DashboardPage() {
                       <div className="space-y-4">
                         {categoryData.map((item, index) => {
                           const total = categoryData.reduce((sum, c) => sum + (c.amount || 0), 0);
-                          const percentage = total > 0 ? (item.amount / total) * 100 : 0;
+                          const percentage = total > 0 ? ((item.amount || 0) / total) * 100 : 0;
                           
                           return (
                             <div key={index} className="space-y-2">

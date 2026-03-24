@@ -96,29 +96,29 @@ export default function DashboardPage() {
     <DashboardLayout>
       <div className="space-y-6 animate-fade-in">
         {/* Header Card */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-6 text-white shadow-xl">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-4 md:p-6 text-white shadow-xl">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MzUgMC0xMC00LjQ2NS0xMC0xMHM0LjQ2NS0xMCAxMC0xMCAxMCA0LjQ2NSAxMCAxMC00LjQ2NSAxMC0xMCAxMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
-          <div className="relative flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Avatar className="h-14 w-14 border-2 border-white/50 shadow-lg">
+          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3 md:gap-4">
+              <Avatar className="h-10 w-10 md:h-14 md:w-14 border-2 border-white/50 shadow-lg">
                 <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-                <AvatarFallback className="bg-white/20 text-white text-xl font-bold">
+                <AvatarFallback className="bg-white/20 text-white text-lg md:text-xl font-bold">
                   {user.name?.charAt(0) || 'U'}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Halo, {user.name}!</h1>
-                <p className="text-white/80 text-sm flex items-center gap-2">
+                <h1 className="text-lg md:text-2xl font-bold tracking-tight">Halo, {user.name}!</h1>
+                <p className="text-white/80 text-xs md:text-sm flex items-center gap-2">
                   <span className="bg-white/20 px-2 py-0.5 rounded-md font-mono text-xs">{wallet.code}</span>
-                  Wallet Anda
+                  <span className="hidden md:inline">Wallet Anda</span>
                 </p>
               </div>
             </div>
             <Button 
               onClick={() => router.push('/transactions/new')} 
-              className="bg-white text-purple-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="w-full md:w-auto bg-white text-purple-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
             >
-              <span className="mr-1">+</span> Transaksi Baru
+              <span className="mr-1">+</span> <span className="md:hidden"> Baru</span><span className="hidden md:inline">Transaksi Baru</span>
             </Button>
           </div>
         </div>

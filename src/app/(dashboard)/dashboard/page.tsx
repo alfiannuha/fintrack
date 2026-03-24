@@ -157,7 +157,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Financial Insights */}
-        {insights.length > 0 && (
+        {insights && insights.length > 0 && (
           <div className="space-y-4">
             <h2 className="text-xl font-bold">💡 Insights Keuangan</h2>
             <div className="grid gap-4 md:grid-cols-2">
@@ -199,29 +199,34 @@ export default function DashboardPage() {
                 <div className="h-48 flex items-center justify-center text-muted-foreground">
                   Loading...
                 </div>
-              ) : categoryData.length === 0 ? (
+              ) : !categoryData || categoryData.length === 0 ? (
                 <div className="h-48 flex items-center justify-center text-muted-foreground">
                   Belum ada data pengeluaran
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {categoryData.slice(0, 5).map((item, index) => (
-                    <div key={index} className="space-y-1">
-                      <div className="flex justify-between text-sm">
-                        <span>{item.category}</span>
-                        <span className="font-medium">{formatCurrency(item.amount)}</span>
+                  {categoryData.slice(0, 5).map((item, index) => {
+                    const total = categoryData.reduce((sum, c) => sum + (c.amount || 0), 0);
+                    const percentage = total > 0 ? (item.amount / total) * 100 : 0;
+                    
+                    return (
+                      <div key={index} className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span>{item.category}</span>
+                          <span className="font-medium">{formatCurrency(item.amount)}</span>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-primary transition-all"
+                            style={{
+                              width: `${percentage}%`,
+                              backgroundColor: item.color || 'hsl(var(--primary))',
+                            }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-2 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary transition-all"
-                          style={{
-                            width: `${categoryData.length > 0 ? (item.amount / categoryData.reduce((sum, c) => sum + c.amount, 0)) * 100 : 0}%`,
-                            backgroundColor: item.color || 'hsl(var(--primary))',
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </CardContent>

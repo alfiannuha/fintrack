@@ -79,22 +79,64 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(async (input: LoginInput) => {
     const response = await api.login(input);
+    console.log('Login response:', response);
+    
     if (response.success) {
-      saveAuth(response.data, response.data.user, response.data.wallet);
+      // Backend returns: { success, data: { tokens }, user, wallet }
+      const tokens = response.data;
+      const user = (response as any).user;
+      const wallet = (response as any).wallet;
+      
+      console.log('Extracted - User:', user, 'Wallet:', wallet);
+      
+      if (!user || !wallet) {
+        console.error('Login response missing user or wallet:', response);
+        throw new Error('Login response incomplete');
+      }
+      
+      saveAuth(tokens, user, wallet);
+    } else {
+      throw new Error(response.message || 'Login failed');
     }
   }, [saveAuth]);
 
   const register = useCallback(async (input: RegisterInput) => {
     const response = await api.register(input);
+    console.log('Register response:', response);
+    
     if (response.success) {
-      saveAuth(response.data, response.data.user, response.data.wallet);
+      const tokens = response.data;
+      const user = (response as any).user;
+      const wallet = (response as any).wallet;
+      
+      if (!user || !wallet) {
+        console.error('Register response missing user or wallet:', response);
+        throw new Error('Register response incomplete');
+      }
+      
+      saveAuth(tokens, user, wallet);
+    } else {
+      throw new Error(response.message || 'Register failed');
     }
   }, [saveAuth]);
 
   const join = useCallback(async (input: JoinInput) => {
     const response = await api.join(input);
+    console.log('Join response:', response);
+    
     if (response.success) {
-      saveAuth(response.data, response.data.user, response.data.wallet);
+      const tokens = response.data;
+      const user = (response as any).user;
+      const wallet = (response as any).wallet;
+      
+      if (!user || !wallet) {
+        console.error('Join response missing user or wallet:', response);
+        throw new Error('Join response incomplete');
+      }
+      
+      saveAuth(tokens, user, wallet);
+    } else {
+      throw new Error(response.message || 'Join failed');
     }
   }, [saveAuth]);
 

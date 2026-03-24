@@ -100,128 +100,163 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
   const isSelected = (categoryId: string) => formData.category_id === categoryId;
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-center text-xl font-bold">
-          {txType === 'expense' ? '💸 Catat Pengeluaran' : '💰 Catat Pemasukan'}
-        </CardTitle>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-5">
-          {/* Type Toggle */}
-          <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-muted p-1 rounded-lg">
-              <TabsTrigger 
-                value="expense"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white data-[state=active]:shadow-sm font-medium py-2"
-              >
-                💸 Pengeluaran
-              </TabsTrigger>
-              <TabsTrigger 
-                value="income"
-                className="data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-sm font-medium py-2"
-              >
-                💰 Pemasukan
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          {/* Amount Input */}
-          <div className="space-y-2">
-            <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground">Jumlah (Rp)</Label>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">Rp</span>
-              <Input
-                id="amount"
-                type="text"
-                inputMode="numeric"
-                placeholder="0"
-                value={formData.amount}
-                onChange={handleAmountChange}
-                className="text-2xl font-bold text-right h-16 pl-12 pr-4"
-                autoFocus
-                disabled={isLoading}
-              />
-            </div>
-          </div>
-
-          {/* Category Selection */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium text-muted-foreground">Pilih Kategori</Label>
-            <div className="grid grid-cols-3 gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category._id}
-                  type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, category_id: category._id }))}
-                  disabled={isLoading}
-                  className={`flex flex-row items-center justify-center gap-2 py-3 px-2 rounded-lg border transition-all duration-200 ${
-                    isSelected(category._id)
-                      ? txType === 'expense' 
-                        ? 'bg-red-50 text-red-700 border-red-400 shadow-sm'
-                        : 'bg-green-50 text-green-700 border-green-400 shadow-sm'
-                      : 'bg-background text-muted-foreground border-border hover:border-primary/50 hover:bg-muted/50'
-                  }`}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md mx-auto shadow-2xl border-0 overflow-hidden">
+        {/* Header Gradient */}
+        <div className={`h-2 ${
+          txType === 'expense' 
+            ? 'bg-gradient-to-r from-red-400 to-red-600' 
+            : 'bg-gradient-to-r from-green-400 to-green-600'
+        }`} />
+        
+        <CardHeader className="pb-4 pt-6">
+          <CardTitle className="text-center text-2xl font-bold">
+            {txType === 'expense' ? '💸 Catat Pengeluaran' : '💰 Catat Pemasukan'}
+          </CardTitle>
+          <p className="text-center text-sm text-muted-foreground mt-1">
+            Tambahkan transaksi baru dengan cepat
+          </p>
+        </CardHeader>
+        
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-5 px-6 pb-6">
+            {/* Type Toggle */}
+            <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                <TabsTrigger 
+                  value="expense"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-2.5 rounded-lg transition-all duration-200"
                 >
-                  <span className="text-lg">{category.icon || '📁'}</span>
-                  <span className="text-xs font-medium truncate">{category.name}</span>
-                </button>
-              ))}
+                  <span className="mr-1">💸</span> Pengeluaran
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="income"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-2.5 rounded-lg transition-all duration-200"
+                >
+                  <span className="mr-1">💰</span> Pemasukan
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            {/* Amount Input */}
+            <div className="space-y-2">
+              <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground ml-1">Jumlah</Label>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-green-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+                <div className="relative bg-slate-50 dark:bg-slate-800/50 rounded-xl border-2 border-transparent group-focus-within:border-primary/30 transition-all duration-300">
+                  <div className="flex items-center px-4">
+                    <span className={`text-2xl font-bold ${txType === 'expense' ? 'text-red-500' : 'text-green-500'}`}>
+                      Rp
+                    </span>
+                    <Input
+                      id="amount"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="0"
+                      value={formData.amount}
+                      onChange={handleAmountChange}
+                      className="text-3xl font-bold text-right h-16 border-0 bg-transparent focus-visible:ring-0 pl-3"
+                      autoFocus
+                      disabled={isLoading}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Date */}
-          <div className="space-y-2">
-            <Label htmlFor="date" className="text-sm font-medium text-muted-foreground">Tanggal</Label>
-            <Input
-              id="date"
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-              disabled={isLoading}
-              className="h-11"
-            />
-          </div>
+            {/* Category Selection */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-muted-foreground ml-1">Kategori</Label>
+              <div className="grid grid-cols-4 gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category._id}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, category_id: category._id }))}
+                    disabled={isLoading}
+                    className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl border-2 transition-all duration-200 hover:scale-105 ${
+                      isSelected(category._id)
+                        ? txType === 'expense' 
+                          ? 'bg-red-50 dark:bg-red-900/30 text-red-600 border-red-400 shadow-md'
+                          : 'bg-green-50 dark:bg-green-900/30 text-green-600 border-green-400 shadow-md'
+                        : 'bg-white dark:bg-slate-800 text-muted-foreground border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                    }`}
+                  >
+                    <span className="text-2xl">{category.icon || '📁'}</span>
+                    <span className="text-[10px] font-semibold truncate w-full text-center">{category.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          {/* Note */}
-          <div className="space-y-2">
-            <Label htmlFor="note" className="text-sm font-medium text-muted-foreground">Catatan</Label>
-            <Input
-              id="note"
-              type="text"
-              placeholder="Opsional"
-              value={formData.note}
-              onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
-              disabled={isLoading}
-              className="h-11"
-            />
-          </div>
+            {/* Date & Note Row */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Date */}
+              <div className="space-y-2">
+                <Label htmlFor="date" className="text-sm font-medium text-muted-foreground ml-1">Tanggal</Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                  disabled={isLoading}
+                  className="h-11 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
+                />
+              </div>
 
-          {/* Actions */}
-          <div className="flex gap-3 pt-2">
-            {onCancel && (
+              {/* Note */}
+              <div className="space-y-2">
+                <Label htmlFor="note" className="text-sm font-medium text-muted-foreground ml-1">Catatan</Label>
+                <Input
+                  id="note"
+                  type="text"
+                  placeholder="Opsional"
+                  value={formData.note}
+                  onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
+                  disabled={isLoading}
+                  className="h-11 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
+                />
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-3 pt-2">
+              {onCancel && (
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={onCancel} 
+                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200"
+                  disabled={isLoading}
+                >
+                  Batal
+                </Button>
+              )}
               <Button 
-                type="button" 
-                variant="outline" 
-                onClick={onCancel} 
-                className="flex-1 h-12 text-base font-medium rounded-lg"
-                disabled={isLoading}
+                type="submit" 
+                className={`flex-1 h-12 text-base font-bold rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] ${
+                  txType === 'expense' 
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700' 
+                    : 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
+                }`}
+                disabled={isLoading || !formData.amount || !formData.category_id}
               >
-                Batal
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Menyimpan...
+                  </span>
+                ) : (
+                  `💾 Simpan`
+                )}
               </Button>
-            )}
-            <Button 
-              type="submit" 
-              className={`flex-1 h-12 text-base font-semibold rounded-lg ${
-                txType === 'expense' ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
-              }`}
-              disabled={isLoading || !formData.amount || !formData.category_id}
-            >
-              {isLoading ? 'Menyimpan...' : `Simpan`}
-            </Button>
-          </div>
-        </CardContent>
-      </form>
-    </Card>
+            </div>
+          </CardContent>
+        </form>
+      </Card>
+    </div>
   );
 }

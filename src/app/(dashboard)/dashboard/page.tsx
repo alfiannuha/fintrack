@@ -10,7 +10,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { api } from '@/lib/api';
 import { formatCurrency, getMonthYear, getCurrentMonth, getPreviousMonth, getNextMonth } from '@/lib/utils';
@@ -96,50 +95,56 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-12 w-12">
-              <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-              <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                {user.name?.charAt(0) || 'U'}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-              <p className="text-muted-foreground text-sm">
-                Halo, {user.name} • <span className="font-mono">{wallet.code}</span>
-              </p>
+        {/* Header Card */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-6 text-white shadow-xl">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MzUgMC0xMC00LjQ2NS0xMC0xMHM0LjQ2NS0xMCAxMC0xMCAxMCA0LjQ2NSAxMCAxMC00LjQ2NSAxMC0xMCAxMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
+          <div className="relative flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Avatar className="h-14 w-14 border-2 border-white/50 shadow-lg">
+                <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
+                <AvatarFallback className="bg-white/20 text-white text-xl font-bold">
+                  {user.name?.charAt(0) || 'U'}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Halo, {user.name}!</h1>
+                <p className="text-white/80 text-sm flex items-center gap-2">
+                  <span className="bg-white/20 px-2 py-0.5 rounded-md font-mono text-xs">{wallet.code}</span>
+                  Wallet Anda
+                </p>
+              </div>
             </div>
+            <Button 
+              onClick={() => router.push('/transactions/new')} 
+              className="bg-white text-purple-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all"
+            >
+              <span className="mr-1">+</span> Transaksi Baru
+            </Button>
           </div>
-          <Button onClick={() => router.push('/transactions/new')} className="gap-2">
-            <span>+</span> Transaksi Baru
-          </Button>
         </div>
 
-        <Separator />
-
         {/* Month Selector */}
-        <div className="flex items-center justify-center gap-4">
-          <Button variant="outline" size="sm" onClick={handlePreviousMonth}>
-            ← Previous
+        <div className="flex items-center justify-center gap-3">
+          <Button variant="outline" size="sm" onClick={handlePreviousMonth} className="rounded-full w-10 h-10 p-0">
+            ←
           </Button>
-          <Card className="w-[200px]">
-            <CardContent className="p-4 text-center">
-              <p className="text-sm font-medium">{getMonthYear(currentMonth)}</p>
-            </CardContent>
-          </Card>
-          <Button variant="outline" size="sm" onClick={handleNextMonth}>
-            Next →
+          <div className="bg-slate-100 dark:bg-slate-800 px-6 py-2 rounded-full">
+            <p className="text-sm font-semibold">{getMonthYear(currentMonth)}</p>
+          </div>
+          <Button variant="outline" size="sm" onClick={handleNextMonth} className="rounded-full w-10 h-10 p-0">
+            →
           </Button>
         </div>
 
         {/* Summary Cards */}
         <div className="grid gap-4 md:grid-cols-3">
-          <Card className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950">
+          <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="h-1.5 bg-gradient-to-r from-green-400 to-green-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pemasukan</CardTitle>
-              <span className="text-2xl">💰</span>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Pemasukan</CardTitle>
+              <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                <span className="text-xl">💰</span>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">
@@ -149,10 +154,13 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950">
+          <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="h-1.5 bg-gradient-to-r from-red-400 to-red-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pengeluaran</CardTitle>
-              <span className="text-2xl">💸</span>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Pengeluaran</CardTitle>
+              <div className="h-10 w-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <span className="text-xl">💸</span>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">
@@ -162,12 +170,15 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className={`border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950 ${
-            (summary?.net_balance || 0) < 0 ? 'border-orange-200 bg-orange-50' : ''
+          <Card className={`overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 ${
+            (summary?.net_balance || 0) < 0 ? '' : ''
           }`}>
+            <div className={`h-1.5 bg-gradient-to-r ${(summary?.net_balance || 0) >= 0 ? 'from-blue-400 to-blue-600' : 'from-orange-400 to-orange-600'}`} />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Saldo</CardTitle>
-              <span className="text-2xl">💵</span>
+              <CardTitle className="text-sm font-medium text-muted-foreground">Saldo</CardTitle>
+              <div className={`h-10 w-10 rounded-full flex items-center justify-center ${(summary?.net_balance || 0) >= 0 ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
+                <span className="text-xl">💵</span>
+              </div>
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${
@@ -182,44 +193,43 @@ export default function DashboardPage() {
 
         {/* Tabs for Charts & Insights */}
         <Tabs defaultValue="charts" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-2 lg:w-[400px]">
-            <TabsTrigger value="charts" className="gap-2">
-              <span>📊</span>
-              <span>Charts</span>
+          <TabsList className="grid w-full grid-cols-2 lg:w-[400px] bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+            <TabsTrigger value="charts" className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-2">
+              <span>📊</span> Charts
             </TabsTrigger>
-            <TabsTrigger value="insights" className="gap-2">
-              <span>💡</span>
-              <span>Insights</span>
+            <TabsTrigger value="insights" className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-2">
+              <span>💡</span> Insights
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="charts" className="space-y-4 animate-fade-in">
             <div className="grid gap-4 md:grid-cols-2">
               {/* Category Breakdown */}
-              <Card>
+              <Card className="border-0 shadow-lg">
                 <CardHeader>
-                  <CardTitle>Pengeluaran per Kategori</CardTitle>
+                  <CardTitle className="text-lg">Pengeluaran per Kategori</CardTitle>
                   <CardDescription>Breakdown pengeluaran bulan ini</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {!categoryData || categoryData.length === 0 ? (
-                    <div className="h-48 flex items-center justify-center text-muted-foreground">
-                      Belum ada data pengeluaran
+                    <div className="h-48 flex flex-col items-center justify-center text-muted-foreground gap-2">
+                      <span className="text-4xl">📊</span>
+                      <p>Belum ada data pengeluaran</p>
                     </div>
                   ) : (
-                    <ScrollArea className="h-[300px] pr-4">
-                      <div className="space-y-4">
+                    <ScrollArea className="h-[280px] pr-4">
+                      <div className="space-y-3">
                         {categoryData.map((item, index) => {
                           const total = categoryData.reduce((sum, c) => sum + (c.amount || 0), 0);
                           const percentage = total > 0 ? ((item.amount || 0) / total) * 100 : 0;
                           
                           return (
-                            <div key={index} className="space-y-2">
-                              <div className="flex justify-between text-sm">
-                                <span className="font-medium">{item.category}</span>
-                                <span className="text-muted-foreground">{formatCurrency(item.amount)}</span>
+                            <div key={index} className="space-y-1.5 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                              <div className="flex justify-between items-center">
+                                <span className="font-medium text-sm">{item.category}</span>
+                                <span className="text-sm font-semibold">{formatCurrency(item.amount)}</span>
                               </div>
-                              <Progress value={percentage} className="h-2" />
+                              <Progress value={percentage} className="h-2 bg-slate-200 dark:bg-slate-700" />
                               <p className="text-xs text-muted-foreground text-right">
                                 {percentage.toFixed(1)}%
                               </p>
@@ -233,30 +243,30 @@ export default function DashboardPage() {
               </Card>
 
               {/* Budget Overview */}
-              <Card>
+              <Card className="border-0 shadow-lg">
                 <CardHeader>
-                  <CardTitle>Budget Overview</CardTitle>
+                  <CardTitle className="text-lg">Budget Overview</CardTitle>
                   <CardDescription>Progress penggunaan budget</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="font-medium">Total Budget Used</span>
-                      <span className="text-muted-foreground">{budgetProgress.toFixed(1)}%</span>
+                      <span className="font-medium">Total Pengeluaran</span>
+                      <span className="text-muted-foreground font-medium">{budgetProgress.toFixed(1)}%</span>
                     </div>
-                    <Progress value={budgetProgress} className="h-3" />
+                    <Progress value={budgetProgress} className="h-3 bg-slate-200 dark:bg-slate-700" />
                   </div>
                   <Separator />
                   <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-xs text-muted-foreground">Spent</p>
-                      <p className="text-lg font-semibold text-red-600">
+                    <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/30 text-center">
+                      <p className="text-xs text-muted-foreground">Terpakai</p>
+                      <p className="text-lg font-bold text-red-600">
                         {formatCurrency(spentBudget)}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Remaining</p>
-                      <p className="text-lg font-semibold text-green-600">
+                    <div className="p-4 rounded-xl bg-green-50 dark:bg-green-950/30 text-center">
+                      <p className="text-xs text-muted-foreground">Sisa</p>
+                      <p className="text-lg font-bold text-green-600">
                         {formatCurrency(Math.max(0, totalBudget - spentBudget))}
                       </p>
                     </div>
@@ -268,33 +278,48 @@ export default function DashboardPage() {
 
           <TabsContent value="insights" className="space-y-4 animate-fade-in">
             {!insights || insights.length === 0 ? (
-              <Card>
-                <CardContent className="py-8 text-center text-muted-foreground">
-                  Belum ada insights untuk bulan ini
+              <Card className="border-0 shadow-lg">
+                <CardContent className="py-12 flex flex-col items-center gap-3 text-center">
+                  <span className="text-5xl">💡</span>
+                  <p className="text-muted-foreground">Belum ada insights untuk bulan ini</p>
+                  <p className="text-sm text-muted-foreground">Insights akan muncul setelah ada transaksi yang cukup</p>
                 </CardContent>
               </Card>
             ) : (
               <div className="grid gap-4 md:grid-cols-2">
                 {insights.map((insight, index) => (
-                  <Card key={index} className={`border-l-4 ${
-                    insight.type === 'warning' ? 'border-l-yellow-500 bg-yellow-50 dark:bg-yellow-950' :
-                    insight.type === 'success' ? 'border-l-green-500 bg-green-50 dark:bg-green-950' :
-                    insight.type === 'anomaly' ? 'border-l-red-500 bg-red-50 dark:bg-red-950' :
-                    'border-l-blue-500 bg-blue-50 dark:bg-blue-950'
+                  <Card key={index} className={`border-0 shadow-lg hover:shadow-xl transition-all duration-300 ${
+                    insight.type === 'warning' ? 'border-l-4 border-l-yellow-500' :
+                    insight.type === 'success' ? 'border-l-4 border-l-green-500' :
+                    insight.type === 'anomaly' ? 'border-l-4 border-l-red-500' :
+                    'border-l-4 border-l-blue-500'
                   }`}>
                     <CardContent className="pt-6">
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl">
-                          {insight.type === 'warning' ? '⚠️' :
-                           insight.type === 'success' ? '✅' :
-                           insight.type === 'anomaly' ? '🚨' : 'ℹ️'}
-                        </span>
+                      <div className="flex items-start gap-4">
+                        <div className={`h-12 w-12 rounded-full flex items-center justify-center flex-shrink-0 ${
+                          insight.type === 'warning' ? 'bg-yellow-100 dark:bg-yellow-900/30' :
+                          insight.type === 'success' ? 'bg-green-100 dark:bg-green-900/30' :
+                          insight.type === 'anomaly' ? 'bg-red-100 dark:bg-red-900/30' :
+                          'bg-blue-100 dark:bg-blue-900/30'
+                        }`}>
+                          <span className="text-xl">
+                            {insight.type === 'warning' ? '⚠️' :
+                             insight.type === 'success' ? '✅' :
+                             insight.type === 'anomaly' ? '🚨' : 'ℹ️'}
+                          </span>
+                        </div>
                         <div className="flex-1 space-y-1">
-                          <p className="font-semibold">{insight.title}</p>
+                          <p className="font-semibold text-lg">{insight.title}</p>
                           <p className="text-sm text-muted-foreground">{insight.message}</p>
-                          <p className="text-xs text-muted-foreground">
-                            Severity: <span className="font-medium capitalize">{insight.severity}</span>
-                          </p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium capitalize ${
+                              insight.severity === 'high' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' :
+                              insight.severity === 'medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
+                              'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                            }`}>
+                              {insight.severity}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </CardContent>

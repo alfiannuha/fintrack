@@ -152,36 +152,6 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
               <span className="font-medium">Scan Struk / Upload</span>
             </button>
 
-            {/* Date & Note - Moved to top */}
-            <div className="grid grid-cols-2 gap-3">
-              {/* Date */}
-              <div className="space-y-2">
-                <Label htmlFor="date" className="text-sm font-medium text-muted-foreground ml-1">Tanggal</Label>
-                <Input
-                  id="date"
-                  type="date"
-                  value={formData.date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                  disabled={isLoading}
-                  className="h-11 rounded-lg bg-slate-50 border-slate-200"
-                />
-              </div>
-
-              {/* Note */}
-              <div className="space-y-2">
-                <Label htmlFor="note" className="text-sm font-medium text-muted-foreground ml-1">Catatan</Label>
-                <Input
-                  id="note"
-                  type="text"
-                  placeholder="Opsional"
-                  value={formData.note}
-                  onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
-                  disabled={isLoading}
-                  className="h-11 rounded-lg bg-slate-50 border-slate-200"
-                />
-              </div>
-            </div>
-
             {/* Amount Input */}
             <div className="space-y-2">
               <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground ml-1">Jumlah</Label>
@@ -230,6 +200,36 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                     <span className="text-[10px] font-semibold truncate w-full text-center">{category.name}</span>
                   </button>
                 ))}
+              </div>
+            </div>
+
+            {/* Date & Note */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Date */}
+              <div className="space-y-2">
+                <Label htmlFor="date" className="text-sm font-medium text-muted-foreground ml-1">Tanggal</Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                  disabled={isLoading}
+                  className="h-11 rounded-lg bg-slate-50 border-slate-200"
+                />
+              </div>
+
+              {/* Note */}
+              <div className="space-y-2">
+                <Label htmlFor="note" className="text-sm font-medium text-muted-foreground ml-1">Catatan</Label>
+                <Input
+                  id="note"
+                  type="text"
+                  placeholder="Opsional"
+                  value={formData.note}
+                  onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
+                  disabled={isLoading}
+                  className="h-11 rounded-lg bg-slate-50 border-slate-200"
+                />
               </div>
             </div>
 

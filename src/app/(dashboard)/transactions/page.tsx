@@ -104,22 +104,22 @@ export default function TransactionsPage() {
 
         {/* Filter Tabs */}
         <Tabs value={filterType} onValueChange={(v) => setFilterType(v as typeof filterType)}>
-          <TabsList className="grid w-full max-w-xs bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+          <TabsList className="flex w-full max-w-md bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
             <TabsTrigger 
               value="all" 
-              className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium"
+              className="flex-1 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium"
             >
               Semua
             </TabsTrigger>
             <TabsTrigger 
               value="income" 
-              className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
+              className="flex-1 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
             >
               💰 Pemasukan
             </TabsTrigger>
             <TabsTrigger 
               value="expense" 
-              className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
+              className="flex-1 rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
             >
               💸 Pengeluaran
             </TabsTrigger>

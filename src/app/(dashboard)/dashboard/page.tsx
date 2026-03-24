@@ -114,12 +114,21 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <Button 
-              onClick={() => router.push('/transactions/new')} 
-              className="w-full md:w-auto bg-white text-purple-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
-            >
-              <span className="mr-1">+</span> <span className="md:hidden"> Baru</span><span className="hidden md:inline">Transaksi Baru</span>
-            </Button>
+            <div className="flex flex-row items-center gap-2 w-full md:w-auto">
+              <Button 
+                onClick={() => router.push('/transactions/new')} 
+                className="flex-1 md:flex-none bg-white text-purple-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
+              >
+                <span className="mr-1">+</span> <span className="md:hidden">Baru</span><span className="hidden md:inline">Transaksi Baru</span>
+              </Button>
+              <Button 
+                onClick={() => router.push('/report')} 
+                variant="ghost"
+                className="flex-1 md:flex-none text-white hover:bg-white/20 font-semibold text-sm md:text-base"
+              >
+                <span>📈</span> <span className="md:hidden ml-1">Laporan</span><span className="hidden md:inline ml-1">Laporan</span>
+              </Button>
+            </div>
           </div>
         </div>
 

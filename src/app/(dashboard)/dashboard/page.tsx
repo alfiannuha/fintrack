@@ -13,7 +13,7 @@ import type { DashboardSummary, CategoryChartData, Insight } from '@/types';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { isAuthenticated, user, wallet } = useAuth();
+  const { isAuthenticated, user, wallet, isLoading: authLoading } = useAuth();
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [categoryData, setCategoryData] = useState<CategoryChartData[]>([]);
   const [insights, setInsights] = useState<Insight[]>([]);
@@ -21,16 +21,17 @@ export default function DashboardPage() {
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // Don't redirect while auth is still loading
+    if (!authLoading && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, authLoading, router]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !authLoading) {
       loadDashboardData();
     }
-  }, [isAuthenticated, currentMonth]);
+  }, [isAuthenticated, authLoading, currentMonth]);
 
   const loadDashboardData = async () => {
     setIsLoading(true);
@@ -65,6 +66,20 @@ export default function DashboardPage() {
   const handleNextMonth = () => {
     setCurrentMonth(getNextMonth(currentMonth));
   };
+
+  // Show loading while auth is being checked
+  if (authLoading || isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="min-h-[80vh] flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="text-muted-foreground">Loading dashboard...</p>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   if (!isAuthenticated || !user || !wallet) {
     return null;

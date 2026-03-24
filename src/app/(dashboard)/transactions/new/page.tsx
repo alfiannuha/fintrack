@@ -8,7 +8,7 @@ export default function NewTransactionPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-4">
       <QuickTransaction
         onSuccess={() => router.push('/dashboard')}
         onCancel={() => router.push('/dashboard')}

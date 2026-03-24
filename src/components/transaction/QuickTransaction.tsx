@@ -23,6 +23,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [txType, setTxType] = useState<'income' | 'expense'>('expense');
+  const [showScanOption, setShowScanOption] = useState(false);
   const [formData, setFormData] = useState({
     amount: '',
     category_id: '',
@@ -97,6 +98,10 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
     setFormData(prev => ({ ...prev, amount: value }));
   };
 
+  const handleScanClick = () => {
+    router.push('/transactions/scan');
+  };
+
   const isSelected = (categoryId: string) => formData.category_id === categoryId;
 
   return (
@@ -121,7 +126,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
           <CardContent className="space-y-5 px-6 pb-6">
             {/* Type Toggle */}
             <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+              <TabsList className="grid w-full grid-cols-2 bg-slate-100 p-1 rounded-xl">
                 <TabsTrigger 
                   value="expense"
                   className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-2.5 rounded-lg transition-all duration-200"
@@ -137,12 +142,52 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
               </TabsList>
             </Tabs>
 
+            {/* Scan Button - Mobile Only */}
+            <button
+              type="button"
+              onClick={handleScanClick}
+              className="w-full md:hidden flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-slate-300 text-slate-600 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200"
+            >
+              <span className="text-xl">📷</span>
+              <span className="font-medium">Scan Struk / Upload</span>
+            </button>
+
+            {/* Date & Note - Moved to top */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Date */}
+              <div className="space-y-2">
+                <Label htmlFor="date" className="text-sm font-medium text-muted-foreground ml-1">Tanggal</Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                  disabled={isLoading}
+                  className="h-11 rounded-lg bg-slate-50 border-slate-200"
+                />
+              </div>
+
+              {/* Note */}
+              <div className="space-y-2">
+                <Label htmlFor="note" className="text-sm font-medium text-muted-foreground ml-1">Catatan</Label>
+                <Input
+                  id="note"
+                  type="text"
+                  placeholder="Opsional"
+                  value={formData.note}
+                  onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
+                  disabled={isLoading}
+                  className="h-11 rounded-lg bg-slate-50 border-slate-200"
+                />
+              </div>
+            </div>
+
             {/* Amount Input */}
             <div className="space-y-2">
               <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground ml-1">Jumlah</Label>
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-green-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-slate-50 dark:bg-slate-800/50 rounded-xl border-2 border-transparent group-focus-within:border-primary/30 transition-all duration-300">
+                <div className="relative bg-slate-50 rounded-xl border-2 border-transparent group-focus-within:border-primary/30 transition-all duration-300">
                   <div className="flex items-center px-4">
                     <span className={`text-2xl font-bold ${txType === 'expense' ? 'text-red-500' : 'text-green-500'}`}>
                       Rp
@@ -176,45 +221,15 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                     className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl border-2 transition-all duration-200 hover:scale-105 ${
                       isSelected(category._id)
                         ? txType === 'expense' 
-                          ? 'bg-red-50 dark:bg-red-900/30 text-red-600 border-red-400 shadow-md'
-                          : 'bg-green-50 dark:bg-green-900/30 text-green-600 border-green-400 shadow-md'
-                        : 'bg-white dark:bg-slate-800 text-muted-foreground border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                          ? 'bg-red-50 text-red-600 border-red-400 shadow-md'
+                          : 'bg-green-50 text-green-600 border-green-400 shadow-md'
+                        : 'bg-white text-muted-foreground border-slate-200 hover:border-primary/50 hover:bg-slate-50'
                     }`}
                   >
                     <span className="text-2xl">{category.icon || '📁'}</span>
                     <span className="text-[10px] font-semibold truncate w-full text-center">{category.name}</span>
                   </button>
                 ))}
-              </div>
-            </div>
-
-            {/* Date & Note Row */}
-            <div className="grid grid-cols-2 gap-3">
-              {/* Date */}
-              <div className="space-y-2">
-                <Label htmlFor="date" className="text-sm font-medium text-muted-foreground ml-1">Tanggal</Label>
-                <Input
-                  id="date"
-                  type="date"
-                  value={formData.date}
-                  onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                  disabled={isLoading}
-                  className="h-11 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
-                />
-              </div>
-
-              {/* Note */}
-              <div className="space-y-2">
-                <Label htmlFor="note" className="text-sm font-medium text-muted-foreground ml-1">Catatan</Label>
-                <Input
-                  id="note"
-                  type="text"
-                  placeholder="Opsional"
-                  value={formData.note}
-                  onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
-                  disabled={isLoading}
-                  className="h-11 rounded-lg bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
-                />
               </div>
             </div>
 
@@ -225,7 +240,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   type="button" 
                   variant="outline" 
                   onClick={onCancel} 
-                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200"
+                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-slate-200 hover:bg-slate-100 transition-all duration-200"
                   disabled={isLoading}
                 >
                   Batal

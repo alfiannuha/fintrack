@@ -71,11 +71,11 @@ export default function SettingsPage() {
             </div>
             <Separator />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <div className="p-4 rounded-xl bg-slate-50 bg-slate-50">
                 <p className="text-xs text-muted-foreground mb-1">Nama Lengkap</p>
                 <p className="font-semibold">{user.name}</p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <div className="p-4 rounded-xl bg-slate-50 bg-slate-50">
                 <p className="text-xs text-muted-foreground mb-1">Email</p>
                 <p className="font-semibold">{user.email}</p>
               </div>
@@ -91,15 +91,15 @@ export default function SettingsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/30 dark:to-purple-950/30 border border-indigo-100 dark:border-indigo-900">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100">
               <p className="text-xs text-muted-foreground mb-2">Kode Undangan</p>
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-mono font-bold text-indigo-600 dark:text-indigo-400">{wallet.code}</p>
+                <p className="text-2xl font-mono font-bold text-indigo-600">{wallet.code}</p>
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={copyWalletCode}
-                  className="rounded-lg border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/30"
+                  className="rounded-lg border-indigo-200 hover:bg-indigo-50"
                 >
                   📋 Salin
                 </Button>
@@ -110,11 +110,11 @@ export default function SettingsPage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <div className="p-4 rounded-xl bg-slate-50 bg-slate-50">
                 <p className="text-xs text-muted-foreground mb-1">Nama Wallet</p>
                 <p className="font-semibold">{wallet.name}</p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <div className="p-4 rounded-xl bg-slate-50 bg-slate-50">
                 <p className="text-xs text-muted-foreground mb-1">Anggota</p>
                 <p className="font-semibold">{wallet.members?.length || 1} orang</p>
               </div>

@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { formatCurrency } from '@/lib/utils';
 import type { Category } from '@/types';
 
 interface QuickTransactionProps {
@@ -98,27 +97,29 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
     setFormData(prev => ({ ...prev, amount: value }));
   };
 
+  const isSelected = (categoryId: string) => formData.category_id === categoryId;
+
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle className="text-center text-xl">
+    <Card className="w-full max-w-md mx-auto shadow-lg">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-center text-xl font-bold">
           {txType === 'expense' ? '💸 Catat Pengeluaran' : '💰 Catat Pemasukan'}
         </CardTitle>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           {/* Type Toggle */}
           <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-muted p-1">
+            <TabsList className="grid w-full grid-cols-2 bg-muted p-1 rounded-lg">
               <TabsTrigger 
                 value="expense"
-                className="data-[state=active]:bg-red-500 data-[state=active]:text-white data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-red-500 data-[state=active]:text-white data-[state=active]:shadow-sm font-medium py-2"
               >
                 💸 Pengeluaran
               </TabsTrigger>
               <TabsTrigger 
                 value="income"
-                className="data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-sm font-medium py-2"
               >
                 💰 Pemasukan
               </TabsTrigger>
@@ -127,23 +128,26 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
 
           {/* Amount Input */}
           <div className="space-y-2">
-            <Label htmlFor="amount">Jumlah (Rp)</Label>
-            <Input
-              id="amount"
-              type="text"
-              inputMode="numeric"
-              placeholder="0"
-              value={formData.amount}
-              onChange={handleAmountChange}
-              className="text-2xl font-bold text-center h-16"
-              autoFocus
-              disabled={isLoading}
-            />
+            <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground">Jumlah (Rp)</Label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">Rp</span>
+              <Input
+                id="amount"
+                type="text"
+                inputMode="numeric"
+                placeholder="0"
+                value={formData.amount}
+                onChange={handleAmountChange}
+                className="text-2xl font-bold text-right h-16 pl-12 pr-4"
+                autoFocus
+                disabled={isLoading}
+              />
+            </div>
           </div>
 
           {/* Category Selection */}
-          <div className="space-y-2">
-            <Label>Kategori</Label>
+          <div className="space-y-3">
+            <Label className="text-sm font-medium text-muted-foreground">Pilih Kategori</Label>
             <div className="grid grid-cols-3 gap-2">
               {categories.map((category) => (
                 <button
@@ -151,16 +155,16 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, category_id: category._id }))}
                   disabled={isLoading}
-                  className={`flex flex-row items-center justify-center gap-2 p-3 rounded-lg border border-border transition-all ${
-                    formData.category_id === category._id
+                  className={`flex flex-row items-center justify-center gap-2 py-3 px-2 rounded-lg border transition-all duration-200 ${
+                    isSelected(category._id)
                       ? txType === 'expense' 
-                        ? 'bg-red-100 text-red-700 border-red-300'
-                        : 'bg-green-100 text-green-700 border-green-300'
-                      : 'hover:bg-muted'
+                        ? 'bg-red-50 text-red-700 border-red-400 shadow-sm'
+                        : 'bg-green-50 text-green-700 border-green-400 shadow-sm'
+                      : 'bg-background text-muted-foreground border-border hover:border-primary/50 hover:bg-muted/50'
                   }`}
                 >
-                  <span className="text-xl">{category.icon || '📁'}</span>
-                  <span className="text-xs font-medium">{category.name}</span>
+                  <span className="text-lg">{category.icon || '📁'}</span>
+                  <span className="text-xs font-medium truncate">{category.name}</span>
                 </button>
               ))}
             </div>
@@ -168,37 +172,39 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
 
           {/* Date */}
           <div className="space-y-2">
-            <Label htmlFor="date">Tanggal</Label>
+            <Label htmlFor="date" className="text-sm font-medium text-muted-foreground">Tanggal</Label>
             <Input
               id="date"
               type="date"
               value={formData.date}
               onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
               disabled={isLoading}
+              className="h-11"
             />
           </div>
 
           {/* Note */}
           <div className="space-y-2">
-            <Label htmlFor="note">Catatan (opsional)</Label>
+            <Label htmlFor="note" className="text-sm font-medium text-muted-foreground">Catatan</Label>
             <Input
               id="note"
               type="text"
-              placeholder="Contoh: Makan siang"
+              placeholder="Opsional"
               value={formData.note}
               onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
               disabled={isLoading}
+              className="h-11"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-2">
             {onCancel && (
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={onCancel} 
-                className="flex-1 h-12 text-base font-medium"
+                className="flex-1 h-12 text-base font-medium rounded-lg"
                 disabled={isLoading}
               >
                 Batal
@@ -206,10 +212,12 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             )}
             <Button 
               type="submit" 
-              className="flex-1 h-12 text-base font-semibold"
+              className={`flex-1 h-12 text-base font-semibold rounded-lg ${
+                txType === 'expense' ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
+              }`}
               disabled={isLoading || !formData.amount || !formData.category_id}
             >
-              {isLoading ? 'Menyimpan...' : `Simpan ${txType === 'expense' ? 'Pengeluaran' : 'Pemasukan'}`}
+              {isLoading ? 'Menyimpan...' : `Simpan`}
             </Button>
           </div>
         </CardContent>

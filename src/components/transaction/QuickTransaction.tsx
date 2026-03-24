@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/utils';
 import type { Category } from '@/types';
@@ -104,24 +105,12 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           {/* Type Toggle */}
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              type="button"
-              variant={txType === 'expense' ? 'default' : 'outline'}
-              onClick={() => setTxType('expense')}
-              className="w-full"
-            >
-              Pengeluaran
-            </Button>
-            <Button
-              type="button"
-              variant={txType === 'income' ? 'default' : 'outline'}
-              onClick={() => setTxType('income')}
-              className="w-full"
-            >
-              Pemasukan
-            </Button>
-          </div>
+          <Tabs value={txType} onValueChange={(v) => setTxType(v as 'income' | 'expense')} className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="expense">💸 Pengeluaran</TabsTrigger>
+              <TabsTrigger value="income">💰 Pemasukan</TabsTrigger>
+            </TabsList>
+          </Tabs>
 
           {/* Amount Input */}
           <div className="space-y-2">

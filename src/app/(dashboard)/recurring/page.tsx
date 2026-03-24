@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Dialog,
   DialogContent,
@@ -151,22 +152,12 @@ export default function RecurringPage() {
               <form onSubmit={handleCreateRule} className="space-y-4">
                 <div className="space-y-2">
                   <Label>Tipe</Label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button
-                      type="button"
-                      variant={newRule.type === 'expense' ? 'default' : 'outline'}
-                      onClick={() => setNewRule(prev => ({ ...prev, type: 'expense' }))}
-                    >
-                      Pengeluaran
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={newRule.type === 'income' ? 'default' : 'outline'}
-                      onClick={() => setNewRule(prev => ({ ...prev, type: 'income' }))}
-                    >
-                      Pemasukan
-                    </Button>
-                  </div>
+                  <Tabs value={newRule.type} onValueChange={(v) => setNewRule(prev => ({ ...prev, type: v as 'income' | 'expense' }))} className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="expense">💸 Pengeluaran</TabsTrigger>
+                      <TabsTrigger value="income">💰 Pemasukan</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
 
                 <div className="space-y-2">

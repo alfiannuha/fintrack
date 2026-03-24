@@ -6,12 +6,12 @@ WORKDIR /app
 # Install dependencies
 RUN apk add --no-cache git
 
-# Copy go mod files
-COPY go.mod go.sum ./
+# Copy backend go mod files
+COPY backend/go.mod backend/go.sum ./
 RUN go mod download
 
-# Copy source code
-COPY . .
+# Copy backend source code
+COPY backend/ ./
 
 # Build the application
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/main.go
@@ -25,7 +25,9 @@ WORKDIR /root/
 
 # Copy the binary from builder
 COPY --from=builder /app/main .
-COPY --from=builder /app/.env.example .env
+
+# Copy default env file
+COPY backend/.env.example .env
 
 # Expose port
 EXPOSE 8080

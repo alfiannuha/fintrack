@@ -107,13 +107,13 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             <TabsList className="grid w-full grid-cols-2 bg-muted p-1">
               <TabsTrigger 
                 value="expense"
-                className="data-[state=active]:bg-red-100 data-[state=active]:text-red-700 data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-red-500 data-[state=active]:text-white data-[state=active]:shadow-sm"
               >
                 💸 Pengeluaran
               </TabsTrigger>
               <TabsTrigger 
                 value="income"
-                className="data-[state=active]:bg-green-100 data-[state=active]:text-green-700 data-[state=active]:shadow-sm"
+                className="data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-sm"
               >
                 💰 Pemasukan
               </TabsTrigger>
@@ -146,13 +146,15 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, category_id: category._id }))}
                   disabled={isLoading}
-                  className={`flex flex-col items-center justify-center gap-1 p-3 rounded-lg border-2 transition-all ${
+                  className={`flex flex-row items-center justify-center gap-2 p-3 rounded-lg border border-border transition-all ${
                     formData.category_id === category._id
-                      ? 'border-primary bg-primary/10 ring-2 ring-primary/20'
-                      : 'border-border hover:border-primary/50 hover:bg-muted'
+                      ? txType === 'expense' 
+                        ? 'bg-red-100 text-red-700 border-red-300'
+                        : 'bg-green-100 text-green-700 border-green-300'
+                      : 'hover:bg-muted'
                   }`}
                 >
-                  <span className="text-2xl">{category.icon || '📁'}</span>
+                  <span className="text-xl">{category.icon || '📁'}</span>
                   <span className="text-xs font-medium">{category.name}</span>
                 </button>
               ))}

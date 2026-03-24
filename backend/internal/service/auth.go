@@ -184,9 +184,8 @@ func (s *AuthService) Join(ctx context.Context, req model.JoinRequest) (*model.A
 		return nil, errors.New("email already registered")
 	}
 
-	// Generate random password for join flow
-	randomPassword := invitation.GenerateCode()
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(randomPassword), bcrypt.DefaultCost)
+	// Hash password from request
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
 	}

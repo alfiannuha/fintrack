@@ -164,6 +164,19 @@ export default function JoinPage() {
                   className="h-12 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20 mb-4"
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm font-medium ml-1">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Minimal 6 karakter"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  required
+                  disabled={isLoading}
+                  className="h-12 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                />
+              </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-5 pt-2 pb-6">
               <div className="flex gap-3 w-full">

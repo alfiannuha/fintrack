@@ -13,9 +13,10 @@ type LoginRequest struct {
 }
 
 type JoinRequest struct {
-	Code  string `json:"code" validate:"required,len=6"`
-	Name  string `json:"name" validate:"required"`
-	Email string `json:"email" validate:"required,email"`
+	Code     string `json:"code" validate:"required,len=6"`
+	Name     string `json:"name" validate:"required"`
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required,min=6"`
 }
 
 // Auth Responses
@@ -26,10 +27,10 @@ type AuthTokens struct {
 }
 
 type AuthResponse struct {
-	Success bool        `json:"success"`
-	Data    AuthTokens  `json:"data"`
-	User    User        `json:"user"`
-	Wallet  Wallet      `json:"wallet"`
+	Success bool       `json:"success"`
+	Data    AuthTokens `json:"data"`
+	User    User       `json:"user"`
+	Wallet  Wallet     `json:"wallet"`
 }
 
 // Generic Response
@@ -40,8 +41,8 @@ type SuccessResponse struct {
 }
 
 type ErrorResponse struct {
-	Success bool   `json:"success"`
-	Error   string `json:"error"`
+	Success bool    `json:"success"`
+	Error   string  `json:"error"`
 	Message *string `json:"message,omitempty"`
 }
 
@@ -66,10 +67,10 @@ type UpdateTransactionRequest struct {
 
 // Category Requests
 type CreateCategoryRequest struct {
-	Name   string `json:"name" validate:"required"`
-	Type   string `json:"type" validate:"required,oneof=income expense"`
-	Icon   string `json:"icon"`
-	Color  string `json:"color"`
+	Name  string `json:"name" validate:"required"`
+	Type  string `json:"type" validate:"required,oneof=income expense"`
+	Icon  string `json:"icon"`
+	Color string `json:"color"`
 }
 
 // Budget Requests
@@ -103,8 +104,8 @@ type DailyChartData struct {
 }
 
 type CategoryChartData struct {
-	Category string `json:"category"`
+	Category   string `json:"category"`
 	CategoryID string `json:"category_id"`
-	Amount   int64  `json:"amount"`
-	Color    string `json:"color,omitempty"`
+	Amount     int64  `json:"amount"`
+	Color      string `json:"color,omitempty"`
 }

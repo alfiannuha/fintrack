@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { toast } from 'sonner';
 
 export default function JoinPage() {
@@ -20,7 +21,6 @@ export default function JoinPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
   });
 
   const handleVerifyCode = async (e: React.FormEvent) => {
@@ -60,33 +60,34 @@ export default function JoinPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-md shadow-2xl border border-slate-200">
-        <div className="h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
-        
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background p-4">
+      <Card className="w-full max-w-md shadow-2xl border-pink-200 dark:border-pink-800 overflow-hidden">
+        {/* Pink gradient header */}
+        <div className="h-2 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500" />
+
         <CardHeader className="space-y-6 text-center pb-2">
           <div className="flex justify-center pt-4">
-            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-xl">
+            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 flex items-center justify-center shadow-xl">
               <span className="text-4xl">🤝</span>
             </div>
           </div>
           <div className="space-y-2">
-            <h1 className="text-2xl font-bold">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
               {step === 'code' ? 'Gabung Wallet' : 'Isi Data Diri'}
             </h1>
             <p className="text-muted-foreground">
-              {step === 'code' 
-                ? 'Masukkan kode undangan dari teman/pasangan Anda' 
+              {step === 'code'
+                ? 'Masukkan kode undangan dari teman/pasangan Anda'
                 : `Bergabung dengan ${walletName}`}
             </p>
           </div>
         </CardHeader>
-        
+
         {step === 'code' ? (
           <form onSubmit={handleVerifyCode}>
             <CardContent className="space-y-5 pt-4">
               <div className="space-y-2">
-                <Label htmlFor="code" className="text-sm font-medium ml-1">Kode Undangan</Label>
+                <Label htmlFor="code" className="text-sm font-medium">Kode Undangan</Label>
                 <Input
                   id="code"
                   type="text"
@@ -96,34 +97,33 @@ export default function JoinPage() {
                   required
                   maxLength={6}
                   disabled={isLoading}
-                  className="h-14 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20 uppercase tracking-widest text-center text-2xl font-mono"
+                  className="h-14 rounded-xl bg-background border-pink-200 dark:border-pink-800 focus-visible:ring-pink-500/20 focus-visible:border-pink-500 uppercase tracking-widest text-center text-2xl font-mono font-semibold"
                 />
-                <p className="text-xs text-muted-foreground text-center mb-4">
+                <p className="text-xs text-muted-foreground text-center">
                   Minta kode ini dari teman atau pasangan Anda
                 </p>
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-5 pt-2 pb-6">
+            <CardFooter className="flex flex-col space-y-4 pt-2">
               <Button 
                 type="submit" 
-                className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
+                className="w-full h-12 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold cursor-pointer"
                 disabled={isLoading || walletCode.length !== 6}
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Memverifikasi...
                   </span>
                 ) : (
-                  'Verifikasi Kode'
+                  <span className="flex items-center gap-2">
+                    <span>🔑</span> Verifikasi Kode
+                  </span>
                 )}
               </Button>
               <div className="text-sm text-center text-muted-foreground">
                 Sudah punya akun?{' '}
-                <Link href="/login" className="text-indigo-600 text-indigo-400 font-medium hover:underline">
+                <Link href="/login" className="text-pink-600 dark:text-pink-400 font-medium hover:underline">
                   Masuk
                 </Link>
               </div>
@@ -131,15 +131,15 @@ export default function JoinPage() {
           </form>
         ) : (
           <form onSubmit={handleJoin}>
-            <CardContent className="space-y-4 pt-4">
-              <div className="p-4 bg-indigo-50 bg-indigo-950/30 rounded-xl border border-indigo-100 border-indigo-900">
-                <p className="text-sm font-medium text-indigo-700 text-indigo-300">Wallet: {walletName}</p>
+            <CardContent className="space-y-5 pt-4">
+              <div className="p-4 rounded-xl bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background border border-pink-200 dark:border-pink-800">
+                <p className="text-sm font-semibold text-foreground">Wallet: {walletName}</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Anda akan melihat semua transaksi dan budget di wallet ini
                 </p>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-medium ml-1">Nama Lengkap</Label>
+                <Label htmlFor="name" className="text-sm font-medium">Nama Lengkap</Label>
                 <Input
                   id="name"
                   type="text"
@@ -148,11 +148,11 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
+                  className="h-12 rounded-xl bg-background border-pink-200 dark:border-pink-800 focus-visible:ring-pink-500/20 focus-visible:border-pink-500"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium ml-1">Email</Label>
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -161,53 +161,36 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium ml-1">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Minimal 6 karakter"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  required
-                  disabled={isLoading}
-                  className="h-12 rounded-xl bg-slate-50 bg-slate-800/50 border-slate-200 border-slate-700 focus:ring-2 focus:ring-indigo-500/20 mb-4"
+                  className="h-12 rounded-xl bg-background border-pink-200 dark:border-pink-800 focus-visible:ring-pink-500/20 focus-visible:border-pink-500"
                 />
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-5 pt-2 pb-6">
-              <div className="flex gap-3 w-full">
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => setStep('code')}
-                  disabled={isLoading}
-                  className="flex-1 h-12 rounded-xl border-slate-200 border-slate-700"
-                >
-                  Kembali
-                </Button>
-                <Button 
-                  type="submit" 
-                  className="flex-1 h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center gap-2">
-                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                      </svg>
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <span>🤝</span> Bergabung
-                    </span>
-                  )}
-                </Button>
-              </div>
+            <CardFooter className="flex flex-col space-y-4 pt-2">
+              <Button 
+                type="submit" 
+                className="w-full h-12 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold cursor-pointer"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Bergabung...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <span>✨</span> Bergabung
+                  </span>
+                )}
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="w-full h-12 cursor-pointer"
+                onClick={() => setStep('code')}
+                disabled={isLoading}
+              >
+                Kembali
+              </Button>
             </CardFooter>
           </form>
         )}

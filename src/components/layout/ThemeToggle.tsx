@@ -75,11 +75,6 @@ export function ThemeToggle() {
         
         <span className="sr-only">Toggle theme</span>
       </Button>
-      
-      {/* Tooltip */}
-      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs font-medium text-foreground bg-background/90 backdrop-blur-sm border border-pink-200 dark:border-pink-800 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg">
-        {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-      </div>
     </div>
   );
 }

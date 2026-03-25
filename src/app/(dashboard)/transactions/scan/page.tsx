@@ -85,7 +85,7 @@ export default function ScanReceiptPage() {
       const formData = new FormData();
       formData.append('document', blob, 'receipt.png');
 
-      // Use Mindee API v2 for receipt parsing
+      // Use Mindee API for receipt parsing
       const apiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
       
       console.log('Mindee API Key:', apiKey ? 'exists' : 'missing');
@@ -94,27 +94,40 @@ export default function ScanReceiptPage() {
         throw new Error('Mindee API key not configured');
       }
 
-      // Use built-in expense_receipts model with v2 API
-      const endpoint = 'https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict';
-      console.log('Mindee Endpoint:', endpoint);
+      // Try different Mindee endpoints
+      const endpoints = [
+        'https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict',
+        'https://api.mindee.net/v1/product/mindee/expense_receipts/v5/predict',
+      ];
       
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Token ${apiKey}`,
-        },
-        body: formData,
-      });
-
-      console.log('Mindee Response Status:', response.status);
+      let response;
+      let success = false;
       
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Mindee Error:', errorText);
-        throw new Error(`Mindee API error: ${response.status} - ${errorText}`);
+      for (const endpoint of endpoints) {
+        console.log('Trying Mindee endpoint:', endpoint);
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${apiKey}`,
+          },
+          body: formData,
+        });
+        
+        console.log('Mindee Response Status:', response.status);
+        
+        if (response.ok) {
+          success = true;
+          break;
+        }
       }
 
-      const mindeeResult = await response.json();
+      if (!success || !response?.ok) {
+        const errorText = await response?.text();
+        console.error('Mindee Error:', errorText);
+        throw new Error(`Mindee API error: ${response?.status} - ${errorText}`);
+      }
+
+      const mindeeResult = await response?.json();
       
       // Parse Mindee response
       const document = mindeeResult?.document;

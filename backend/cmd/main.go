@@ -166,11 +166,10 @@ func main() {
 				reports.GET("/monthly", reportHandler.GetMonthlyReport)
 			}
 
-			// OCR
-			ocr := protected.Group("/ocr")
-			{
-				ocr.POST("/scan", ocrHandler.ScanReceipt)
-			}
+			// OCR - public endpoint for receipt scanning
+			r.POST("/api/v1/ocr/scan", func(c *gin.Context) {
+				ocrHandler.ScanReceipt(c)
+			})
 
 			// Auto-category (for suggestions)
 			// To be implemented

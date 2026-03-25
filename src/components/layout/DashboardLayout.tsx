@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: '📊', gradient: 'from-pink-500 to-rose-500' },
     { href: '/transactions', label: 'Transaksi', icon: '💳', gradient: 'from-pink-400 to-rose-400' },
-    { href: '/transactions/scan', label: 'Scan', icon: '📷', gradient: 'from-pink-600 to-rose-600' },
+    // { href: '/transactions/scan', label: 'Scan', icon: '📷', gradient: 'from-pink-600 to-rose-600' },
     { href: '/budget', label: 'Budget', icon: '🎯', gradient: 'from-pink-500 to-rose-500' },
     { href: '/recurring', label: 'Berulang', icon: '🔄', gradient: 'from-pink-400 to-rose-400' },
     { href: '/report', label: 'Laporan', icon: '📈', gradient: 'from-pink-600 to-rose-600' },

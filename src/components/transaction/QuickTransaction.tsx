@@ -147,15 +147,15 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
               </Tabs>
             </div>
 
-            {/* Scan Button - Mobile Only */}
-            <button
+            {/* Scan Button - Mobile Only - Hidden */}
+            {/* <button
               type="button"
               onClick={handleScanClick}
               className="w-full md:hidden flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-pink-200! text-pink-600 hover:border-pink-400! hover:text-pink-700 hover:bg-pink-50! transition-all duration-200 cursor-pointer"
             >
               <span className="text-xl">📷</span>
               <span className="font-medium">Scan Struk / Upload</span>
-            </button>
+            </button> */}
 
             {/* Amount Input */}
             <div className="space-y-2">

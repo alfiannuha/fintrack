@@ -146,7 +146,7 @@ export default function RecurringPage() {
             </div>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger>
-                <Button className="w-full md:w-auto bg-white text-cyan-600 hover:bg-white/90 font-semibold shadow-lg text-sm md:text-base">
+                <Button className="w-full md:w-auto bg-white text-pink-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base">
                   <span className="mr-1">+</span> <span className="md:hidden">Baru</span><span className="hidden md:inline">Aturan Baru</span>
                 </Button>
               </DialogTrigger>
@@ -166,11 +166,11 @@ export default function RecurringPage() {
                   <div className="space-y-3">
                     <Label className="text-sm font-medium ml-1">Tipe Transaksi</Label>
                     <Tabs value={newRule.type} onValueChange={(v) => setNewRule(prev => ({ ...prev, type: v as 'income' | 'expense', category_id: '' }))} className="w-full">
-                      <TabsList className="grid w-full grid-cols-2 bg-slate-100 bg-slate-800 p-1 rounded-xl">
-                        <TabsTrigger value="expense" className="rounded-lg data-[state=active]:bg-red-500 data-[state=active]:text-white font-medium">
+                      <TabsList className="grid w-full grid-cols-2 bg-pink-100! dark:bg-pink-900! p-1 rounded-xl">
+                        <TabsTrigger value="expense" className="rounded-lg data-[state=active]:bg-red-500 data-[state=active]:text-white dark:data-[state=active]:bg-red-600 font-medium">
                           💸 Pengeluaran
                         </TabsTrigger>
-                        <TabsTrigger value="income" className="rounded-lg data-[state=active]:bg-green-500 data-[state=active]:text-white font-medium">
+                        <TabsTrigger value="income" className="rounded-lg data-[state=active]:bg-green-500 data-[state=active]:text-white dark:data-[state=active]:bg-green-600 font-medium">
                           💰 Pemasukan
                         </TabsTrigger>
                       </TabsList>
@@ -206,7 +206,7 @@ export default function RecurringPage() {
                         placeholder="0"
                         value={newRule.amount}
                         onChange={handleAmountChange}
-                        className="text-lg font-bold pl-10"
+                        className="text-lg font-bold pl-10 border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
                         required
                       />
                     </div>
@@ -222,7 +222,7 @@ export default function RecurringPage() {
                         max="31"
                         value={newRule.day_of_month}
                         onChange={(e) => setNewRule(prev => ({ ...prev, day_of_month: parseInt(e.target.value) || 1 }))}
-                        className="text-center font-semibold"
+                        className="text-center font-semibold border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
                         required
                       />
                     </div>
@@ -234,6 +234,7 @@ export default function RecurringPage() {
                         placeholder="Contoh: Gaji"
                         value={newRule.note}
                         onChange={(e) => setNewRule(prev => ({ ...prev, note: e.target.value }))}
+                        className="border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
                       />
                     </div>
                   </div>

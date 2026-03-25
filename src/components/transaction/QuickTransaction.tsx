@@ -128,17 +128,17 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             <div className="space-y-2">
               <Label className="text-sm font-medium text-muted-foreground ml-1">Tipe Transaksi</Label>
               <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 bg-pink-100 dark:bg-pink-900 p-1 rounded-xl shadow-inner">
+                <TabsList className="grid w-full grid-cols-2 bg-pink-100! dark:bg-pink-900! p-1 rounded-xl shadow-inner">
                   <TabsTrigger
                     value="expense"
-                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white dark:data-[state=active]:from-red-600 dark:data-[state=active]:to-red-700 data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
                   >
                     <span className="text-lg">💸</span> 
                     <span>Pengeluaran</span>
                   </TabsTrigger>
                   <TabsTrigger
                     value="income"
-                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white dark:data-[state=active]:from-green-600 dark:data-[state=active]:to-green-700 data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
                   >
                     <span className="text-lg">💰</span> 
                     <span>Pemasukan</span>
@@ -162,7 +162,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
               <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground ml-1">Jumlah</Label>
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-green-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-pink-50! rounded-xl border-2 border-transparent group-focus-within:border-pink-300! transition-all duration-300">
+                <div className="relative bg-pink-50! dark:bg-pink-950/30 rounded-xl border-2 border-transparent group-focus-within:border-pink-300! transition-all duration-300">
                   <div className="flex items-center px-4">
                     <span className={`text-2xl font-bold ${txType === 'expense' ? 'text-red-500' : 'text-green-500'}`}>
                       Rp
@@ -219,7 +219,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   value={formData.date}
                   onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
                   disabled={isLoading}
-                  className="h-11 rounded-lg bg-pink-50! border-pink-100!"
+                  className="h-11 rounded-lg bg-pink-50! dark:bg-pink-950/30 border-pink-100! dark:border-pink-800!"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   value={formData.note}
                   onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
                   disabled={isLoading}
-                  className="h-11 rounded-lg bg-pink-50! border-pink-100!"
+                  className="h-11 rounded-lg bg-pink-50! dark:bg-pink-950/30 border-pink-100! dark:border-pink-800!"
                 />
               </div>
             </div>

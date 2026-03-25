@@ -95,7 +95,7 @@ export default function TransactionsPage() {
             </div>
             <Button 
               onClick={() => router.push('/transactions/new')} 
-              className="w-full md:w-auto bg-white text-indigo-600 hover:bg-white/90 font-semibold shadow-lg text-sm md:text-base"
+              className="w-full md:w-auto bg-white text-pink-600 hover:bg-white/90 font-semibold shadow-lg hover:shadow-xl transition-all text-sm md:text-base"
             >
               <span className="mr-1">+</span> <span className="md:hidden">Baru</span><span className="hidden md:inline">Transaksi Baru</span>
             </Button>
@@ -105,10 +105,10 @@ export default function TransactionsPage() {
         {/* Filter Tabs */}
         <div className="flex justify-center">
           <Tabs value={filterType} onValueChange={(v) => setFilterType(v as typeof filterType)} className="w-full max-w-md">
-            <TabsList className="grid w-full grid-cols-3 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+            <TabsList className="grid w-full grid-cols-3 bg-pink-100! dark:bg-pink-900! p-1 rounded-xl">
               <TabsTrigger
                 value="all"
-                className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium transition-all duration-200"
+                className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-pink-800 data-[state=active]:shadow-md font-medium transition-all duration-200"
               >
                 Semua
               </TabsTrigger>

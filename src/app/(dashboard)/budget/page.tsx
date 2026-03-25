@@ -141,71 +141,70 @@ export default function BudgetPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
-              Budget
-            </h1>
-            <p className="text-muted-foreground text-sm mt-1">
-              {getMonthYear(currentMonth)}
-            </p>
+      <div className="space-y-6 animate-fade-in">
+        {/* Header Card */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-pink-600 p-4 md:p-6 text-white shadow-xl">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MzUgMC0xMC00LjQ2NS0xMC0xMHM0LjQ2NS0xMCAxMC0xMCAxMCA0LjQ2NSAxMCAxMC00LjQ2NSAxMC0xMCAxMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
+          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-xl md:text-2xl font-bold">Budget</h1>
+              <p className="text-white/80 text-xs md:text-sm mt-1">{getMonthYear(currentMonth)}</p>
+            </div>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger>
+                <Button className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 cursor-pointer">
+                  <span className="mr-1">+</span> Budget Baru
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
+                    Buat Budget Baru
+                  </DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handleCreateBudget} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="category" className="text-sm font-medium">Kategori</Label>
+                    <select
+                      id="category"
+                      value={newBudget.category_id}
+                      onChange={(e) => setNewBudget(prev => ({ ...prev, category_id: e.target.value }))}
+                      className="flex h-10 w-full rounded-md border border-pink-200! dark:border-pink-800! bg-background dark:bg-pink-950/20 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500/20 focus-visible:ring-offset-2 cursor-pointer"
+                      required
+                    >
+                      <option value="">Pilih kategori</option>
+                      {categories.map((cat) => (
+                        <option key={cat._id} value={cat._id}>
+                          {categoryEmojis[cat.name] || '📌'} {cat.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="amount" className="text-sm font-medium">Budget (Rp)</Label>
+                    <Input
+                      id="amount"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="0"
+                      value={newBudget.amount}
+                      onChange={handleAmountChange}
+                      className="text-lg font-semibold cursor-pointer border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
+                      required
+                    />
+                  </div>
+                  <DialogFooter>
+                    <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="cursor-pointer">
+                      Batal
+                    </Button>
+                    <Button type="submit" className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 cursor-pointer">
+                      Simpan
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger>
-              <Button className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 cursor-pointer">
-                <span className="mr-1">+</span> Budget Baru
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle className="text-xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
-                  Buat Budget Baru
-                </DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleCreateBudget} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="category" className="text-sm font-medium">Kategori</Label>
-                  <select
-                    id="category"
-                    value={newBudget.category_id}
-                    onChange={(e) => setNewBudget(prev => ({ ...prev, category_id: e.target.value }))}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer"
-                    required
-                  >
-                    <option value="">Pilih kategori</option>
-                    {categories.map((cat) => (
-                      <option key={cat._id} value={cat._id}>
-                        {categoryEmojis[cat.name] || '📌'} {cat.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="amount" className="text-sm font-medium">Budget (Rp)</Label>
-                  <Input
-                    id="amount"
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="0"
-                    value={newBudget.amount}
-                    onChange={handleAmountChange}
-                    className="text-lg font-semibold cursor-pointer"
-                    required
-                  />
-                </div>
-                <DialogFooter>
-                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="cursor-pointer">
-                    Batal
-                  </Button>
-                  <Button type="submit" className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 cursor-pointer">
-                    Simpan
-                  </Button>
-                </DialogFooter>
-              </form>
-            </DialogContent>
-          </Dialog>
         </div>
 
         {/* Overall Summary Card */}

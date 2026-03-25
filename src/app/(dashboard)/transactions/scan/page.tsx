@@ -85,7 +85,7 @@ export default function ScanReceiptPage() {
       const formData = new FormData();
       formData.append('document', blob, 'receipt.png');
 
-      // Use Mindee API for receipt parsing
+      // Use Mindee API v2 for receipt parsing
       const apiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
       const modelId = process.env.NEXT_PUBLIC_MINDEE_MODEL_ID;
       
@@ -96,12 +96,12 @@ export default function ScanReceiptPage() {
         throw new Error('Mindee API key not configured');
       }
 
-      // Try custom model first, fallback to built-in expense_receipts
+      // Try custom model first with v2 API, fallback to built-in expense_receipts
       let endpoint = '';
       let response;
       
       if (modelId) {
-        endpoint = `https://api.mindee.net/v1/products/custom/v1/${modelId}/predict`;
+        endpoint = `https://api.mindee.net/v2/products/custom/${modelId}/predict`;
         response = await fetch(endpoint, {
           method: 'POST',
           headers: {
@@ -113,7 +113,7 @@ export default function ScanReceiptPage() {
         // If custom model fails, try built-in expense_receipts
         if (!response.ok) {
           console.log('Custom model failed, trying built-in expense_receipts...');
-          endpoint = 'https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict';
+          endpoint = 'https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict';
           response = await fetch(endpoint, {
             method: 'POST',
             headers: {
@@ -123,8 +123,8 @@ export default function ScanReceiptPage() {
           });
         }
       } else {
-        // Use built-in expense_receipts model
-        endpoint = 'https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict';
+        // Use built-in expense_receipts model with v2 API
+        endpoint = 'https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict';
         response = await fetch(endpoint, {
           method: 'POST',
           headers: {

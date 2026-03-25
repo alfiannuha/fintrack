@@ -131,7 +131,7 @@ export default function RegisterPage() {
                 </button>
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 mb-4">
               <Label htmlFor="confirmPassword" className="text-sm font-medium">Konfirmasi Password</Label>
               <div className="relative">
                 <Input

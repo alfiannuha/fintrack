@@ -146,15 +146,17 @@ export default function ScanReceiptPage() {
         }
       }
 
-      // Fallback to OCR.space
+      // Fallback to OCR.space with improved settings
       const formData = new FormData();
-      formData.append('base64Image', `data:image/png;base64,${imageBase64}`);
+      // Convert to JPEG for better compatibility
+      formData.append('base64Image', `data:image/jpeg;base64,${imageBase64}`);
       formData.append('language', 'eng');
       formData.append('isOverlayRequired', 'false');
       formData.append('detectOrientation', 'true');
       formData.append('scale', 'true');
       formData.append('OCREngine', '2');
-      formData.append('filetype', 'PNG');
+      formData.append('filetype', 'JPEG');
+      formData.append('isTable', 'true');
 
       const ocrApiKey = process.env.NEXT_PUBLIC_OCR_SPACE_API_KEY || 'helloworld';
       const response = await fetch('https://api.ocr.space/parse/image', {

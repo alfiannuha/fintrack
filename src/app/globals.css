@@ -9,25 +9,20 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --primary: 346.8 77.2% 49.8%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 346.8 77.2% 49.8%;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -37,8 +32,8 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 346.8 77.2% 49.8%;
+    --primary-foreground: 355.7 100% 97.3%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -49,42 +44,48 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --ring: 346.8 77.2% 49.8%;
   }
 }
 
-/* Pink Theme Borders */
+/* Smooth Borders & Shadows */
 @layer components {
-  .border-pink-smooth {
-    @apply border-pink-200/50 dark:border-pink-800/50;
+  /* Border utilities */
+  .border-smooth {
+    border-color: hsl(240 5.9% 90% / 0.6);
   }
   
-  .border-card-smooth {
-    @apply border-slate-200/60 dark:border-slate-800/60;
+  .dark .border-smooth {
+    border-color: hsl(217.2 32.6% 17.5% / 0.6);
   }
   
-  .shadow-card-soft {
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
+  .border-pink-soft {
+    border-color: hsl(346.8 77.2% 90% / 0.5);
   }
   
-  .shadow-card-soft-hover:hover {
-    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+  .dark .border-pink-soft {
+    border-color: hsl(346.8 77.2% 20% / 0.5);
+  }
+  
+  /* Shadow utilities - Soft and elegant */
+  .shadow-soft {
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 0.04);
+  }
+  
+  .shadow-soft-hover:hover {
+    box-shadow: 0 4px 16px 0 rgb(0 0 0 / 0.08);
   }
   
   .shadow-pink-glow {
-    box-shadow: 0 0 20px 0 rgba(236, 72, 153, 0.1);
+    box-shadow: 0 0 20px 0 rgb(236 72 153 / 0.1);
   }
-}
-
-@layer base {
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+  
+  .shadow-card {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+  
+  .shadow-card-hover:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 }
 
@@ -95,16 +96,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: hsl(var(--muted));
+  background: hsl(var(--muted));
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--muted-foreground) / 0.3);
+  background: hsl(var(--muted-foreground) / 0.3);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: hsl(var(--muted-foreground) / 0.5);
+  background: hsl(var(--muted-foreground) / 0.5);
 }
 
 /* Smooth animations */
@@ -128,22 +129,6 @@
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.4s ease-out;
-}
-
-/* Card hover effects */
-.card-hover:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  transform: translateY(-2px);
-  transition: all 0.2s;
-}
-
-/* Custom slow spin animation */
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -153,6 +138,21 @@
   }
 }
 
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
 .animate-spin-slow {
   animation: spin-slow 8s linear infinite;
+}
+
+/* Card hover effects */
+.card-hover:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+  transition: all 0.2s;
 }

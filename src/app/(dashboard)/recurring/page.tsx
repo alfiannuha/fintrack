@@ -183,7 +183,7 @@ export default function RecurringPage() {
                       id="category"
                       value={newRule.category_id}
                       onChange={(e) => setNewRule(prev => ({ ...prev, category_id: e.target.value }))}
-                      className="w-full p-3 border border-pink-200! dark:border-pink-800! rounded-lg bg-background text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500! transition-all"
+                      className="w-full p-3 border-0 rounded-lg bg-background text-sm focus:ring-2 focus:ring-pink-500/20 focus:ring-pink-500! transition-all"
                       required
                     >
                       <option value="">Pilih kategori...</option>
@@ -206,7 +206,7 @@ export default function RecurringPage() {
                         placeholder="0"
                         value={newRule.amount}
                         onChange={handleAmountChange}
-                        className="text-lg font-bold pl-10 border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
+                        className="text-lg font-bold pl-10 border-0 bg-pink-50! dark:bg-pink-950/20!"
                         required
                       />
                     </div>
@@ -222,7 +222,7 @@ export default function RecurringPage() {
                         max="31"
                         value={newRule.day_of_month}
                         onChange={(e) => setNewRule(prev => ({ ...prev, day_of_month: parseInt(e.target.value) || 1 }))}
-                        className="text-center font-semibold border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
+                        className="text-center font-semibold border-0 bg-pink-50! dark:bg-pink-950/20!"
                         required
                       />
                     </div>
@@ -234,7 +234,7 @@ export default function RecurringPage() {
                         placeholder="Contoh: Gaji"
                         value={newRule.note}
                         onChange={(e) => setNewRule(prev => ({ ...prev, note: e.target.value }))}
-                        className="border-pink-200! dark:border-pink-800! bg-pink-50! dark:bg-pink-950/20!"
+                        className="border-0 bg-pink-50! dark:bg-pink-950/20!"
                       />
                     </div>
                   </div>

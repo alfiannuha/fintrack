@@ -168,7 +168,7 @@ export default function DashboardPage() {
 
         {/* Summary Cards - Improved with smooth shadows */}
         <div className="grid gap-4 md:grid-cols-3">
-          <Card className="overflow-hidden border-pink-smooth shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
+          <Card className="overflow-hidden border-0 shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
             <div className="h-1.5 bg-gradient-to-r from-green-400 to-green-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pemasukan</CardTitle>
@@ -184,7 +184,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="overflow-hidden border-pink-smooth shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
+          <Card className="overflow-hidden border-0 shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
             <div className="h-1.5 bg-gradient-to-r from-red-400 to-red-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pengeluaran</CardTitle>
@@ -200,7 +200,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="overflow-hidden border-pink-smooth shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
+          <Card className="overflow-hidden border-0 shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
             <div className={`h-1.5 bg-gradient-to-r ${(summary?.net_balance || 0) >= 0 ? 'from-blue-400 to-blue-600' : 'from-orange-400 to-orange-600'}`} />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Saldo</CardTitle>

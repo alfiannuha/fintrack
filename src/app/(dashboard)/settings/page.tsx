@@ -43,7 +43,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Profile Card */}
-        <Card className="border-pink-smooth shadow-soft">
+        <Card className="border-0 shadow-soft">
           <CardHeader>
             <CardTitle className="text-xl font-semibold">Profil Saya</CardTitle>
             <CardDescription>Informasi akun Anda</CardDescription>

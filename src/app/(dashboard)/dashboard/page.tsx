@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '@/components/layout/DashboardLayout';
@@ -11,10 +11,12 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { MonthPicker } from '@/components/ui/MonthPicker';
 import { api } from '@/lib/api';
 import { formatCurrency, getMonthYear, getCurrentMonth, getPreviousMonth, getNextMonth } from '@/lib/utils';
 import { toast } from 'sonner';
 import type { DashboardSummary, CategoryChartData, Insight } from '@/types';
+import { format } from 'date-fns';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -24,6 +26,10 @@ export default function DashboardPage() {
   const [insights, setInsights] = useState<Insight[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
+
+  // Calculate min/max dates for month picker
+  const minDate = useMemo(() => user?.created_at ? new Date(user.created_at) : new Date(2020, 0, 1), [user]);
+  const maxDate = useMemo(() => new Date(), []);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -132,22 +138,37 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Month Selector */}
+        {/* Month Selector - Improved with MonthPicker */}
         <div className="flex items-center justify-center gap-3">
-          <Button variant="outline" size="sm" onClick={handlePreviousMonth} className="rounded-full w-10 h-10 p-0">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handlePreviousMonth} 
+            className="rounded-full w-10 h-10 p-0 cursor-pointer hover:bg-pink-50 dark:hover:bg-pink-950/30"
+          >
             ←
           </Button>
-          <div className="bg-muted px-6 py-2 rounded-full">
-            <p className="text-sm font-semibold text-foreground">{getMonthYear(currentMonth)}</p>
-          </div>
-          <Button variant="outline" size="sm" onClick={handleNextMonth} className="rounded-full w-10 h-10 p-0">
+          
+          <MonthPicker 
+            currentMonth={currentMonth}
+            onMonthChange={setCurrentMonth}
+            minDate={minDate}
+            maxDate={maxDate}
+          />
+          
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleNextMonth} 
+            className="rounded-full w-10 h-10 p-0 cursor-pointer hover:bg-pink-50 dark:hover:bg-pink-950/30"
+          >
             →
           </Button>
         </div>
 
-        {/* Summary Cards */}
+        {/* Summary Cards - Improved with smooth shadows */}
         <div className="grid gap-4 md:grid-cols-3">
-          <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <Card className="overflow-hidden border-pink-smooth shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
             <div className="h-1.5 bg-gradient-to-r from-green-400 to-green-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pemasukan</CardTitle>
@@ -163,7 +184,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <Card className="overflow-hidden border-pink-smooth shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
             <div className="h-1.5 bg-gradient-to-r from-red-400 to-red-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pengeluaran</CardTitle>
@@ -179,7 +200,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <Card className="overflow-hidden border-pink-smooth shadow-card-soft hover:shadow-card-soft-hover transition-all duration-300">
             <div className={`h-1.5 bg-gradient-to-r ${(summary?.net_balance || 0) >= 0 ? 'from-blue-400 to-blue-600' : 'from-orange-400 to-orange-600'}`} />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Saldo</CardTitle>

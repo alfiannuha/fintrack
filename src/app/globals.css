@@ -19,8 +19,8 @@
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
@@ -55,6 +55,29 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+}
+
+/* Pink Theme Borders */
+@layer components {
+  .border-pink-smooth {
+    @apply border-pink-200/50 dark:border-pink-800/50;
+  }
+  
+  .border-card-smooth {
+    @apply border-slate-200/60 dark:border-slate-800/60;
+  }
+  
+  .shadow-card-soft {
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
+  }
+  
+  .shadow-card-soft-hover:hover {
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.08);
+  }
+  
+  .shadow-pink-glow {
+    box-shadow: 0 0 20px 0 rgba(236, 72, 153, 0.1);
   }
 }
 

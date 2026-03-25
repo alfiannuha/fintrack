@@ -87,52 +87,24 @@ export default function ScanReceiptPage() {
 
       // Use Mindee API v2 for receipt parsing
       const apiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
-      const modelId = process.env.NEXT_PUBLIC_MINDEE_MODEL_ID;
       
       console.log('Mindee API Key:', apiKey ? 'exists' : 'missing');
-      console.log('Mindee Model ID:', modelId ? modelId : 'missing');
       
       if (!apiKey) {
         throw new Error('Mindee API key not configured');
       }
 
-      // Try custom model first with v2 API, fallback to built-in expense_receipts
-      let endpoint = '';
-      let response;
+      // Use built-in expense_receipts model with v2 API
+      const endpoint = 'https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict';
+      console.log('Mindee Endpoint:', endpoint);
       
-      if (modelId) {
-        endpoint = `https://api.mindee.net/v2/products/custom/${modelId}/predict`;
-        response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Token ${apiKey}`,
-          },
-          body: formData,
-        });
-        
-        // If custom model fails, try built-in expense_receipts
-        if (!response.ok) {
-          console.log('Custom model failed, trying built-in expense_receipts...');
-          endpoint = 'https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict';
-          response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Token ${apiKey}`,
-            },
-            body: formData,
-          });
-        }
-      } else {
-        // Use built-in expense_receipts model with v2 API
-        endpoint = 'https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict';
-        response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Token ${apiKey}`,
-          },
-          body: formData,
-        });
-      }
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${apiKey}`,
+        },
+        body: formData,
+      });
 
       console.log('Mindee Response Status:', response.status);
       

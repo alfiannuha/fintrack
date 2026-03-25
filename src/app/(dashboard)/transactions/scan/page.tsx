@@ -75,8 +75,13 @@ export default function ScanReceiptPage() {
     try {
       const formData = new FormData();
       formData.append('base64Image', `data:image/png;base64,${imageBase64}`);
+      // Use 'eng' for better accuracy, enable OCR engine
       formData.append('language', 'eng');
       formData.append('isOverlayRequired', 'false');
+      formData.append('detectOrientation', 'true');
+      formData.append('scale', 'true');
+      formData.append('OCREngine', '2'); // Use engine 2 for better accuracy
+      formData.append('filetype', 'PNG');
 
       const response = await fetch('https://api.ocr.space/parse/image', {
         method: 'POST',
@@ -121,78 +126,148 @@ export default function ScanReceiptPage() {
   };
 
   const parseReceiptText = (text: string) => {
-    const lines = text.split('\n');
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
     let merchantName = '';
     let date = '';
     let totalAmount = 0;
     const items: { name: string; amount: number }[] = [];
+    
+    // Clean up text
+    const cleanText = text.replace(/\s+/g, ' ');
 
-    const dateMatch = text.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
-    if (dateMatch) {
-      const day = dateMatch[1].padStart(2, '0');
-      const month = dateMatch[2].padStart(2, '0');
-      let year = dateMatch[3];
-      if (year.length === 2) year = '20' + year;
-      date = `${year}-${month}-${day}`;
+    // 1. Find date - multiple patterns
+    const datePatterns = [
+      /(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/,  // DD/MM/YYYY or DD-MM-YYYY
+      /(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2})/,  // DD/MM/YY
+      /(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/,  // YYYY/MM/DD
+      /(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+(\d{4})/i,
+    ];
+    
+    for (const pattern of datePatterns) {
+      const match = cleanText.match(pattern);
+      if (match) {
+        if (match[1].length === 4) {
+          // YYYY-MM-DD format
+          date = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+        } else if (match[1].length === 2 && match[3].length === 2) {
+          // DD/MM/YY format
+          const year = parseInt(match[3]) > 50 ? '19' + match[3] : '20' + match[3];
+          date = `${year}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`;
+        } else {
+          // DD/MM/YYYY
+          date = `${match[3]}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`;
+        }
+        break;
+      }
     }
 
-    // Find total amount - look for "total", "grand total", "jumlah", "bayar" first
-    const totalPatterns = [
-      /(?:total|grand total|grandtotal|jumlah|bayar|tagihan|netto|brutto)[\s:]*[\d,]+\.?\d*/i,
-      /(?:Rp\s*)[\d,]+\.?\d*/i,
+    // 2. Find total amount - look for keywords first
+    const totalKeywords = [
+      'total', 'grand total', 'grandtotal', 'jumlah total', 'jumlah',
+      'bayar', 'tagihan', 'netto', 'brutto', 'subtotal', 'amount due',
+      'total due', 'balance', 'grand amount', 'ttl'
     ];
     
     let foundTotal = false;
+    
+    // First pass: look for lines with total keywords
     for (const line of lines) {
-      for (const pattern of totalPatterns) {
-        const match = line.match(pattern);
-        if (match) {
-          const amountMatch = match[0].match(/([\d,]+)/);
-          if (amountMatch) {
-            const amount = parseInt(amountMatch[1].replace(/,/g, ''), 10);
-            if (amount > 0 && amount < 100000000) {
-              totalAmount = amount;
+      const lowerLine = line.toLowerCase();
+      const hasKeyword = totalKeywords.some(kw => lowerLine.includes(kw));
+      
+      if (hasKeyword) {
+        // Extract all numbers from line
+        const amounts = line.match(/[\d,]+(?:\.\d{2})?/g);
+        if (amounts) {
+          for (const amt of amounts) {
+            const num = parseInt(amt.replace(/,/g, ''), 10);
+            if (num > 0 && num < 100000000 && num > totalAmount) {
+              totalAmount = num;
               foundTotal = true;
-              break;
             }
           }
         }
       }
-      if (foundTotal) break;
     }
 
-    // If no total found, use the highest amount
+    // Second pass: if no total found, look for "Rp" prefix amounts
     if (!foundTotal) {
-      const amounts: number[] = [];
       for (const line of lines) {
-        const match = line.match(/([\d,]+)\.?\d*$/);
-        if (match) {
-          const amount = parseInt(match[1].replace(/,/g, ''), 10);
-          if (amount > 0 && amount < 100000000) {
-            amounts.push(amount);
+        if (line.toLowerCase().includes('rp')) {
+          const amounts = line.match(/[\d,]+/g);
+          if (amounts) {
+            for (const amt of amounts) {
+              const num = parseInt(amt.replace(/,/g, ''), 10);
+              if (num > 0 && num < 100000000 && num > totalAmount) {
+                totalAmount = num;
+                foundTotal = true;
+              }
+            }
           }
         }
       }
-      if (amounts.length > 0) {
-        totalAmount = Math.max(...amounts);
+    }
+
+    // Third pass: if still no total, use the largest number
+    if (!foundTotal) {
+      const allAmounts: number[] = [];
+      for (const line of lines) {
+        const amounts = line.match(/[\d,]+(?:\.\d{2})?/g);
+        if (amounts) {
+          for (const amt of amounts) {
+            const num = parseInt(amt.replace(/,/g, ''), 10);
+            if (num > 1000 && num < 100000000) {
+              allAmounts.push(num);
+            }
+          }
+        }
+      }
+      if (allAmounts.length > 0) {
+        totalAmount = Math.max(...allAmounts);
       }
     }
 
-    const potentialMerchant = lines.slice(0, 3).find(line => 
-      line.trim().length > 3 && !line.match(/\d/) && !line.toLowerCase().includes('receipt')
-    );
-    if (potentialMerchant) {
-      merchantName = potentialMerchant.trim();
+    // 3. Find merchant name - usually at the top, no numbers
+    const skipWords = ['receipt', 'struk', 'tax', 'invoice', 'payment', 'tunai', 'cash', 'kembalian', 'kembali', 'discount', 'potongan'];
+    for (const line of lines.slice(0, 5)) {
+      const lowerLine = line.toLowerCase();
+      const hasSkipWord = skipWords.some(w => lowerLine.includes(w));
+      const hasNumber = /\d/.test(line);
+      
+      if (line.length > 3 && !hasSkipWord && !hasNumber && !line.includes('•') && !line.includes('*')) {
+        merchantName = line;
+        break;
+      }
     }
 
-    const itemPattern = /^(.+?)\s+([\d,]+)\s*$/;
+    // 4. Parse items - look for patterns like "itemname 10000" or "itemname Rp 10.000"
+    const itemLinePatterns = [
+      /^(.+?)\s+([\d,]+)$/,  // itemname 10000
+      /^(.+?)\s+Rp\s*([\d,.]+)$/i,  // itemname Rp 10.000
+      /^(.+?)\s+x\s*\d+\s+([\d,]+)$/i,  // itemname x2 15000
+    ];
+    
+    const excludeItemWords = ['total', 'subtotal', 'tax', 'pajak', 'discount', 'bayar', 'kembali', 'tunai', 'cash', ' kembalian', 'service', 'admin', 'fee', 'charge'];
+    
     for (const line of lines) {
-      const match = line.match(itemPattern);
-      if (match && match[1].length > 2) {
-        const itemName = match[1].trim();
-        const itemAmount = parseInt(match[2].replace(/,/g, ''), 10);
-        if (itemAmount > 0 && itemAmount < 10000000) {
-          items.push({ name: itemName, amount: itemAmount });
+      const lowerLine = line.toLowerCase();
+      const isExcluded = excludeItemWords.some(w => lowerLine.includes(w));
+      
+      if (isExcluded) continue;
+      
+      for (const pattern of itemLinePatterns) {
+        const match = line.match(pattern);
+        if (match) {
+          const itemName = match[1].trim();
+          const itemAmount = parseInt(match[2].replace(/,/g, ''), 10);
+          
+          if (itemName.length > 1 && itemAmount > 0 && itemAmount < 50000000) {
+            // Avoid duplicates
+            const exists = items.some(i => i.name === itemName || Math.abs(i.amount - itemAmount) < 100);
+            if (!exists) {
+              items.push({ name: itemName, amount: itemAmount });
+            }
+          }
         }
       }
     }

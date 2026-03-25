@@ -137,8 +137,8 @@ export default function DashboardPage() {
           <Button variant="outline" size="sm" onClick={handlePreviousMonth} className="rounded-full w-10 h-10 p-0">
             ←
           </Button>
-          <div className="bg-slate-100 bg-slate-800 px-6 py-2 rounded-full">
-            <p className="text-sm font-semibold">{getMonthYear(currentMonth)}</p>
+          <div className="bg-muted px-6 py-2 rounded-full">
+            <p className="text-sm font-semibold text-foreground">{getMonthYear(currentMonth)}</p>
           </div>
           <Button variant="outline" size="sm" onClick={handleNextMonth} className="rounded-full w-10 h-10 p-0">
             →
@@ -151,12 +151,12 @@ export default function DashboardPage() {
             <div className="h-1.5 bg-gradient-to-r from-green-400 to-green-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pemasukan</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-green-100 bg-green-900/30 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                 <span className="text-xl">💰</span>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">
                 {formatCurrency(summary?.total_income || 0)}
               </div>
               <p className="text-xs text-muted-foreground mt-1">Bulan ini</p>
@@ -167,12 +167,12 @@ export default function DashboardPage() {
             <div className="h-1.5 bg-gradient-to-r from-red-400 to-red-600" />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Pengeluaran</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-red-100 bg-red-900/30 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
                 <span className="text-xl">💸</span>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-red-600">
+              <div className="text-2xl font-bold text-red-600 dark:text-red-400">
                 {formatCurrency(summary?.total_expense || 0)}
               </div>
               <p className="text-xs text-muted-foreground mt-1">Bulan ini</p>
@@ -183,13 +183,13 @@ export default function DashboardPage() {
             <div className={`h-1.5 bg-gradient-to-r ${(summary?.net_balance || 0) >= 0 ? 'from-blue-400 to-blue-600' : 'from-orange-400 to-orange-600'}`} />
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Saldo</CardTitle>
-              <div className={`h-10 w-10 rounded-full flex items-center justify-center ${(summary?.net_balance || 0) >= 0 ? 'bg-blue-100 bg-blue-900/30' : 'bg-orange-100 bg-orange-900/30'}`}>
+              <div className={`h-10 w-10 rounded-full flex items-center justify-center ${(summary?.net_balance || 0) >= 0 ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-orange-100 dark:bg-orange-900/30'}`}>
                 <span className="text-xl">💵</span>
               </div>
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${
-                (summary?.net_balance || 0) >= 0 ? 'text-blue-600' : 'text-orange-600'
+                (summary?.net_balance || 0) >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-orange-600 dark:text-orange-400'
               }`}>
                 {formatCurrency(summary?.net_balance || 0)}
               </div>

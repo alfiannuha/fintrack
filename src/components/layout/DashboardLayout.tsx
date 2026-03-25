@@ -25,11 +25,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 border-t border-slate-200 border-slate-800 bg-white bg-slate-950 md:hidden z-50">
+      <nav className="fixed bottom-0 left-0 right-0 border-t border-border bg-background md:hidden z-50">
         <div className="relative h-14">
           {/* Active indicator background */}
-          <div className="absolute inset-x-0 top-1 h-[calc(100%-8px)] mx-3 rounded-2xl bg-slate-100 bg-slate-800 transition-all duration-300" />
-          
+          <div className="absolute inset-x-0 top-1 h-[calc(100%-8px)] mx-3 rounded-2xl bg-muted transition-all duration-300" />
+
           <div className="relative flex h-full items-center justify-between px-2">
             {/* Left side items */}
             <div className="flex items-center justify-center w-14 h-14">
@@ -39,13 +39,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <div className={cn(
                   "absolute w-10 h-10 rounded-2xl transition-all duration-300",
-                  pathname === '/dashboard' 
-                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                  pathname === '/dashboard'
+                    ? 'bg-primary shadow-lg shadow-primary/30'
                     : 'bg-transparent'
                 )} />
                 <span className={cn(
                   "relative text-xl transition-all duration-200 z-10",
-                  pathname === '/dashboard' ? 'text-white' : 'text-slate-400 text-slate-500'
+                  pathname === '/dashboard' ? 'text-primary-foreground' : 'text-muted-foreground'
                 )}>📊</span>
               </Link>
             </div>
@@ -57,13 +57,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <div className={cn(
                   "absolute w-10 h-10 rounded-2xl transition-all duration-300",
-                  pathname === '/transactions' 
-                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                  pathname === '/transactions'
+                    ? 'bg-primary shadow-lg shadow-primary/30'
                     : 'bg-transparent'
                 )} />
                 <span className={cn(
                   "relative text-xl transition-all duration-200 z-10",
-                  pathname === '/transactions' ? 'text-white' : 'text-slate-400 text-slate-500'
+                  pathname === '/transactions' ? 'text-primary-foreground' : 'text-muted-foreground'
                 )}>💳</span>
               </Link>
             </div>
@@ -73,8 +73,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               href="/transactions/new"
               className="relative flex items-center justify-center -mt-8"
             >
-              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/40 flex items-center justify-center border-4 border-white border-slate-950">
-                <span className="text-3xl text-white font-bold">+</span>
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-purple-600 shadow-lg shadow-primary/40 flex items-center justify-center border-4 border-background">
+                <span className="text-3xl text-primary-foreground font-bold">+</span>
               </div>
             </Link>
 
@@ -86,13 +86,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <div className={cn(
                   "absolute w-10 h-10 rounded-2xl transition-all duration-300",
-                  pathname === '/budget' 
-                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                  pathname === '/budget'
+                    ? 'bg-primary shadow-lg shadow-primary/30'
                     : 'bg-transparent'
                 )} />
                 <span className={cn(
                   "relative text-xl transition-all duration-200 z-10",
-                  pathname === '/budget' ? 'text-white' : 'text-slate-400 text-slate-500'
+                  pathname === '/budget' ? 'text-primary-foreground' : 'text-muted-foreground'
                 )}>🎯</span>
               </Link>
             </div>
@@ -104,13 +104,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <div className={cn(
                   "absolute w-10 h-10 rounded-2xl transition-all duration-300",
-                  pathname === '/settings' 
-                    ? 'bg-indigo-500 shadow-lg shadow-indigo-500/30' 
+                  pathname === '/settings'
+                    ? 'bg-primary shadow-lg shadow-primary/30'
                     : 'bg-transparent'
                 )} />
                 <span className={cn(
                   "relative text-xl transition-all duration-200 z-10",
-                  pathname === '/settings' ? 'text-white' : 'text-slate-400 text-slate-500'
+                  pathname === '/settings' ? 'text-primary-foreground' : 'text-muted-foreground'
                 )}>⚙️</span>
               </Link>
             </div>
@@ -119,7 +119,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </nav>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 border-r border-slate-200 border-slate-800 bg-white bg-slate-950 p-4 z-50 flex-col">
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 border-r border-border bg-card z-50 flex-col">
         {/* Logo */}
         <div className="mb-8 pt-2">
           <div className="flex items-center justify-between">
@@ -147,8 +147,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200',
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
-                    : 'text-slate-600 text-slate-400 hover:bg-slate-100 hover:bg-slate-800 hover:text-slate-900 hover:text-slate-200'
+                    ? 'bg-primary text-primary-foreground shadow-lg'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                 )}
               >
                 <span className="text-xl">{item.icon}</span>
@@ -159,7 +159,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </nav>
 
         {/* Footer */}
-        <div className="pt-4 border-t border-slate-200 border-slate-800">
+        <div className="pt-4 border-t border-border">
           <p className="text-xs text-center text-muted-foreground">
             FinTrack v1.0.0
           </p>

@@ -29,22 +29,22 @@ export function ThemeToggle() {
   }
 
   return (
-    <div className="relative group">
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <div className="relative group cursor-pointer">
+      {/* Glow effect - Pink theme */}
+      <div className="absolute inset-0 bg-gradient-to-r from-pink-500/30 via-rose-500/30 to-pink-500/30 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
       {/* Button container */}
       <Button
         variant="outline"
         size="icon"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-background via-background to-muted/50 backdrop-blur-xl border-border hover:border-primary/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+        className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-background via-background to-pink-500/20 backdrop-blur-xl border-pink-200 dark:border-pink-800 hover:border-pink-400 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
       >
-        {/* Animated background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Animated background gradient - Pink theme */}
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-rose-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
-        {/* Rotating ring animation */}
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 animate-spin-slow" />
+        {/* Rotating ring animation - Pink theme */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-pink-500/30 via-rose-500/30 to-pink-500/30 opacity-0 group-hover:opacity-100 animate-spin-slow" />
         
         {/* Sun icon */}
         <Sun 
@@ -52,7 +52,7 @@ export function ThemeToggle() {
             "absolute h-5 w-5 transition-all duration-500",
             theme === 'dark' 
               ? "rotate-90 scale-0 opacity-0" 
-              : "rotate-0 scale-100 opacity-100"
+              : "rotate-0 scale-100 opacity-100 text-pink-600 dark:text-pink-400"
           )}
         />
         
@@ -61,23 +61,23 @@ export function ThemeToggle() {
           className={cn(
             "absolute h-5 w-5 transition-all duration-500",
             theme === 'dark'
-              ? "rotate-0 scale-100 opacity-100"
+              ? "rotate-0 scale-100 opacity-100 text-pink-400"
               : "-rotate-90 scale-0 opacity-0"
           )}
         />
         
-        {/* Sparkle effect on hover */}
+        {/* Sparkle effect on hover - Pink theme */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <div className="absolute top-1 right-1 w-1 h-1 bg-blue-400 rounded-full animate-ping" />
-          <div className="absolute bottom-1 left-1 w-1 h-1 bg-purple-400 rounded-full animate-ping delay-100" />
-          <div className="absolute top-1 left-1 w-0.5 h-0.5 bg-pink-400 rounded-full animate-ping delay-200" />
+          <div className="absolute top-1 right-1 w-1 h-1 bg-pink-400 rounded-full animate-ping" />
+          <div className="absolute bottom-1 left-1 w-1 h-1 bg-rose-400 rounded-full animate-ping delay-100" />
+          <div className="absolute top-1 left-1 w-0.5 h-0.5 bg-pink-300 rounded-full animate-ping delay-200" />
         </div>
         
         <span className="sr-only">Toggle theme</span>
       </Button>
       
       {/* Tooltip */}
-      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs font-medium text-foreground bg-background/90 backdrop-blur-sm border border-border rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg">
+      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs font-medium text-foreground bg-background/90 backdrop-blur-sm border border-pink-200 dark:border-pink-800 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg">
         {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
       </div>
     </div>

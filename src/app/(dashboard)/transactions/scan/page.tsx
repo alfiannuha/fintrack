@@ -397,12 +397,12 @@ export default function ScanReceiptPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="pt-6">
                 <div 
-                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-indigo-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 text-center cursor-pointer hover:border-indigo-400 hover:from-indigo-100 hover:to-purple-100 transition-all duration-300 group"
+                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 text-center cursor-pointer hover:border-pink-400 hover:from-pink-100 hover:to-rose-100 transition-all duration-300 group"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <div className="relative">
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center shadow-inner">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center shadow-inner">
                       <span className="text-4xl">📸</span>
                     </div>
                     <p className="text-lg font-semibold text-slate-700">Ambil Foto Struk</p>

@@ -57,7 +57,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
               <Avatar className="h-24 w-24 relative">
                 <AvatarImage src="https://avatar.vercel.sh/fintrack" />
-                <AvatarFallback className="bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 text-white text-5xl font-bold shadow-xl">
+                <AvatarFallback className="bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 text-white text-xl font-bold shadow-xl">
                   F
                 </AvatarFallback>
               </Avatar>

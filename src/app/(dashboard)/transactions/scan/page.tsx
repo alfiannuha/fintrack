@@ -73,107 +73,54 @@ export default function ScanReceiptPage() {
   const scanReceipt = async (imageBase64: string) => {
     setIsScanning(true);
     try {
-      // Convert base64 to blob
-      const byteCharacters = atob(imageBase64);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'image/png' });
-
+      // Use OCR.space for OCR first
       const formData = new FormData();
-      formData.append('document', blob, 'receipt.png');
+      formData.append('base64Image', `data:image/png;base64,${imageBase64}`);
+      formData.append('language', 'eng');
+      formData.append('isOverlayRequired', 'false');
+      formData.append('detectOrientation', 'true');
+      formData.append('scale', 'true');
+      formData.append('OCREngine', '2');
+      formData.append('filetype', 'PNG');
 
-      // Use Mindee API for receipt parsing
-      const apiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
-      
-      console.log('Mindee API Key:', apiKey ? 'exists' : 'missing');
-      
-      if (!apiKey) {
-        throw new Error('Mindee API key not configured');
+      const ocrApiKey = process.env.NEXT_PUBLIC_OCR_SPACE_API_KEY || 'helloworld';
+      const response = await fetch('https://api.ocr.space/parse/image', {
+        method: 'POST',
+        headers: {
+          'apikey': ocrApiKey,
+        },
+        body: formData,
+      });
+
+      const ocrResult = await response.json();
+
+      if (ocrResult.IsErroredOnProcessing) {
+        throw new Error(ocrResult.ErrorMessage?.[0] || 'OCR failed');
       }
 
-      // Try different Mindee endpoints
-      const endpoints = [
-        'https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict',
-        'https://api.mindee.net/v1/product/mindee/expense_receipts/v5/predict',
-      ];
-      
-      let response;
-      let success = false;
-      
-      for (const endpoint of endpoints) {
-        console.log('Trying Mindee endpoint:', endpoint);
-        response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Token ${apiKey}`,
-          },
-          body: formData,
-        });
-        
-        console.log('Mindee Response Status:', response.status);
-        
-        if (response.ok) {
-          success = true;
-          break;
-        }
-      }
-
-      if (!success || !response?.ok) {
-        const errorText = await response?.text();
-        console.error('Mindee Error:', errorText);
-        throw new Error(`Mindee API error: ${response?.status} - ${errorText}`);
-      }
-
-      const mindeeResult = await response?.json();
-      
-      // Parse Mindee response
-      const document = mindeeResult?.document;
-      const inference = document?.inference;
-      const prediction = inference?.prediction;
-      
-      // Extract data from Mindee response
-      const merchantName = prediction?.merchant_name?.[0]?.value || '';
-      const date = prediction?.date?.value ? formatMindeeDate(prediction.date.value) : '';
-      const totalAmount = prediction?.total_amount?.value || 0;
-      
-      // Extract line items
-      const items: { name: string; amount: number }[] = [];
-      const lineItems = prediction?.line_items || [];
-      for (const item of lineItems) {
-        if (item.description && item.total_amount?.value) {
-          items.push({
-            name: item.description[0]?.value || 'Item',
-            amount: Math.round(item.total_amount.value * 100) // Convert to cents
-          });
-        }
-      }
-
-      // Build raw text from OCR for reference
-      const rawText = `${merchantName}\n${date}\nTotal: ${totalAmount}\n\nItems:\n${items.map(i => `${i.name}: ${i.amount}`).join('\n')}`;
+      const text = ocrResult.ParsedResults?.[0]?.ParsedText || '';
+      const parsedData = parseReceiptText(text);
 
       setReceiptData({
-        merchant_name: merchantName,
-        date: date,
-        total_amount: Math.round(totalAmount * 100),
-        items: items,
-        raw_text: rawText,
+        merchant_name: parsedData.merchantName,
+        date: parsedData.date,
+        total_amount: parsedData.totalAmount,
+        items: parsedData.items,
+        raw_text: text,
       });
 
       setFormData(prev => ({
         ...prev,
-        amount: totalAmount ? String(Math.round(totalAmount * 100)) : '',
-        date: date || new Date().toISOString().split('T')[0],
-        merchant_name: merchantName || '',
-        note: items.map(item => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
+        amount: parsedData.totalAmount ? String(parsedData.totalAmount) : '',
+        date: parsedData.date || new Date().toISOString().split('T')[0],
+        merchant_name: parsedData.merchantName || '',
+        note: parsedData.items.map(item => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
       }));
 
       toast.success('Struk berhasil dipindai');
     } catch (error) {
       console.error('Scan error:', error);
-      toast.error('Gagal memindai struk. Pastikan API key Mindee sudah benar.');
+      toast.error('Gagal memindai struk. Silakan coba lagi.');
     } finally {
       setIsScanning(false);
     }

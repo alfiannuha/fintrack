@@ -96,18 +96,28 @@ export default function ScanReceiptPage() {
         throw new Error(`OCR failed: ${response.status}`);
       }
 
-      const mindeeResult = await response.json();
-      
+      const resJson = await response.json();
+
+      // Path data pada Mindee API v2 Financial Document
+      const prediction = resJson.document.inference.prediction;
+
+      const extractedData = {
+        merchant_name: prediction.supplier_name?.value || "Tidak terdeteksi",
+        tanggal: prediction.date?.value || "",
+        total: prediction.total_amount?.value || 0,
+        mataUang: prediction.currency?.value || "IDR",
+        kategori: prediction.category?.value || "Lainnya",
+        pajak: prediction.tip?.value || 0
+      };
+
       // Parse Mindee response
-      const prediction = mindeeResult?.document?.inference?.prediction;
-      
-      const merchantName = prediction?.supplier_name?.[0]?.value || prediction?.merchant_name?.[0]?.value || '';
-      const date = prediction?.date?.value || '';
-      const totalAmount = prediction?.total_amount?.value || 0;
-      
+      const merchantName = prediction.supplier_name?.value || '';
+      const date = prediction.date?.value || '';
+      const totalAmount = prediction.total_amount?.value || 0;
+
       // Extract line items
       const items: { name: string; amount: number }[] = [];
-      const lineItems = prediction?.line_items || [];
+      const lineItems = prediction.line_items || [];
       for (const item of lineItems) {
         if (item.description && item.total_amount?.value) {
           items.push({
@@ -121,18 +131,18 @@ export default function ScanReceiptPage() {
       const rawText = `${merchantName}\n${date}\nTotal: ${totalAmount}\n\nItems:\n${items.map(i => `${i.name}: ${i.amount}`).join('\n')}`;
 
       setReceiptData({
-        merchant_name: merchantName,
-        date: formatMindeeDate(date),
-        total_amount: Math.round(totalAmount * 100),
+        merchant_name: extractedData.merchant_name,
+        date: formatMindeeDate(extractedData.tanggal),
+        total_amount: Math.round(extractedData.total * 100),
         items: items,
         raw_text: rawText,
       });
 
       setFormData(prev => ({
         ...prev,
-        amount: totalAmount ? String(Math.round(totalAmount * 100)) : '',
-        date: formatMindeeDate(date) || new Date().toISOString().split('T')[0],
-        merchant_name: merchantName || '',
+        amount: extractedData.total ? String(Math.round(extractedData.total * 100)) : '',
+        date: formatMindeeDate(extractedData.tanggal) || new Date().toISOString().split('T')[0],
+        merchant_name: extractedData.merchant_name || '',
         note: items.map(item => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
       }));
 

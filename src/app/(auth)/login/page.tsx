@@ -78,7 +78,7 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 disabled={isLoading}
-                className="h-12 rounded-xl bg-background border-pink-200/50! dark:border-pink-800/50! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
+                className="h-12 rounded-xl bg-background dark:bg-pink-950/20 border-pink-200/50! dark:border-pink-800/50! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
                 autoComplete="email"
               />
             </div>
@@ -94,7 +94,7 @@ export default function LoginPage() {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-background border-pink-200/50 dark:border-pink-800/50 focus-visible:ring-pink-500/20 focus-visible:border-pink-500 pr-12"
+                  className="h-12 rounded-xl bg-background dark:bg-pink-950/20 border-pink-200/50! dark:border-pink-800/50! focus-visible:ring-pink-500/20 focus-visible:border-pink-500! pr-12"
                   autoComplete="current-password"
                 />
                 <button

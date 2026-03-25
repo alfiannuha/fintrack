@@ -97,7 +97,7 @@ export default function JoinPage() {
                   required
                   maxLength={6}
                   disabled={isLoading}
-                  className="h-14 rounded-xl bg-background border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500! uppercase tracking-widest text-center text-2xl font-mono font-semibold"
+                  className="h-14 rounded-xl bg-background dark:bg-pink-950/20 border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500! uppercase tracking-widest text-center text-2xl font-mono font-semibold"
                 />
                 <p className="text-xs text-muted-foreground text-center">
                   Minta kode ini dari teman atau pasangan Anda
@@ -148,7 +148,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-background border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
+                  className="h-12 rounded-xl bg-background dark:bg-pink-950/20 border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
                 />
               </div>
               <div className="space-y-2">
@@ -161,7 +161,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-background border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
+                  className="h-12 rounded-xl bg-background dark:bg-pink-950/20 border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
                 />
               </div>
             </CardContent>

@@ -46,7 +46,7 @@ export default function HomePage() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-pink-300/10 to-rose-300/10 rounded-full blur-3xl animate-pulse delay-500" />
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl border-pink-200! dark:border-pink-800! relative z-10 overflow-hidden animate-fade-in">
+      <Card className="w-full max-w-md shadow-2xl border-pink-200! dark:border-pink-800! relative z-10 overflow-hidden animate-fade-in bg-white dark:bg-pink-950/5">
         {/* Pink gradient header bar */}
         <div className="h-2 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500" />
         
@@ -87,7 +87,7 @@ export default function HomePage() {
           </div>
         </CardHeader>
         
-        <CardContent className="space-y-3 pb-6">
+        <CardContent className="space-y-3 pb-6 bg-white dark:bg-pink-950/10">
           <Link href="/login" className="block group">
             <Button className="w-full h-14 text-base font-semibold bg-gradient-to-r from-pink-600 via-rose-600 to-pink-600 hover:from-pink-700 hover:via-rose-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl hover:shadow-pink-500/25 transition-all duration-300 cursor-pointer">
               <span className="flex items-center justify-center gap-2">

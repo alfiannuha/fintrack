@@ -44,7 +44,7 @@ func (h *OCRHandler) ScanReceipt(c *gin.Context) {
 }
 
 func (h *OCRHandler) sendToMindee(file io.Reader, filename string) ([]byte, error) {
-	apiUrl := "https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict"
+	apiUrl := "https://api.mindee.net/v2/products/mindee/expense_receipts/v5/predict"
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)

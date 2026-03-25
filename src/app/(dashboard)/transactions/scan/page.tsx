@@ -384,7 +384,7 @@ export default function ScanReceiptPage() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 p-4 md:p-6 text-white shadow-xl">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 p-4 md:p-6 text-white shadow-xl">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MzUgMC0xMC00LjQ2NS0xMC0xMHM0LjQ2NS0xMCAxMC0xMCAxMCA0LjQ2NSAxMCAxMC00LjQ2NSAxMC0xMCAxMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
           <div className="relative">
             <h1 className="text-xl md:text-2xl font-bold">📷 Pindai Struk</h1>
@@ -397,10 +397,10 @@ export default function ScanReceiptPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="pt-6">
                 <div 
-                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 text-center cursor-pointer hover:border-indigo-400 hover:from-indigo-100 hover:to-purple-100 transition-all duration-300 group"
+                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-indigo-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 text-center cursor-pointer hover:border-indigo-400 hover:from-indigo-100 hover:to-purple-100 transition-all duration-300 group"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <div className="relative">
                     <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center shadow-inner">
                       <span className="text-4xl">📸</span>
@@ -425,8 +425,8 @@ export default function ScanReceiptPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="pt-8 pb-8 text-center">
                 <div className="relative w-24 h-24 mx-auto mb-4">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 animate-ping opacity-20"></div>
-                  <div className="relative w-full h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 animate-ping opacity-20"></div>
+                  <div className="relative w-full h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 flex items-center justify-center">
                     <span className="text-4xl">🔍</span>
                   </div>
                   <div className="absolute inset-0 rounded-full border-4 border-indigo-200 border-t-indigo-500 animate-spin"></div>
@@ -441,7 +441,7 @@ export default function ScanReceiptPage() {
             <div className="space-y-4">
               {/* Preview Card */}
               <Card className="border-0 shadow-lg overflow-hidden">
-                <div className="h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                <div className="h-1.5 bg-gradient-to-r from-pink-500 to-rose-500"></div>
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-base flex items-center gap-2">
@@ -472,7 +472,7 @@ export default function ScanReceiptPage() {
 
               {/* Form Card */}
               <Card className="border-0 shadow-lg">
-                <div className="h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                <div className="h-1.5 bg-gradient-to-r from-pink-500 to-rose-500"></div>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base flex items-center gap-2">
                     <span>📝</span> Data Transaksi
@@ -489,7 +489,7 @@ export default function ScanReceiptPage() {
                         value={formData.amount}
                         onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                         placeholder="0"
-                        className="pl-12 h-12 text-lg font-semibold rounded-xl border-slate-200 bg-slate-50"
+                        className="pl-12 h-12 text-lg font-semibold rounded-xl border-pink-200 bg-pink-50 shadow-sm"
                       />
                     </div>
                   </div>
@@ -508,7 +508,7 @@ export default function ScanReceiptPage() {
                             className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl border-2 transition-all duration-200 ${
                               formData.category_id === cat._id
                                 ? 'bg-red-50 text-red-600 border-red-400 shadow-md'
-                                : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:bg-indigo-50'
+                                : 'bg-white text-slate-600 border-pink-100 hover:border-pink-300 hover:bg-pink-50'
                             }`}
                           >
                             <span className="text-xl">{cat.icon || '📁'}</span>
@@ -525,7 +525,7 @@ export default function ScanReceiptPage() {
                       value={formData.merchant_name}
                       onChange={(e) => setFormData({ ...formData, merchant_name: e.target.value })}
                       placeholder="Nama merchant (opsional)"
-                      className="rounded-xl border-slate-200 bg-slate-50"
+                      className="rounded-xl border-pink-100 bg-slate-50"
                     />
                   </div>
 
@@ -536,7 +536,7 @@ export default function ScanReceiptPage() {
                       type="date"
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="rounded-xl border-slate-200 bg-slate-50"
+                      className="rounded-xl border-pink-100 bg-slate-50"
                     />
                   </div>
 
@@ -547,7 +547,7 @@ export default function ScanReceiptPage() {
                       value={formData.note}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, note: e.target.value })}
                       placeholder="Catatan tambahan..."
-                      className="rounded-xl border-slate-200 bg-slate-50 resize-none"
+                      className="rounded-xl border-pink-100 bg-slate-50 resize-none"
                       rows={2}
                     />
                   </div>
@@ -585,13 +585,13 @@ export default function ScanReceiptPage() {
                       type="button" 
                       variant="outline" 
                       onClick={handleRetake}
-                      className="flex-1 h-12 text-base font-semibold rounded-xl border-slate-200 hover:bg-slate-50"
+                      className="flex-1 h-12 text-base font-semibold rounded-xl border-pink-100 hover:bg-slate-50"
                     >
                       Pindai Ulang
                     </Button>
                     <Button 
                       type="submit" 
-                      className="flex-1 h-12 text-base font-bold rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all"
+                      className="flex-1 h-12 text-base font-bold rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-700 shadow-lg hover:shadow-xl transition-all"
                     >
                       Simpan Transaksi
                     </Button>

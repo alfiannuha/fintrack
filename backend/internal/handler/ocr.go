@@ -2,6 +2,7 @@ package handler
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -44,8 +45,8 @@ func (h *OCRHandler) ScanReceipt(c *gin.Context) {
 }
 
 func (h *OCRHandler) sendToMindee(file io.Reader, filename string) ([]byte, error) {
-	// Gunakan v2 Financial Document (ini versi terbaru yang mencakup Receipts)
-	apiUrl := "https://api.mindee.net/v2/products/mindee/financial_document/v1/predict"
+	// COBA GUNAKAN INI (Versi paling umum untuk akun baru)
+	apiUrl := "https://api.mindee.net/v1/products/mindee/financial_document/v1/predict"
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
@@ -64,5 +65,12 @@ func (h *OCRHandler) sendToMindee(file io.Reader, filename string) ([]byte, erro
 	}
 	defer resp.Body.Close()
 
-	return io.ReadAll(resp.Body)
+	resBody, _ := io.ReadAll(resp.Body)
+
+	// Jika Mindee return error (404, 401, dll), kirim status yang sesuai ke Next.js
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+		return nil, fmt.Errorf("Mindee Error %d: %s", resp.StatusCode, string(resBody))
+	}
+
+	return resBody, nil
 }

@@ -98,6 +98,12 @@ export default function ScanReceiptPage() {
 
       const resJson = await response.json();
 
+      // CEK APAKAH DATA ADA SEBELUM MEMBACA 'inference'
+      if (!resJson?.document?.inference) {
+        console.error("Struktur JSON Mindee tidak sesuai:", resJson);
+        throw new Error("Gagal membaca struk. Pastikan API di Dashboard sudah aktif.");
+      }
+
       // Path data pada Mindee API v2 Financial Document
       const prediction = resJson.document.inference.prediction;
 

@@ -151,7 +151,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             <button
               type="button"
               onClick={handleScanClick}
-              className="w-full md:hidden flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-slate-300 text-slate-600 hover:border-pink-300 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200"
+              className="w-full md:hidden flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-slate-300 text-slate-600 hover:border-pink-300 hover:text-pink-600 hover:bg-pink-50 transition-all duration-200 cursor-pointer"
             >
               <span className="text-xl">📷</span>
               <span className="font-medium">Scan Struk / Upload</span>
@@ -193,7 +193,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, category_id: category._id }))}
                     disabled={isLoading}
-                    className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl border-2 transition-all duration-200 hover:scale-105 ${
+                    className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl border-2 transition-all duration-200 hover:scale-105 cursor-pointer ${
                       isSelected(category._id)
                         ? txType === 'expense' 
                           ? 'bg-red-50 text-red-600 border-red-400 shadow-md'

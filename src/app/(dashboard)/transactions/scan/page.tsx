@@ -505,7 +505,7 @@ export default function ScanReceiptPage() {
                             key={cat._id}
                             type="button"
                             onClick={() => setFormData({ ...formData, category_id: cat._id })}
-                            className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl border-2 transition-all duration-200 ${
+                            className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
                               formData.category_id === cat._id
                                 ? 'bg-red-50 text-red-600 border-red-400 shadow-md'
                                 : 'bg-white text-slate-600 border-pink-100 hover:border-pink-300 hover:bg-pink-50'
@@ -558,7 +558,7 @@ export default function ScanReceiptPage() {
                       <button
                         type="button"
                         onClick={() => setItemsExpanded(!itemsExpanded)}
-                        className="w-full flex items-center justify-between text-sm font-medium text-slate-600"
+                        className="w-full flex items-center justify-between text-sm font-medium text-slate-600 cursor-pointer"
                       >
                         <span>Item Terdeteksi ({receiptData.items.length})</span>
                         <span className="text-xs text-slate-400">

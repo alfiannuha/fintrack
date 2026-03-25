@@ -99,7 +99,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="text-xs text-muted-foreground hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+                className="text-xs text-muted-foreground hover:text-pink-600 dark:hover:text-pink-400 transition-colors cursor-pointer"
               >
                 {showPassword ? '🙈 Sembunyikan' : '👁️ Tampilkan'} password
               </button>

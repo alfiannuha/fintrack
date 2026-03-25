@@ -405,8 +405,8 @@ export default function ScanReceiptPage() {
                     <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center shadow-inner">
                       <span className="text-4xl">📸</span>
                     </div>
-                    <p className="text-lg font-semibold text-slate-700">Ambil Foto Struk</p>
-                    <p className="text-sm text-slate-500 mt-1">Ketuk untuk kamera atau pilih dari galeri</p>
+                    <p className="text-lg font-semibold text-pink-700">Ambil Foto Struk</p>
+                    <p className="text-sm text-pink-500 mt-1">Ketuk untuk kamera atau pilih dari galeri</p>
                   </div>
                 </div>
                 <input
@@ -429,10 +429,10 @@ export default function ScanReceiptPage() {
                   <div className="relative w-full h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 flex items-center justify-center">
                     <span className="text-4xl">🔍</span>
                   </div>
-                  <div className="absolute inset-0 rounded-full border-4 border-indigo-200 border-t-indigo-500 animate-spin"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-pink-200 border-t-pink-500 animate-spin"></div>
                 </div>
-                <p className="text-lg font-semibold text-slate-700">Memindai Struk...</p>
-                <p className="text-sm text-slate-500 mt-1">Mohon tunggu sebentar</p>
+                <p className="text-lg font-semibold text-pink-700">Memindai Struk...</p>
+                <p className="text-sm text-pink-500 mt-1">Mohon tunggu sebentar</p>
               </CardContent>
             </Card>
           )}

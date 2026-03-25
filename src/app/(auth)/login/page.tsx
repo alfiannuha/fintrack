@@ -85,24 +85,26 @@ export default function LoginPage() {
             
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">🔒 Password</Label>
-              <Input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                required
-                disabled={isLoading}
-                className="h-12 rounded-xl bg-background border-pink-200/50 dark:border-pink-800/50 focus-visible:ring-pink-500/20 focus-visible:border-pink-500"
-                autoComplete="current-password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="text-xs text-muted-foreground hover:text-pink-600 dark:hover:text-pink-400 transition-colors cursor-pointer"
-              >
-                {showPassword ? '🙈 Sembunyikan' : '👁️ Tampilkan'} password
-              </button>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  required
+                  disabled={isLoading}
+                  className="h-12 rounded-xl bg-background border-pink-200/50 dark:border-pink-800/50 focus-visible:ring-pink-500/20 focus-visible:border-pink-500 pr-12"
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-pink-500 hover:text-pink-700 dark:hover:text-pink-300 transition-colors cursor-pointer"
+                >
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
             </div>
           </CardContent>
           

@@ -6,7 +6,6 @@ import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 
 export default function HomePage() {
@@ -53,14 +52,11 @@ export default function HomePage() {
         
         <CardHeader className="space-y-6 text-center pt-8 pb-6">
           <div className="flex justify-center">
-            <div className="relative group">
+            <div className="relative group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
-              <Avatar className="h-24 w-24 relative">
-                <AvatarImage src="https://avatar.vercel.sh/fintrack" />
-                <AvatarFallback className="bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 text-white text-xl font-bold shadow-xl">
-                  F
-                </AvatarFallback>
-              </Avatar>
+              <div className="relative h-24 w-24 rounded-3xl bg-gradient-to-br from-pink-600 via-rose-600 to-pink-600 flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-all duration-300">
+                <span className="text-5xl text-white font-bold">F</span>
+              </div>
             </div>
           </div>
           

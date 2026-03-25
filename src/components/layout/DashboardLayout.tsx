@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from './ThemeToggle';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -118,17 +119,20 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </nav>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 border-r bg-white bg-slate-900 p-4 z-50 flex-col">
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 border-r border-slate-200 border-slate-800 bg-white bg-slate-950 p-4 z-50 flex-col">
         {/* Logo */}
         <div className="mb-8 pt-2">
-          <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
-              <span className="text-2xl text-white font-bold">F</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                <span className="text-2xl text-white font-bold">F</span>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-slate-900 text-slate-100">FinTrack</h1>
+                <p className="text-xs text-muted-foreground">Kelola Keuangan</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold">FinTrack</h1>
-              <p className="text-xs text-muted-foreground">Kelola Keuangan</p>
-            </div>
+            <ThemeToggle />
           </div>
         </div>
 

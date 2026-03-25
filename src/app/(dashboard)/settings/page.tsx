@@ -43,7 +43,7 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        <Separator className="border-pink-200/50 dark:border-pink-800/50" />
+        <Separator className="border-pink-200/50! dark:border-pink-800/50!" />
 
         {/* Profile Card */}
         <Card className="border-pink-smooth shadow-soft">
@@ -65,7 +65,7 @@ export default function SettingsPage() {
               </div>
             </div>
             
-            <Separator className="border-pink-200/50 dark:border-pink-800/50" />
+            <Separator className="border-pink-200/50! dark:border-pink-800/50!" />
             
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -100,7 +100,7 @@ export default function SettingsPage() {
               </div>
             </div>
             
-            <Separator className="border-pink-200/50 dark:border-pink-800/50" />
+            <Separator className="border-pink-200/50! dark:border-pink-800/50!" />
             
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -144,7 +144,7 @@ export default function SettingsPage() {
               <span className="font-medium text-foreground">Versi:</span>
               <span>1.0.0 (Phase 3)</span>
             </div>
-            <Separator className="border-pink-200/50 dark:border-pink-800/50" />
+            <Separator className="border-pink-200/50! dark:border-pink-800/50!" />
             <p>
               FinTrack adalah aplikasi pencatatan keuangan personal yang dirancang
               untuk membantu Anda mengelola keuangan dengan lebih baik.

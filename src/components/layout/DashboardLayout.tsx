@@ -26,7 +26,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       {/* Mobile Bottom Navigation - Glassmorphism */}
-      <nav className="fixed bottom-0 left-0 right-0 border-t border-pink-200 dark:border-pink-800 bg-background/80 backdrop-blur-xl md:hidden z-50 cursor-pointer">
+      <nav className="fixed bottom-0 left-0 right-0 border-t border-pink-200! dark:border-pink-800! bg-background/80 backdrop-blur-xl md:hidden z-50 cursor-pointer">
         <div className="relative h-16">
           {/* Active indicator - Animated pill */}
           <div className="absolute inset-x-0 top-1.5 h-[calc(100%-12px)] mx-4 rounded-2xl bg-gradient-to-r from-pink-500/10 to-rose-500/10 transition-all duration-300" />
@@ -120,9 +120,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </nav>
 
       {/* Desktop Sidebar - Compact Modern Design */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 border-r border-pink-200 dark:border-pink-800 bg-card/80 backdrop-blur-xl z-50 flex-col">
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 border-r border-pink-200! dark:border-pink-800! bg-card/80 backdrop-blur-xl z-50 flex-col">
         {/* Logo Section - Compact */}
-        <div className="relative p-4 border-b border-pink-200/50 dark:border-pink-800/50">
+        <div className="relative p-4 border-b border-pink-200/50! dark:border-pink-800/50!">
           <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-pink-500/5" />
           <div className="relative flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -205,8 +205,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </nav>
 
         {/* User Card - Compact */}
-        <div className="p-3 border-t border-pink-200/50 dark:border-pink-800/50">
-          <div className="relative p-3 rounded-xl bg-gradient-to-br from-pink-500/10 via-rose-500/5 to-transparent border border-pink-200/50 dark:border-pink-800/50 overflow-hidden cursor-pointer">
+        <div className="p-3 border-t border-pink-200/50! dark:border-pink-800/50!">
+          <div className="relative p-3 rounded-xl bg-gradient-to-br from-pink-500/10 via-rose-500/5 to-transparent border border-pink-200/50! dark:border-pink-800/50! overflow-hidden cursor-pointer">
             <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-pink-500/20 to-transparent rounded-full blur-xl" />
             <div className="relative flex items-center gap-2.5">
               <div className="h-8 w-8 rounded-full bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg flex-shrink-0">
@@ -221,7 +221,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
         {/* Footer - Compact */}
-        <div className="p-3 border-t border-pink-200/50 dark:border-pink-800/50">
+        <div className="p-3 border-t border-pink-200/50! dark:border-pink-800/50!">
           <div className="text-center">
             <p className="text-[10px] text-muted-foreground font-medium">
               FinTrack v1.0.0

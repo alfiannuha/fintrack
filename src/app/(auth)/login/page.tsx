@@ -41,7 +41,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background p-4">
-      <Card className="w-full max-w-md shadow-xl border-pink-200/50 dark:border-pink-800/50 overflow-hidden">
+      <Card className="w-full max-w-md shadow-xl border-pink-200/50! dark:border-pink-800/50! overflow-hidden">
         {/* Pink gradient header bar */}
         <div className="h-2 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500" />
         
@@ -78,7 +78,7 @@ export default function LoginPage() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 disabled={isLoading}
-                className="h-12 rounded-xl bg-background border-pink-200/50 dark:border-pink-800/50 focus-visible:ring-pink-500/20 focus-visible:border-pink-500"
+                className="h-12 rounded-xl bg-background border-pink-200/50! dark:border-pink-800/50! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
                 autoComplete="email"
               />
             </div>

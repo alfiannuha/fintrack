@@ -209,7 +209,7 @@ export default function BudgetPage() {
         </div>
 
         {/* Overall Summary Card */}
-        <Card className="border-pink-200 dark:border-pink-800 bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background">
+        <Card className="border-pink-200! dark:border-pink-800! bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg font-semibold">Ringkasan Budget</CardTitle>
             <CardDescription className="text-xs">Total semua kategori bulan ini</CardDescription>
@@ -255,7 +255,7 @@ export default function BudgetPage() {
             ))}
           </div>
         ) : budgets.length === 0 ? (
-          <Card className="border-dashed border-pink-200 dark:border-pink-800">
+          <Card className="border-dashed border-pink-200! dark:border-pink-800!">
             <CardContent className="py-12 text-center">
               <div className="text-4xl mb-4">🎯</div>
               <p className="text-muted-foreground font-medium">Belum ada budget</p>
@@ -276,7 +276,7 @@ export default function BudgetPage() {
               const categoryIcon = categoryEmojis[categoryName] || '📌';
 
               return (
-                <Card key={budget._id} className="group hover:shadow-lg transition-all duration-300 border-pink-100 dark:border-pink-900 overflow-hidden cursor-pointer">
+                <Card key={budget._id} className="group hover:shadow-lg transition-all duration-300 border-pink-100! dark:border-pink-900! overflow-hidden cursor-pointer">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3 mb-3">
                       <Avatar className="h-10 w-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-md">
@@ -344,7 +344,7 @@ export default function BudgetPage() {
         )}
 
         {/* Info Card */}
-        <Card className="border-pink-200 dark:border-pink-800 bg-gradient-to-br from-pink-50/50 via-rose-50/50 to-white dark:from-pink-950/10 dark:via-rose-950/10 dark:to-background">
+        <Card className="border-pink-200! dark:border-pink-800! bg-gradient-to-br from-pink-50/50 via-rose-50/50 to-white dark:from-pink-950/10 dark:via-rose-950/10 dark:to-background">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
               <span className="text-2xl">💡</span>

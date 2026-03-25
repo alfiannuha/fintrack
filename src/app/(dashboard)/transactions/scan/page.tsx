@@ -397,7 +397,7 @@ export default function ScanReceiptPage() {
             <Card className="border-0 shadow-lg">
               <CardContent className="pt-6">
                 <div 
-                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-pink-200 bg-gradient-to-br from-pink-50 to-rose-50 p-8 text-center cursor-pointer hover:border-pink-400 hover:from-pink-100 hover:to-rose-100 transition-all duration-300 group"
+                  className="relative overflow-hidden rounded-2xl border-2 border-dashed border-pink-200! bg-gradient-to-br from-pink-50 to-rose-50 p-8 text-center cursor-pointer hover:border-pink-400! hover:from-pink-100 hover:to-rose-100 transition-all duration-300 group"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -429,7 +429,7 @@ export default function ScanReceiptPage() {
                   <div className="relative w-full h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 flex items-center justify-center">
                     <span className="text-4xl">🔍</span>
                   </div>
-                  <div className="absolute inset-0 rounded-full border-4 border-pink-200 border-t-pink-500 animate-spin"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-pink-200! border-t-pink-500! animate-spin"></div>
                 </div>
                 <p className="text-lg font-semibold text-pink-700">Memindai Struk...</p>
                 <p className="text-sm text-pink-500 mt-1">Mohon tunggu sebentar</p>
@@ -489,7 +489,7 @@ export default function ScanReceiptPage() {
                         value={formData.amount}
                         onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                         placeholder="0"
-                        className="pl-12 h-12 text-lg font-semibold rounded-xl border-pink-200 bg-pink-50 shadow-sm"
+                        className="pl-12 h-12 text-lg font-semibold rounded-xl border-pink-200! bg-pink-50! shadow-sm"
                       />
                     </div>
                   </div>
@@ -508,7 +508,7 @@ export default function ScanReceiptPage() {
                             className={`flex flex-col items-center justify-center gap-1 py-2 px-1 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
                               formData.category_id === cat._id
                                 ? 'bg-red-50 text-red-600 border-red-400 shadow-md'
-                                : 'bg-white text-slate-600 border-pink-100 hover:border-pink-300 hover:bg-pink-50'
+                                : 'bg-white text-slate-600 border-pink-100! hover:border-pink-300! hover:bg-pink-50!'
                             }`}
                           >
                             <span className="text-xl">{cat.icon || '📁'}</span>
@@ -525,7 +525,7 @@ export default function ScanReceiptPage() {
                       value={formData.merchant_name}
                       onChange={(e) => setFormData({ ...formData, merchant_name: e.target.value })}
                       placeholder="Nama merchant (opsional)"
-                      className="rounded-xl border-pink-100 bg-pink-50"
+                      className="rounded-xl border-pink-100! bg-pink-50!"
                     />
                   </div>
 
@@ -536,7 +536,7 @@ export default function ScanReceiptPage() {
                       type="date"
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="rounded-xl border-pink-100 bg-pink-50"
+                      className="rounded-xl border-pink-100! bg-pink-50!"
                     />
                   </div>
 
@@ -585,7 +585,7 @@ export default function ScanReceiptPage() {
                       type="button" 
                       variant="outline" 
                       onClick={handleRetake}
-                      className="flex-1 h-12 text-base font-semibold rounded-xl border-pink-100 hover:bg-pink-50"
+                      className="flex-1 h-12 text-base font-semibold rounded-xl border-pink-100! hover:bg-pink-50!"
                     >
                       Pindai Ulang
                     </Button>

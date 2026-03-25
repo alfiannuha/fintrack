@@ -61,7 +61,7 @@ export default function JoinPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background p-4">
-      <Card className="w-full max-w-md shadow-2xl border-pink-200 dark:border-pink-800 overflow-hidden">
+      <Card className="w-full max-w-md shadow-2xl border-pink-200! dark:border-pink-800! overflow-hidden">
         {/* Pink gradient header */}
         <div className="h-2 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500" />
 
@@ -97,7 +97,7 @@ export default function JoinPage() {
                   required
                   maxLength={6}
                   disabled={isLoading}
-                  className="h-14 rounded-xl bg-background border-pink-200 dark:border-pink-800 focus-visible:ring-pink-500/20 focus-visible:border-pink-500 uppercase tracking-widest text-center text-2xl font-mono font-semibold"
+                  className="h-14 rounded-xl bg-background border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500! uppercase tracking-widest text-center text-2xl font-mono font-semibold"
                 />
                 <p className="text-xs text-muted-foreground text-center">
                   Minta kode ini dari teman atau pasangan Anda
@@ -132,7 +132,7 @@ export default function JoinPage() {
         ) : (
           <form onSubmit={handleJoin}>
             <CardContent className="space-y-5 pt-4">
-              <div className="p-4 rounded-xl bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background border border-pink-200 dark:border-pink-800">
+              <div className="p-4 rounded-xl bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background border border-pink-200! dark:border-pink-800!">
                 <p className="text-sm font-semibold text-foreground">Wallet: {walletName}</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Anda akan melihat semua transaksi dan budget di wallet ini
@@ -148,7 +148,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-background border-pink-200 dark:border-pink-800 focus-visible:ring-pink-500/20 focus-visible:border-pink-500"
+                  className="h-12 rounded-xl bg-background border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
                 />
               </div>
               <div className="space-y-2">
@@ -161,7 +161,7 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={isLoading}
-                  className="h-12 rounded-xl bg-background border-pink-200 dark:border-pink-800 focus-visible:ring-pink-500/20 focus-visible:border-pink-500"
+                  className="h-12 rounded-xl bg-background border-pink-200! dark:border-pink-800! focus-visible:ring-pink-500/20 focus-visible:border-pink-500!"
                 />
               </div>
             </CardContent>

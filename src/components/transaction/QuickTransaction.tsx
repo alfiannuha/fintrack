@@ -151,7 +151,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             <button
               type="button"
               onClick={handleScanClick}
-              className="w-full md:hidden flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-pink-200 text-pink-600 hover:border-pink-400 hover:text-pink-700 hover:bg-pink-50 transition-all duration-200 cursor-pointer"
+              className="w-full md:hidden flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-dashed border-pink-200! text-pink-600 hover:border-pink-400! hover:text-pink-700 hover:bg-pink-50! transition-all duration-200 cursor-pointer"
             >
               <span className="text-xl">📷</span>
               <span className="font-medium">Scan Struk / Upload</span>
@@ -162,7 +162,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
               <Label htmlFor="amount" className="text-sm font-medium text-muted-foreground ml-1">Jumlah</Label>
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-green-500/20 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-pink-50 rounded-xl border-2 border-transparent group-focus-within:border-pink-300 transition-all duration-300">
+                <div className="relative bg-pink-50! rounded-xl border-2 border-transparent group-focus-within:border-pink-300! transition-all duration-300">
                   <div className="flex items-center px-4">
                     <span className={`text-2xl font-bold ${txType === 'expense' ? 'text-red-500' : 'text-green-500'}`}>
                       Rp
@@ -198,7 +198,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                         ? txType === 'expense' 
                           ? 'bg-red-50 text-red-600 border-red-400 shadow-md'
                           : 'bg-green-50 text-green-600 border-green-400 shadow-md'
-                        : 'bg-white text-muted-foreground border-pink-100 hover:border-pink-300 hover:bg-pink-50'
+                        : 'bg-white text-muted-foreground border-pink-100! hover:border-pink-300! hover:bg-pink-50!'
                     }`}
                   >
                     <span className="text-2xl">{category.icon || '📁'}</span>
@@ -219,7 +219,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   value={formData.date}
                   onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
                   disabled={isLoading}
-                  className="h-11 rounded-lg bg-pink-50 border-pink-100"
+                  className="h-11 rounded-lg bg-pink-50! border-pink-100!"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   value={formData.note}
                   onChange={(e) => setFormData(prev => ({ ...prev, note: e.target.value }))}
                   disabled={isLoading}
-                  className="h-11 rounded-lg bg-pink-50 border-pink-100"
+                  className="h-11 rounded-lg bg-pink-50! border-pink-100!"
                 />
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   type="button" 
                   variant="outline" 
                   onClick={onCancel} 
-                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-pink-100 hover:bg-pink-100 transition-all duration-200"
+                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-pink-100! hover:bg-pink-100! transition-all duration-200"
                   disabled={isLoading}
                 >
                   Batal

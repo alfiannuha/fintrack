@@ -183,7 +183,7 @@ export default function RecurringPage() {
                       id="category"
                       value={newRule.category_id}
                       onChange={(e) => setNewRule(prev => ({ ...prev, category_id: e.target.value }))}
-                      className="w-full p-3 border border-pink-200 dark:border-pink-800 rounded-lg bg-background text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 transition-all"
+                      className="w-full p-3 border border-pink-200! dark:border-pink-800! rounded-lg bg-background text-sm focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500! transition-all"
                       required
                     >
                       <option value="">Pilih kategori...</option>

@@ -20,7 +20,7 @@ export function ThemeToggle() {
       <Button
         variant="outline"
         size="icon"
-        className="relative h-9 w-9 rounded-xl bg-background/50 backdrop-blur-sm border-pink-200 dark:border-pink-800"
+        className="relative h-9 w-9 rounded-xl bg-background/50 backdrop-blur-sm border-pink-200! dark:border-pink-800!"
         disabled
       >
         <div className="w-5 h-5" />
@@ -38,7 +38,7 @@ export function ThemeToggle() {
         variant="outline"
         size="icon"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-background via-background to-pink-500/20 backdrop-blur-xl border-pink-200 dark:border-pink-800 hover:border-pink-400 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+        className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-background via-background to-pink-500/20 backdrop-blur-xl border-pink-200! dark:border-pink-800! hover:border-pink-400! shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
       >
         {/* Animated background gradient - Pink theme */}
         <div className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-rose-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

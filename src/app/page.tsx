@@ -21,7 +21,7 @@ export default function HomePage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background">
-        <Card className="w-full max-w-md mx-4 border-pink-200 dark:border-pink-800">
+        <Card className="w-full max-w-md mx-4 border-pink-200! dark:border-pink-800!">
           <CardContent className="pt-6">
             <div className="flex flex-col items-center justify-center space-y-4">
               <div className="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
@@ -46,7 +46,7 @@ export default function HomePage() {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-pink-300/10 to-rose-300/10 rounded-full blur-3xl animate-pulse delay-500" />
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl border-pink-200 dark:border-pink-800 relative z-10 overflow-hidden animate-fade-in">
+      <Card className="w-full max-w-md shadow-2xl border-pink-200! dark:border-pink-800! relative z-10 overflow-hidden animate-fade-in">
         {/* Pink gradient header bar */}
         <div className="h-2 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500" />
         
@@ -116,20 +116,19 @@ export default function HomePage() {
           </Link>
         </CardContent>
 
-        <CardFooter className="flex flex-col space-y-4 pt-6 border-t border-pink-100 dark:border-pink-900 bg-gradient-to-br from-pink-50/50 via-rose-50/50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background">
-          {/* Features */}
+        <CardFooter className="flex flex-col space-y-4 pt-6 border-t border-pink-100! dark:border-pink-900! bg-gradient-to-br from-pink-50/50 via-rose-50/50 to-white dark:from-pink-950/20 dark:via-rose-950/20 dark:to-background">
           <div className="grid grid-cols-3 gap-3 w-full">
-            <div className="text-center space-y-2 p-3 rounded-xl bg-white dark:bg-pink-950/30 border border-pink-100 dark:border-pink-800">
+            <div className="text-center space-y-2 p-3 rounded-xl bg-white dark:bg-pink-950/30 border border-pink-100! dark:border-pink-800!">
               <div className="text-2xl">💰</div>
               <p className="text-xs font-semibold text-foreground">Track</p>
               <p className="text-[10px] text-muted-foreground">Income & Expense</p>
             </div>
-            <div className="text-center space-y-2 p-3 rounded-xl bg-white dark:bg-pink-950/30 border border-pink-100 dark:border-pink-800">
+            <div className="text-center space-y-2 p-3 rounded-xl bg-white dark:bg-pink-950/30 border border-pink-100! dark:border-pink-800!">
               <div className="text-2xl">📊</div>
               <p className="text-xs font-semibold text-foreground">Analytics</p>
               <p className="text-[10px] text-muted-foreground">Charts & Reports</p>
             </div>
-            <div className="text-center space-y-2 p-3 rounded-xl bg-white dark:bg-pink-950/30 border border-pink-100 dark:border-pink-800">
+            <div className="text-center space-y-2 p-3 rounded-xl bg-white dark:bg-pink-950/30 border border-pink-100! dark:border-pink-800!">
               <div className="text-2xl">🎯</div>
               <p className="text-xs font-semibold text-foreground">Budget</p>
               <p className="text-[10px] text-muted-foreground">Control Spending</p>

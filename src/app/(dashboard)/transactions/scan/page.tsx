@@ -87,24 +87,59 @@ export default function ScanReceiptPage() {
 
       // Use Mindee API for receipt parsing
       const apiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
-      const modelId = process.env.NEXT_PUBLIC_MINDEE_MODEL_ID || 'f45ac531-fb34-49a8-90b5-63286619d5f4';
+      const modelId = process.env.NEXT_PUBLIC_MINDEE_MODEL_ID;
+      
+      console.log('Mindee API Key:', apiKey ? 'exists' : 'missing');
+      console.log('Mindee Model ID:', modelId ? modelId : 'missing');
+      
       if (!apiKey) {
         throw new Error('Mindee API key not configured');
       }
 
-      // Try custom model endpoint
-      let endpoint = `https://api.mindee.net/v1/products/custom/v1/${modelId}/predict`;
+      // Try custom model first, fallback to built-in expense_receipts
+      let endpoint = '';
+      let response;
       
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Token ${apiKey}`,
-        },
-        body: formData,
-      });
+      if (modelId) {
+        endpoint = `https://api.mindee.net/v1/products/custom/v1/${modelId}/predict`;
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${apiKey}`,
+          },
+          body: formData,
+        });
+        
+        // If custom model fails, try built-in expense_receipts
+        if (!response.ok) {
+          console.log('Custom model failed, trying built-in expense_receipts...');
+          endpoint = 'https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict';
+          response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Token ${apiKey}`,
+            },
+            body: formData,
+          });
+        }
+      } else {
+        // Use built-in expense_receipts model
+        endpoint = 'https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict';
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${apiKey}`,
+          },
+          body: formData,
+        });
+      }
 
+      console.log('Mindee Response Status:', response.status);
+      
       if (!response.ok) {
-        throw new Error(`Mindee API error: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Mindee Error:', errorText);
+        throw new Error(`Mindee API error: ${response.status} - ${errorText}`);
       }
 
       const mindeeResult = await response.json();

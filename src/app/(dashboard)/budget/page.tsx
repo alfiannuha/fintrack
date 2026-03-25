@@ -255,7 +255,7 @@ export default function BudgetPage() {
             ))}
           </div>
         ) : budgets.length === 0 ? (
-          <Card className="border-dashed">
+          <Card className="border-dashed border-pink-200 dark:border-pink-800">
             <CardContent className="py-12 text-center">
               <div className="text-4xl mb-4">🎯</div>
               <p className="text-muted-foreground font-medium">Belum ada budget</p>

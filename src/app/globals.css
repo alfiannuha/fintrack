@@ -50,6 +50,17 @@
 
 /* Smooth Borders & Shadows */
 @layer components {
+  /* Force all borders to be pink */
+  * {
+    --border: 346.8 77.2% 88% !important;
+    --input: 346.8 77.2% 88% !important;
+  }
+  
+  .dark * {
+    --border: 346.8 77.2% 30% !important;
+    --input: 346.8 77.2% 30% !important;
+  }
+  
   /* Border utilities */
   .border-smooth {
     border-color: hsl(346.8 77.2% 88% / 0.6) !important;
@@ -57,6 +68,24 @@
   
   .dark .border-smooth {
     border-color: hsl(346.8 77.2% 30% / 0.6) !important;
+  }
+  
+  /* Force border-border to be pink */
+  .border-border {
+    border-color: hsl(346.8 77.2% 88% / 0.8) !important;
+  }
+  
+  .dark .border-border {
+    border-color: hsl(346.8 77.2% 30% / 0.8) !important;
+  }
+  
+  /* Force border-input to be pink */
+  .border-input {
+    border-color: hsl(346.8 77.2% 88% / 0.8) !important;
+  }
+  
+  .dark .border-input {
+    border-color: hsl(346.8 77.2% 30% / 0.8) !important;
   }
   
   .border-pink-soft {

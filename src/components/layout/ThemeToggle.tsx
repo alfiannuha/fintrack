@@ -20,7 +20,7 @@ export function ThemeToggle() {
       <Button
         variant="outline"
         size="icon"
-        className="relative h-9 w-9 rounded-xl bg-background/50 backdrop-blur-sm border-border"
+        className="relative h-9 w-9 rounded-xl bg-background/50 backdrop-blur-sm border-pink-200 dark:border-pink-800"
         disabled
       >
         <div className="w-5 h-5" />

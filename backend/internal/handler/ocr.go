@@ -45,17 +45,32 @@ func (h *OCRHandler) ScanReceipt(c *gin.Context) {
 }
 
 func (h *OCRHandler) sendToMindee(file io.Reader, filename string) ([]byte, error) {
-	// COBA GUNAKAN INI (Versi paling umum untuk akun baru)
-	apiUrl := "https://api.mindee.net/v1/products/mindee/financial_document/v1/predict"
+	// Endpoint V2 untuk model ekstraksi
+	apiUrl := "https://api.mindee.net/v2/products/mindee/extraction/v1/predict"
+	apiKey := "md_9fCXiGiWKetbilro4QDBgdhjhc6S54X40kzDvlJscfE"
+
+	// Gunakan Model ID Receipt yang kamu temukan tadi
+	modelId := "8384815c-ad30-460e-9d03-ac9fb61147b8"
 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
-	part, _ := writer.CreateFormFile("document", filename)
+
+	// 1. Tambahkan File
+	part, err := writer.CreateFormFile("document", filename)
+	if err != nil {
+		return nil, err
+	}
 	io.Copy(part, file)
+
+	// 2. TAMBAHKAN MODEL_ID (Wajib di V2)
+	_ = writer.WriteField("model_id", modelId)
+
 	writer.Close()
 
 	req, _ := http.NewRequest("POST", apiUrl, body)
-	req.Header.Set("Authorization", "Token "+h.mindeeAPIKey)
+
+	// Header V2 tetap menggunakan Token
+	req.Header.Set("Authorization", "Token "+apiKey)
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
 	client := &http.Client{}
@@ -67,9 +82,8 @@ func (h *OCRHandler) sendToMindee(file io.Reader, filename string) ([]byte, erro
 
 	resBody, _ := io.ReadAll(resp.Body)
 
-	// Jika Mindee return error (404, 401, dll), kirim status yang sesuai ke Next.js
-	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
-		return nil, fmt.Errorf("Mindee Error %d: %s", resp.StatusCode, string(resBody))
+	if resp.StatusCode >= 400 {
+		return nil, fmt.Errorf("Mindee V2 Error: %s", string(resBody))
 	}
 
 	return resBody, nil

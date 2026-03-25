@@ -104,26 +104,25 @@ export default function ScanReceiptPage() {
         throw new Error("Gagal membaca struk. Pastikan API di Dashboard sudah aktif.");
       }
 
-      // Path data pada Mindee API v2 Financial Document
-      const prediction = resJson.document.inference.prediction;
+      // Di V2, data ada di inference.prediction.fields
+      const fields = resJson.document.inference.prediction.fields;
 
+      // V2 mengembalikan data dalam bentuk map/object berdasarkan nama field
       const extractedData = {
-        merchant_name: prediction.supplier_name?.value || "Tidak terdeteksi",
-        tanggal: prediction.date?.value || "",
-        total: prediction.total_amount?.value || 0,
-        mataUang: prediction.currency?.value || "IDR",
-        kategori: prediction.category?.value || "Lainnya",
-        pajak: prediction.tip?.value || 0
+        merchant_name: fields.supplier_name?.value || "Unknown",
+        total: fields.total_amount?.value || 0,
+        tanggal: fields.date?.value || "",
+        kategori: fields.category?.value || "Lainnya"
       };
 
       // Parse Mindee response
-      const merchantName = prediction.supplier_name?.value || '';
-      const date = prediction.date?.value || '';
-      const totalAmount = prediction.total_amount?.value || 0;
+      const merchantName = extractedData.merchant_name || '';
+      const date = extractedData.tanggal || '';
+      const totalAmount = extractedData.total || 0;
 
-      // Extract line items
+      // Extract line items (if available in fields)
       const items: { name: string; amount: number }[] = [];
-      const lineItems = prediction.line_items || [];
+      const lineItems = fields.line_items || [];
       for (const item of lineItems) {
         if (item.description && item.total_amount?.value) {
           items.push({
@@ -137,9 +136,9 @@ export default function ScanReceiptPage() {
       const rawText = `${merchantName}\n${date}\nTotal: ${totalAmount}\n\nItems:\n${items.map(i => `${i.name}: ${i.amount}`).join('\n')}`;
 
       setReceiptData({
-        merchant_name: extractedData.merchant_name,
-        date: formatMindeeDate(extractedData.tanggal),
-        total_amount: Math.round(extractedData.total * 100),
+        merchant_name: merchantName,
+        date: formatMindeeDate(date),
+        total_amount: Math.round(totalAmount * 100),
         items: items,
         raw_text: rawText,
       });

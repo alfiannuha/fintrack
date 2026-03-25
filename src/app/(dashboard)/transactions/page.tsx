@@ -103,28 +103,30 @@ export default function TransactionsPage() {
         </div>
 
         {/* Filter Tabs */}
-        <Tabs value={filterType} onValueChange={(v) => setFilterType(v as typeof filterType)}>
-          <TabsList className="flex w-full max-w-md bg-slate-100 bg-slate-800 p-1 rounded-xl">
-            <TabsTrigger 
-              value="all" 
-              className="flex-1 rounded-lg data-[state=active]:bg-white data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium"
-            >
-              Semua
-            </TabsTrigger>
-            <TabsTrigger 
-              value="income" 
-              className="flex-1 rounded-lg data-[state=active]:bg-white data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
-            >
-              💰 Pemasukan
-            </TabsTrigger>
-            <TabsTrigger 
-              value="expense" 
-              className="flex-1 rounded-lg data-[state=active]:bg-white data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium gap-1"
-            >
-              💸 Pengeluaran
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex justify-center">
+          <Tabs value={filterType} onValueChange={(v) => setFilterType(v as typeof filterType)} className="w-full max-w-md">
+            <TabsList className="grid w-full grid-cols-3 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+              <TabsTrigger
+                value="all"
+                className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md font-medium transition-all duration-200"
+              >
+                Semua
+              </TabsTrigger>
+              <TabsTrigger
+                value="income"
+                className="rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-md font-medium transition-all duration-200 gap-1"
+              >
+                <span className="hidden sm:inline">💰</span> Pemasukan
+              </TabsTrigger>
+              <TabsTrigger
+                value="expense"
+                className="rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-medium transition-all duration-200 gap-1"
+              >
+                <span className="hidden sm:inline">💸</span> Pengeluaran
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
 
         {/* Transactions List */}
         {isLoading ? (

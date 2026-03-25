@@ -124,23 +124,28 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
         
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-5 px-6 pb-6">
-            {/* Type Toggle */}
-            <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-slate-100 p-1 rounded-xl">
-                <TabsTrigger 
-                  value="expense"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-2.5 rounded-lg transition-all duration-200"
-                >
-                  <span className="mr-1">💸</span> Pengeluaran
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="income"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-2.5 rounded-lg transition-all duration-200"
-                >
-                  <span className="mr-1">💰</span> Pemasukan
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+            {/* Type Tabs - Modern Toggle */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-muted-foreground ml-1">Tipe Transaksi</Label>
+              <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shadow-inner">
+                  <TabsTrigger
+                    value="expense"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                  >
+                    <span className="text-lg">💸</span> 
+                    <span>Pengeluaran</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="income"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                  >
+                    <span className="text-lg">💰</span> 
+                    <span>Pemasukan</span>
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
 
             {/* Scan Button - Mobile Only */}
             <button

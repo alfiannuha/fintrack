@@ -73,82 +73,8 @@ export default function ScanReceiptPage() {
   const scanReceipt = async (imageBase64: string) => {
     setIsScanning(true);
     try {
-      // Try Mindee first with v2 API
-      const mindeeApiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
-      const modelId = process.env.NEXT_PUBLIC_MINDEE_MODEL_ID;
-      
-      if (mindeeApiKey && modelId) {
-        try {
-          const byteCharacters = atob(imageBase64);
-          const byteNumbers = new Array(byteCharacters.length);
-          for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          const blob = new Blob([byteArray], { type: 'image/png' });
-
-          const mindeeFormData = new FormData();
-          mindeeFormData.append('document', blob, 'receipt.png');
-
-          // Try Mindee v2 API
-          const mindeeEndpoint = `https://api.mindee.net/v2/products/custom/${modelId}/predict`;
-          const mindeeResponse = await fetch(mindeeEndpoint, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Token ${mindeeApiKey}`,
-            },
-            body: mindeeFormData,
-          });
-
-          if (mindeeResponse.ok) {
-            const mindeeResult = await mindeeResponse.json();
-            const prediction = mindeeResult?.document?.inference?.prediction;
-            
-            const merchantName = prediction?.merchant_name?.[0]?.value || '';
-            const date = prediction?.date?.value ? formatMindeeDate(prediction.date.value) : '';
-            const totalAmount = prediction?.total_amount?.value || 0;
-            
-            const items: { name: string; amount: number }[] = [];
-            const lineItems = prediction?.line_items || [];
-            for (const item of lineItems) {
-              if (item.description && item.total_amount?.value) {
-                items.push({
-                  name: item.description[0]?.value || 'Item',
-                  amount: Math.round(item.total_amount.value * 100)
-                });
-              }
-            }
-
-            const rawText = `${merchantName}\n${date}\nTotal: ${totalAmount}\n\nItems:\n${items.map(i => `${i.name}: ${i.amount}`).join('\n')}`;
-
-            setReceiptData({
-              merchant_name: merchantName,
-              date: date,
-              total_amount: Math.round(totalAmount * 100),
-              items: items,
-              raw_text: rawText,
-            });
-
-            setFormData(prev => ({
-              ...prev,
-              amount: totalAmount ? String(Math.round(totalAmount * 100)) : '',
-              date: date || new Date().toISOString().split('T')[0],
-              merchant_name: merchantName || '',
-              note: items.map(item => `${item.name}: ${formatCurrency(item.amount)}`).join('\n') || '',
-            }));
-
-            toast.success('Struk berhasil dipindai');
-            setIsScanning(false);
-            return;
-          }
-        } catch (mindeeError) {
-          console.log('Mindee failed, trying OCR.space:', mindeeError);
-        }
-      }
-
-      // Fallback to OCR.space with improved settings
+      // Use OCR.space for OCR
       const formData = new FormData();
-      // Convert to JPEG for better compatibility
       formData.append('base64Image', `data:image/jpeg;base64,${imageBase64}`);
       formData.append('language', 'eng');
       formData.append('isOverlayRequired', 'false');
@@ -199,19 +125,6 @@ export default function ScanReceiptPage() {
     } finally {
       setIsScanning(false);
     }
-  };
-
-  // Helper function to format Mindee date
-  const formatMindeeDate = (dateStr: string): string => {
-    // Mindee returns dates as YYYY-MM-DD or YYYYMMDD
-    const cleaned = dateStr.replace(/-/g, '');
-    if (cleaned.length === 8) {
-      const year = cleaned.substring(0, 4);
-      const month = cleaned.substring(4, 6);
-      const day = cleaned.substring(6, 8);
-      return `${year}-${month}-${day}`;
-    }
-    return dateStr;
   };
 
   const parseReceiptText = (text: string) => {

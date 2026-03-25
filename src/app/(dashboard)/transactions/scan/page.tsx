@@ -85,13 +85,14 @@ export default function ScanReceiptPage() {
       const formData = new FormData();
       formData.append('document', blob, 'receipt.png');
 
-      // Use Mindee API for receipt parsing
+      // Use Mindee API for receipt parsing with custom model
       const apiKey = process.env.NEXT_PUBLIC_MINDEE_API_KEY;
+      const modelId = process.env.NEXT_PUBLIC_MINDEE_MODEL_ID || 'f45ac531-fb34-49a8-90b5-63286619d5f4';
       if (!apiKey) {
         throw new Error('Mindee API key not configured');
       }
 
-      const response = await fetch('https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict', {
+      const response = await fetch(`https://api.mindee.net/v1/products/custom/${modelId}/predict`, {
         method: 'POST',
         headers: {
           'Authorization': `Token ${apiKey}`,

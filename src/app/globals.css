@@ -19,8 +19,8 @@
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
+    --border: 346.8 77.2% 88% !important;
+    --input: 346.8 77.2% 88% !important;
     --ring: 346.8 77.2% 49.8%;
     --radius: 0.75rem;
   }
@@ -42,8 +42,8 @@
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 346.8 77.2% 30% !important;
+    --input: 346.8 77.2% 30% !important;
     --ring: 346.8 77.2% 49.8%;
   }
 }
@@ -52,11 +52,11 @@
 @layer components {
   /* Border utilities */
   .border-smooth {
-    border-color: hsl(240 5.9% 90% / 0.6);
+    border-color: hsl(346.8 77.2% 88% / 0.6) !important;
   }
   
   .dark .border-smooth {
-    border-color: hsl(217.2 32.6% 17.5% / 0.6);
+    border-color: hsl(346.8 77.2% 30% / 0.6) !important;
   }
   
   .border-pink-soft {

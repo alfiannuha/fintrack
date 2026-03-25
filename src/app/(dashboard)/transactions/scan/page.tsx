@@ -525,7 +525,7 @@ export default function ScanReceiptPage() {
                       value={formData.merchant_name}
                       onChange={(e) => setFormData({ ...formData, merchant_name: e.target.value })}
                       placeholder="Nama merchant (opsional)"
-                      className="rounded-xl border-pink-100 bg-slate-50"
+                      className="rounded-xl border-pink-100 bg-pink-50"
                     />
                   </div>
 
@@ -536,7 +536,7 @@ export default function ScanReceiptPage() {
                       type="date"
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="rounded-xl border-pink-100 bg-slate-50"
+                      className="rounded-xl border-pink-100 bg-pink-50"
                     />
                   </div>
 
@@ -547,14 +547,14 @@ export default function ScanReceiptPage() {
                       value={formData.note}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, note: e.target.value })}
                       placeholder="Catatan tambahan..."
-                      className="rounded-xl border-pink-100 bg-slate-50 resize-none"
+                      className="rounded-xl border-pink-100 bg-pink-50 resize-none"
                       rows={2}
                     />
                   </div>
 
                   {/* Items */}
                   {receiptData.items && receiptData.items.length > 0 && (
-                    <div className="space-y-2 p-4 rounded-xl bg-slate-50">
+                    <div className="space-y-2 p-4 rounded-xl bg-pink-50">
                       <button
                         type="button"
                         onClick={() => setItemsExpanded(!itemsExpanded)}
@@ -585,7 +585,7 @@ export default function ScanReceiptPage() {
                       type="button" 
                       variant="outline" 
                       onClick={handleRetake}
-                      className="flex-1 h-12 text-base font-semibold rounded-xl border-pink-100 hover:bg-slate-50"
+                      className="flex-1 h-12 text-base font-semibold rounded-xl border-pink-100 hover:bg-pink-50"
                     >
                       Pindai Ulang
                     </Button>

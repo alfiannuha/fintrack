@@ -128,7 +128,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
             <div className="space-y-2">
               <Label className="text-sm font-medium text-muted-foreground ml-1">Tipe Transaksi</Label>
               <Tabs value={txType} onValueChange={handleTypeChange} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl shadow-inner">
+                <TabsList className="grid w-full grid-cols-2 bg-pink-100 dark:bg-pink-900 p-1 rounded-xl shadow-inner">
                   <TabsTrigger
                     value="expense"
                     className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-md font-semibold py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
@@ -245,7 +245,7 @@ export default function QuickTransaction({ onSuccess, onCancel }: QuickTransacti
                   type="button" 
                   variant="outline" 
                   onClick={onCancel} 
-                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-pink-100 hover:bg-slate-100 transition-all duration-200"
+                  className="flex-1 h-12 text-base font-semibold rounded-xl border-2 border-pink-100 hover:bg-pink-100 transition-all duration-200"
                   disabled={isLoading}
                 >
                   Batal
